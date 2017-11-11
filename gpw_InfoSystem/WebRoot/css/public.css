@@ -1,0 +1,130 @@
+﻿@charset "utf-8";
+/* --全局样式-- */
+html,body{background-color:#FFFFFF; margin:0; padding:0;font-size:12px;font-family: "宋体",Arial,sans-serif;color:#1B3674;}
+ul{margin:0; padding:0; list-style:none}
+img{border:none}
+h4{ font-size:14px;}
+h6{font-size:100%;font-weight:600;}
+a:link {text-decoration:none;color:#1B3674;}
+a:visited {text-decoration:none;color:#1B3674;}
+a:hover {text-decoration:underline;color:#1B3674;}
+a:active {text-decoration:none;color:#1B3674;}
+.auto {width:960px; margin:0 auto;}
+.nothing{ text-align:center; height:50px; line-height:50px;}
+.mft{clear:both; height:0; line-height:0; font-size:0; overflow:hidden;}
+.fixft{ overflow:hidden; zoom:1;}
+fieldset{border:solid 1px #ccc; margin:5px; padding:5px}
+fieldset legend{ color:#06c; font-weight:bold;text-indent:0}
+pre{ margin:0; padding:0;}
+blockquote{ border:solid 1px #cdcdcd;padding:5px;background-color:#eef4f6;filter:alpha(opacity=80);opacity:0.8;-moz-border-radius: 15px;border:solid 1px #cdcdcd;-khtml-border-radius: 15px;-webkit-border-radius: 15px;border-radius: 15px;}
+
+.white{ background-color:White;}
+.green{ background-color:Green;}
+.blue{ background-color:#355155;}
+.red{ background-color:Red;}
+.black{ background-color:Black;}
+.christmas{ background-color:#d3e3e9;}
+.display{ float:right;}
+.display ul{}
+.display ul li{ float:left;margin-top:0px;margin-right:2px;}
+.display ul li a{ }
+.display ul li a.on { border:dashed 1px #D1D1D1;padding:0 2px;}
+.skin{ float:right;}
+.skin ul{ }
+.skin ul li{ float:left;margin-top:4px; margin-right:2px; }
+.skin ul li a{ display:block;width:10px; height:10px;line-height:10px;overflow:hidden;border:solid 1px #D1D1D1; text-indent:-500px}
+.skin ul li.on a{ border-style:inset;border-width:2px; margin-top:-1px;}
+.right{ float:right;}
+.right a.help{ background:url(bg_total.png) no-repeat -460px -247px; padding-left:16px; cursor:help;}
+
+a.switch{ width:20px; height:44px;background:url(bg_total.png) no-repeat -143px -310px; overflow:hidden; text-indent:-100px;}
+a.switch-off{width:20px; height:44px;background:url(bg_total.png) no-repeat -123px -310px; overflow:hidden; text-indent:-100px;}
+
+	
+/* --图片幻灯模块-- */
+.column .slide{ }
+.column .slide .cont{padding:0px; position:relative;height:180px; overflow:hidden;}
+.column .slide .cont ul.list{ position:absolute; z-index:1; top:0; left:0; margin-left:0;}
+.column .slide .cont ul.list li{ list-style:none; margin:0; padding:0; display:inline;}
+.column .slide .cont ul.list li a{display:block; text-align:left;}
+.column .slide .cont ul.list li a img{border:none;}
+
+.column .slide .cont .shadow{ position:absolute; z-index:2;bottom:0px; width:100%;background-color:#1B3674;opacity:.5;filter:alpha(opacity=50);}
+.column .slide .cont .shadow .title{ height:30px; line-height:30px; overflow:hidden;text-indent:2em; margin:0; padding:0; font-size:13px;}
+.column .slide .cont .shadow .title a{text-indent:2em; color:#FFFFFF;}
+
+.column .slide .cont ul.pages{ position:absolute; z-index:3; right:5px; bottom:5px;}
+.column .slide .cont ul.pages li{ list-style:none; line-height:normal;float:left;margin:0px;}
+.column .slide .cont ul.pages li a{display:block;border:solid 1px #ccc; background:#fff; margin:0 2px; padding:2px 5px; color:green;}
+.column .slide .cont ul.pages li.current a,
+.column .slide .cont ul.pages li a:hover{border:#004C82 1px solid; background-color:green; color:#FFFFFF; font-weight:700;}
+
+/* --搜索模块-- */
+.column .search{ }
+.column .search .cont{text-align:center; padding:5px; margin:16px auto;}
+.column .search .cont from{ margin:0; padding:0;}
+.column .search .cont .text{background:url(ico_search.gif) #FFFFFF no-repeat 6px; padding-left:23px; padding-top:6px; border:solid 1px #CCC;height:18px;width:165px;}
+.column .search .cont .btn{ height:27px;}
+
+/* --音乐模块-- */
+.column .music{ }
+.column .music .cont{text-align:center; padding:2px;}
+
+
+/* --公共代码样式-- */
+.code{ line-height:22px; white-space:pre;word-break: break-all;word-wrap:break-word;overflow:auto;margin:5px; padding-left:20px;border-left:double 4px #6ce26c;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;*white-space:pre;}
+.code .codetitle{ line-height:16px; }
+.code .codetitle img{ margin-top:2px; margin-right:1px;}
+.code .codetitle span{ vertical-align:top; padding-left:2px; font-family:Tahoma; zoom:1;line-height:22px;}
+.code .codemain{}
+
+/* --公共文章内容-- */
+.article .cont{ margin-bottom:20px; font-size:14px;}
+.article .cont p{ line-height:28px; text-indent:2em;}
+.article .cont table.collapse{ border:solid 1px Black; border-collapse:collapse;}
+.article .cont table.collapse th{ background-color:#cecece;border:solid 1px Black;}
+.article .cont table.collapse td{border:solid 1px Black;}
+
+/* --公共分页样式-- */
+.pagination { text-align:right;padding-top:15px;padding-right:15px; padding-bottom:15px;}
+.pagination span,
+.pagination a{border:solid 1px #ccc; margin:0 2px; padding:2px 5px; color:green;text-decoration:none; }
+.pagination .current,
+.pagination a:hover{border:#004C82 1px solid; background-color:green; color:#FFFFFF; font-weight:700; }
+.pagination .disabled{color:#cccccc;background-color:#ffffff;}
+.pagination span.page{ border:none;margin:0; padding:0; color:#000000; margin-left:2px;}
+.pagination span.page .text{width:20px; height:13px; border:solid 1px #cccccc; padding:1px;}
+.pagination span.page .btn{height:18px; }
+.pagination form{ display:inline;}
+
+/* --公共评论样式-- */
+.comment{ margin-top:20px;}
+.comment .title{ padding-left:2px;height:30px; line-height:30px; font-weight:700; background-color:#CCCCCC;}/*width:95%; margin:0 auto;*/
+.comment .commentlist{ border:solid 1px #ccc;}
+.comment .commentlist .item{ margin: 20px 10px; padding-bottom:10px; border-bottom:dashed 1px #ccc;}
+.comment .commentlist .item .desc{ line-height:30px;font-weight:600}
+.comment .commentlist .item .desc ul.options{ float:right;}
+.comment .commentlist .item .desc ul.options li{display:inline}
+.comment .commentlist .item .cont{ }
+.comment .commentlist .item .reply{ color:#666; background-color:#f1f7f9; border:solid 1px #ccc; padding:5px; margin-top:5px;}
+.comment .commentlist .item .reply span{ font-weight:700 }
+.postcomment{ margin-top:20px;}
+.postcomment .title{ padding-left:2px;height:30px; line-height:30px; font-weight:700; background-color:#CCCCCC;}
+.postcomment .box{border:solid 1px #ccc;}
+.postcomment .box .fi{ padding:5px;}
+.postcomment .box .fi label{ width:7em; line-height:20px;float:left}
+.postcomment .box .fi .text{border:solid 1px #ccc; width:250px; height:15px;}
+.postcomment .box .fi .textarea{border:solid 1px #ccc;width:330px; height:120px;}
+.postcomment .box .fi span.note{ color:red; margin-left:5px; vertical-align:middle;}
+.postcomment .box .btn{ padding-top:10px; padding-bottom:10px; padding-left:8em;}
+.postcomment .box .btn .submit{ background:url(btn_bg.gif) no-repeat; width:65px; height:25px; line-height:25px; border:none}
+
+/* --公共网格列表样式-- */
+.datagrid table{ width:100%;border:solid 1px #a7c5e2;border-collapse:collapse;}
+.datagrid table th{border:#a7c5e2 1px solid;padding:0 5px;vertical-align:top;white-space:normal;}
+.datagrid table td{ border:solid 1px #a7c5e2; padding:2px 5px; height:25px;line-height:25px; white-space:nowrap; text-align:center;}
+.datagrid table td.title{ width:400px;}
+.datagrid table .header {font-weight:700; background:url(bg_table_head.gif) repeat-x; color:#000000; line-height:28px; text-align:center;}
+.datagrid table tr.even { background-color:#f0f5fb;}
+.datagrid table a {color: #000000; text-decoration:none;}
+.datagrid table a:hover {color: #ffaa00;}
