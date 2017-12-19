@@ -12,10 +12,10 @@ public class To_Gpwgl_xggpw extends ActionSupport {
 	@Override
 	public String execute() throws Exception {
 		//System.out.println("To_Gpwgl_xggpw :" + objJury);
-		System.out.println("To_Gpwgl_xggpw :" + jury_no);
+		//System.out.println("To_Gpwgl_xggpw :" + jury_no);
 		objGetJury = new GetJury();
 		objJury = objGetJury.getJuryByNo(jury_no);
-		System.out.println("To_Gpwgl_xggpw  objJury :" + objJury.getJury_name());
+		//System.out.println("To_Gpwgl_xggpw  objJury :" + objJury.getJury_name());
 		return super.execute();
 	}
 

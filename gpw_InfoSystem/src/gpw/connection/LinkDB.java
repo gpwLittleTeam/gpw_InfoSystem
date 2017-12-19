@@ -19,7 +19,7 @@ public class LinkDB {
 		try {
 			Class.forName(DRIVER);
 			conn = DriverManager.getConnection(URL, "root",
-					"OG5MwimpewYH");
+					"root");
 			return conn;
 		} catch (ClassNotFoundException | SQLException ex) {
 			System.out.println("Can't connect to ds!");//

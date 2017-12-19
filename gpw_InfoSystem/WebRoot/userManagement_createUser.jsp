@@ -110,13 +110,13 @@ a:active {
 									bgcolor="#c0de98" style="margin-top:10px;">
 									<tr>
 										<td class="leftTd" align="right">用户名</td>
-										<td class="rightTd"><input name="objUserLogin.user_name" type="text" class="editable" />
+										<td class="rightTd"><input name="objUserLogin.user_name" type="text" class="editable"  required="required"/>
 										</td>
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">用户密码</td>
 										<td class="rightTd"><input name="objUserLogin.user_psd" type="password"
-											class="editable" /></td>
+											class="editable"  required="required"/></td>
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">状态</td>
@@ -128,15 +128,15 @@ a:active {
 									<tr>
 										<td class="leftTd" align="right">用户类别</td>
 										<td class="rightTd"><select name="objUserLogin.user_type" calss="editable">
-												<option value="1">高评委用户</option>
-												<option value="2" selected>管理员用户</option>
+												<option value="1" selected>高评委用户</option>
+												<option value="2">管理员用户</option>
 										</select></td>
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">所属高评委</td>
 										<td class="rightTd">
 										<select id="editable-select" name="objUserLogin.user_jury" style="width:176px"
-											autocomplete="off">
+											autocomplete="off" >
 												<s:iterator id="jury" value="JuryList">
 													<option><s:property value="#jury.Jury_name"/></option>
 												</s:iterator>
@@ -163,7 +163,7 @@ a:active {
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">创建时间</td>
-										<td class="rightTd"><input name="objUserLogin.user_date" type="date" class="editable" />
+										<td class="rightTd"><input name="objUserLogin.user_date" type="date" class="editable" required/>
 										</td>
 									</tr>
 								</table>

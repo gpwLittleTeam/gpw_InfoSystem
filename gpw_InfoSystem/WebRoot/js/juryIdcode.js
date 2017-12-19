@@ -1,7 +1,5 @@
 function deleteJuryIdcode(formId,objectAddress,action) {
-	// alert("deletion");
 	var aCheckbox=document.getElementsByName("nrOfCheckbox");
-	// alert("deletion2");
 	console.log(aCheckbox);
 	for(var i=0;i<aCheckbox.length;i++) {
 		if(aCheckbox[i].checked == true) {
@@ -23,9 +21,7 @@ function deleteJuryIdcode(formId,objectAddress,action) {
 }
 
 function updateJuryIdcode(formId,objectAddress,action) {
-	// alert("deletion");
 	var aCheckbox=document.getElementsByName("nrOfCheckbox");
-	// alert("deletion2");
 	console.log(aCheckbox);
 	for(var i=0;i<aCheckbox.length;i++) {
 		if(aCheckbox[i].checked == true) {

@@ -25,6 +25,9 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import gpw.action.jump.To_Gpwgl;
+import gpw.algorithm.AuthCode;
+import gpw.algorithm.Committee;
+import gpw.algorithm.ReviewGroup;
 import gpw.getInfo.GetCounciltitle;
 import gpw.getInfo.GetDegree;
 import gpw.getInfo.GetEducation;
@@ -48,16 +51,16 @@ import gpw.object.Methods;
 import gpw.object.Sex;
 import gpw.object.UserField;
 import gpw.object.UserLogin;
+import gpw.object.JuryIdcode;
 import gpw.operateDatabase.Insert;
-import gpw.randomFunc.Committee;
-import gpw.randomFunc.ReviewGroup;
+import gpw.operateDatabase.Update;
 
 public class InsertAction extends ActionSupport {
-	private String feedback;
+	private String feedback; //给用户反馈
+	private String message; //同feedback
 	private Methods objMethods = new Methods();
 	private Insert objInsert = new Insert();
 	
-	private String message;
 	
 	// 新建专家
 	private Expert expert;
@@ -111,6 +114,12 @@ public class InsertAction extends ActionSupport {
 	private List<Expert> listCommittee;
 	private List<Expert> listDirector;
 	private String year;
+	
+	//验证码管理-新增专家
+	//private JuryIdcode expertFromAuthCode;
+	//private List<JuryIdcode> expertFromAuthCode;
+	private String[] expert_name;
+	private String[] expert_phone;
 	
 	public String execute() throws Exception {
 		return SUCCESS;
@@ -177,28 +186,16 @@ public class InsertAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	//专家端录入信息
+	/**
+	 * 该函数在专家通过验证码录入自己个人信息后提交时调用
+	 * @return SUCCESS
+	 * @throws Exception
+	 */
 	public String infoEntryZJ() throws Exception {
 		HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
-		
-//		//根据输入的密码获得对应的juryNo
-//		objGetJuryIdcode = new GetJuryIdcode();
-		
-//		System.out.println("psdAndTime:" + this.psdAndTime);
-//		this.psdAndTime = objGetJuryIdcode.getJuryNo(this., expertName, expertPhone)
-		
-//		//日期处理
-//		Date now = new Date();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		long timeDistance = now.getTime() - sdf.parse(psdAndTime.get(1)).getTime();
-////		System.out.println(now + " db:" + sdf.parse(psdAndTime.get(1)));
-		
-		
-//		//判断是否超过24h
-//		if((timeDistance/(60*60*1000)) < 24){
+
 			// 传入数据库
 			objInsert = new Insert();
-			// System.out.println("System.out.println(expert.getExpert_Field31());"+expert.getExpert_Field31());
 			Jury objJury;
 			objJury = new Jury();
 //			System.out.println("first————" + expert.getExpert_Field31());
@@ -211,15 +208,19 @@ public class InsertAction extends ActionSupport {
 				System.out.println("System.out.println(expert.setExpert_Field22());" + expert.getExpert_Field22());
 			}
 			
-//			//根据所属juryNo给予一个编号
-//			this.expert.setExpert_Field1(expert.generateExpertNo(this.psdAndTime.get(0)));
-//			
-//			JSONObject json = JSONObject.fromObject(this.expert);
-//			String str = json.toString();
-////			System.out.println(str);
 			
-			// 显示专家
-			objInsert.insertNewExpert(expert);
+			// 专家信息写入数据库
+			if(objInsert.insertNewExpert(expert))
+			{
+				Update objUpdate = new Update();
+				Methods objMethods = new Methods();
+				String expertName_enter = (String)objMethods.getSession("expertName_enter");
+				String expertPhone_enter = (String)objMethods.getSession("expertPhone_enter");
+				objUpdate.updateJuryIdcodeStatebyNamePhone(expertName_enter, expertPhone_enter, "已录入");
+				message = "录入成功";
+			} else {
+				message = "录入失败";
+			}
 			
 			// System.out.println(file);
 			// 上传头像
@@ -244,31 +245,6 @@ public class InsertAction extends ActionSupport {
 			} else {
 				System.out.println("没有照片");
 			}
-//			// 跳转到infoList.jsp
-//			// 初始化列表的成员 选择全部的成员
-//			objUserLogin = (UserLogin) request.getSession().getAttribute("User");
-//			objMethods = new Methods();
-//			expertList = objMethods.initializeExpertListForGPWByJuryNo(objUserLogin.getUser_jury());
-//			// System.out.println("To_Zjgl_infoList_gpw:"+expertList.get(3).getExpert_Field4());
-	//
-//			// 初始化user的默认字段
-//			objUserField = new UserField();
-//			UserName = objUserLogin.getUser_name();
-//			intDefaultFieldList = objUserField.getDefaultFieldNrByUserName(UserName);
-//			chDefaultFieldList = objUserField.getDefaultFieldChNameByUserName(UserName);
-//			request.getSession().setAttribute("chDefaultFieldList", chDefaultFieldList);
-//			request.getSession().setAttribute("intDefaultFieldList", intDefaultFieldList);
-
-//		}
-//		else{
-//			System.out.println("chaoshi");
-//		}
-//		System.out.println(psdAndTime.get(0));
-//		System.out.println(this.psdInsert);
-//		System.out.println(expert.getExpert_Field1());
-//		System.out.println(expert.getExpert_Field2());
-//		System.out.println(expert.getExpert_Field3());
-//		System.out.println(expert.getExpert_Field4());
 		
 		
 		return SUCCESS;
@@ -303,7 +279,7 @@ public class InsertAction extends ActionSupport {
 		objGetJury = new GetJury();
 		listJury = objGetJury.getAllJurys();
 
-		// 评审权限
+		// 评审权限  //因为数据库中没有评审权限对应的表 所以这里手动设置编号对应的名称
 		for (int i = 0; i < listJury.size(); i++) {
 			switch (listJury.get(i).getJury_power()) {
 			case "1":
@@ -314,6 +290,9 @@ public class InsertAction extends ActionSupport {
 				break;
 			case "3":
 				listJury.get(i).setJury_power("正副合一");
+				break;
+			case "0":
+				listJury.get(i).setJury_power("");
 				break;
 			}
 		}
@@ -332,9 +311,6 @@ public class InsertAction extends ActionSupport {
 		} else {
 			feedback = "新建用户失败！";
 		}
-		
-		objGetUserLogin = new GetUserLogin();
-		listUserLogin = objGetUserLogin.getAllUserLogins();
 
 		return SUCCESS;
 	}
@@ -389,15 +365,9 @@ public class InsertAction extends ActionSupport {
 
 	//评议组抽取结果录入数据库
 	public String addHistoryTitleForPYZ(){
-		List<Expert> leaderExpert = new ArrayList<Expert>();
-		List<Expert> memberExpert = new ArrayList<Expert>();
-		GetExpert objExpert = new GetExpert();
-		for(int i=0;i<leaderResult.size();i++) {
-			leaderExpert.add(objExpert.getExpertByNumber(leaderResult.get(i)));
-		}
-		for(int i=0;i<memberResult.size();i++) {
-			memberExpert.add(objExpert.getExpertByNumber(memberResult.get(i)));
-		}
+		List<Expert> leaderExpert = (List<Expert>) objMethods.getSession("leaderExpert");
+		List<Expert> memberExpert = (List<Expert>) objMethods.getSession("memberExpert");
+
 		//当前年份
 		SimpleDateFormat format = new SimpleDateFormat("yyyy");
         Date date = new Date();
@@ -405,7 +375,7 @@ public class InsertAction extends ActionSupport {
 		
 //        System.out.println("leaderResult: " + leaderResult.get(0));
 //        System.out.println("memberResult: " + memberResult.get(0));
-
+//        System.out.println("addHistoryTitleForPYZ -> leaderExpert: " + leaderExpert.size());
         
         new ReviewGroup().insertResult(leaderExpert, memberExpert, formatDate);
 		
@@ -416,7 +386,31 @@ public class InsertAction extends ActionSupport {
 		return "pyz";
 	}
 
-
+	//验证码管理-新增专家
+	public String addJuryIdcode(){
+		String juryNo = objMethods.getCurrentUser().getUser_jury();
+		int size = expert_name.length;
+		List<JuryIdcode> listExpertFromAuthCode = new ArrayList<JuryIdcode>();
+		AuthCode objAuthCode = new AuthCode();
+		for(int i=0;i<size;i++){
+			JuryIdcode expertFromAuthCode = new JuryIdcode();
+			expertFromAuthCode.setExpert_name(expert_name[i]);
+			expertFromAuthCode.setExpert_phone(expert_phone[i]);
+			expertFromAuthCode.setJuryNo(juryNo);
+			expertFromAuthCode.setState("未录入");
+			expertFromAuthCode.setId_code(objAuthCode.getRandAuthCode());
+			expertFromAuthCode.setCode_invalid_time(objAuthCode.getValidDate().toString());
+			//System.out.println("objAuthCode.getValidDate().toString(): "+objAuthCode.getValidDate().toString());
+			listExpertFromAuthCode.add(expertFromAuthCode);
+		}
+		//System.out.println("expertFromAuthCode<2> : " + expertFromAuthCode.get(1));
+		objInsert.insertJuryIdcodes(listExpertFromAuthCode);
+		return SUCCESS;
+	}
+	
+	
+	
+	//getter&setter
 	public String getMessage() {
 		return message;
 	}
@@ -425,7 +419,6 @@ public class InsertAction extends ActionSupport {
 		this.message = message;
 	}
 
-	// get set
 	public List<String> getPsdAndTime() {
 		return psdAndTime;
 	}
@@ -686,6 +679,22 @@ public class InsertAction extends ActionSupport {
 
 	public void setYear(String year) {
 		this.year = year;
+	}
+
+	public String[] getExpert_name() {
+		return expert_name;
+	}
+
+	public void setExpert_name(String[] expert_name) {
+		this.expert_name = expert_name;
+	}
+
+	public String[] getExpert_phone() {
+		return expert_phone;
+	}
+
+	public void setExpert_phone(String[] expert_phone) {
+		this.expert_phone = expert_phone;
 	}
 
 }

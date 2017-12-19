@@ -70,7 +70,7 @@ body {
 							</table>
 						</td>
 						<td width="380"
-							style="background-image: url('images/main_08.jpg'); background-repeat: repeat-x;">
+							style="background-image: url('images/main_08.gif'); background-repeat: repeat-x;">
 							&nbsp;</td>
 						<td>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">

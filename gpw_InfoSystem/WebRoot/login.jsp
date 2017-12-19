@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,views.View" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -32,47 +32,6 @@ body {
 -->
 </style>
 <script>
-	function showIdcodeLogin(){
-		var htmlBlock = '<form action="to_zjgl_InfoEntryZJ" method="post">' + 
-			'<table width="100%" border="0" cellpadding="0" cellspacing="0">' + 
-				'<tr>' +
-					'<td>' +
-						'<div align="center">' + 
-							'<span>姓名</span>' +
-						'</div>' +
-					'</td>' +
-					'<td>' +
-						'<input type="text" name="expertName"/>' + 
-					'</td>' +
-				'</tr>' + 
-					'<td>' +
-						'<div align="center">' + 
-							'<span>手机号码</span>' +
-						'</div>' +
-					'</td>' +
-					'<td>' +
-						'<input type="text" name="expertPhone"/>' + 
-					'</td>' +
-				'</tr>' +
-				'</tr>' + 
-					'<td>' +
-						'<div align="center">' + 
-							'<span>验证码</span>' +
-						'</div>' +
-					'</td>' +
-					'<td>' +
-						'<input type="text" name="expertIdcode"/>' + 
-					'</td>' +
-				'</tr>' +
-				'<tr>' +
-					'<td>' +
-						'<input type="submit" value="提交"/>' +
-					'</td>' +
-				'</tr>' +
-			'</table>' + 
-		'</form>';
-		jQuery.alertWindow("专家端录入信息", "#A5DE37"); 
-	}
 </script>
 </head>
 
@@ -88,7 +47,7 @@ body {
 					cellspacing="0">
 
 					<tr>
-						<td height="266" background="images/login_04_.gif">&nbsp;</td>
+						<td height="266" background="images/login_04.gif">&nbsp;</td>
 					</tr>
 					<tr>
 						<td height="95">
@@ -129,9 +88,9 @@ body {
 													</td>
 												</tr>
 												<tr>
-													<td height="30" align="left"><input type="button" value="录入" onclick="showIdcodeLogin()"/></td>
+													<td height="30" align="left"></td>
 													<td height="30" align="right"><input type="submit"
-														value="登录" /></td>
+														value="登录" style="margin-right:10px"/></td>
 												</tr>
 											</table>
 										</form>

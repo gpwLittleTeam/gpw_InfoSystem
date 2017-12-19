@@ -80,7 +80,7 @@ a:active {
 			console.log(data.feedback); //
 			var feedback = data.feedback;
 			if(feedback == "保存成功！") {
-				alert(feedback);
+				//alert(feedback);
 				saveSuccess = 1;
 				$("#feedbackNav").html(feedback);
 			}
@@ -119,7 +119,7 @@ a:active {
 						<td bgcolor="#f3ffe3" align="center">
 							<nav id="feedbackNav" class="feedbackNav"><s:property value="feedback"/></nav>
 							<fieldset style="width:97%; border-color:#c0de98; border-width: 2px;" align="left">
-								<legend class="STYLE1">最终抽取结果：(总人数为：6)</legend>
+								<legend class="STYLE1">最终抽取结果：(总人数为：${directorListSize+viceDirectorListSize+committeeListSize })</legend>
 								<table class="normalDisplayTable">
 								<!-- width="99%" border="0" align="center" cellpadding="0" cellspacing="1"
 								bgcolor="#c0de98" -->
@@ -197,15 +197,6 @@ a:active {
 									</tr>
 								</s:iterator>
 								</table>
-								<div class="STYLE7" style="width:100%;margin:5px 0px;text-align:center">
-									<button type="button"
-										style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
-										class="button button-action button-rounded">导出</button>
-									<button type="button"
-										style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
-										class="button button-action button-rounded" onclick="saveResult()">保存</button>
-								</div>
-
 							</fieldset>
 
 							<div class="STYLE7" style="width:100%;margin:5px 0px;text-align:center">
@@ -213,9 +204,14 @@ a:active {
 									style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
 									class="button button-action button-rounded" onclick="location.href='to_pwcq_wyh!backResult.action'">上一步</button>
 								<button type="button"
+									style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
+									class="button button-action button-rounded" onclick="saveResult()">保存</button>
+								<button type="button"
+									style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
+									class="button button-action button-rounded" onclick="window.open('to_pwcq_wyh!finalPagePrint.action')">打印</button>
+								<button type="button"
 									style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="finish"
 									class="button button-action button-rounded" onclick="location.href='./index.jsp'">关闭</button>
-
 							</div>
 						</td>
 						<td width="9" background="images/tab_16.gif">&nbsp;</td>

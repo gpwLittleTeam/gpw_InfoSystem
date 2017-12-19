@@ -198,7 +198,7 @@ a:active {
 		document.getElementById('file').onchange = function() {
 			var imgFile = this.files[0];
 			var fr = new FileReader();
-			if (imgFile.size > 100000) {
+			if (imgFile.size > 512000) {
 				alert("您上传照片为超过100KB，请重新上传");
 				//alert(document.getElementById('file').value);
 				document.getElementById('file').value = "";
@@ -689,10 +689,10 @@ a:active {
 										<td class="thirdTd">${remariksName[34] }</td>
 									</tr> --%>
 																</table>
-																<div style="margin-top:20px;margin-right:10px;" align="right">
+																<div style="margin-top:20px; text-align:center" >
 																		<input type="submit"
 																				style="font-size:15px; padding: 0 30px;  line-height: 27px; height: 27px;"
-																				value="确定" class="button button-action button-rounded" onclick="check_submit()" />
+																				value="保存" class="button button-action button-rounded" onclick="check_submit()" />
 																</div>
 														</form>
 												</td>

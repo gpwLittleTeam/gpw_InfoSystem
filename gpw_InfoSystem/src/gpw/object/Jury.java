@@ -291,7 +291,7 @@ public class Jury {
 		}
 	}
 	
-	public String getJuryPowerByJuryNo(int juryNo){
+	public String getJuryPowerByJuryNo(String juryNo){
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();
 		Statement stmt = null;

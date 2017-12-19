@@ -1,8 +1,10 @@
 package gpw.action.MyAjax;
 
+import gpw.algorithm.AuthCode;
 import gpw.getInfo.GetJuryIdcode;
 import gpw.object.JuryIdcode;
 import gpw.object.Methods;
+import gpw.operateDatabase.Update;
 import net.sf.json.JSONArray;
 
 import java.util.List;
@@ -14,13 +16,20 @@ public class ForJuryIdcode extends ActionSupport{
 	private JSONArray jsonArray;
 	private GetJuryIdcode getJuryIdcode = new GetJuryIdcode();
 	private String juryNo = objMethods.getCurrentUser().getUser_jury();
-	private String resultString;
 	private String randomNum;
 	private List<JuryIdcode> juryIdcodes;
 	
+	//input
+	private String invalidTime; 
 	private String expertName;
 	private String expertPhone;
+
+	//output
+	private String newTime; //更新后的时间
+	private String newAuthCode; //更新后的随机验证码
+	private String resultString;  //返回到页面的结果
 	
+	//生成随机验证码
 	public String showRandomNum() throws Exception {
 		randomNum = getJuryIdcode.generateJuryIdcode(juryNo,expertName,expertPhone);
 		//System.out.println("showrandomnum : " + expertName + "  "+expertPhone);
@@ -31,6 +40,7 @@ public class ForJuryIdcode extends ActionSupport{
 		return super.execute();
 	}
 	
+	//读取专家
 	public String showJuryIdcode() throws Exception {
 		juryIdcodes = getJuryIdcode.getJuryIdcodes(juryNo);
 		//System.out.println("showJuryIdcode: "+juryIdcodes);
@@ -40,6 +50,28 @@ public class ForJuryIdcode extends ActionSupport{
 		return super.execute();
 	}
 
+	public String updateInvalidTime() {
+		//System.out.println("gpw.action.MyAjax.ForJuryIdcode.updateInvalidTime(String):" + invalidTime);
+		Update objUpdate = new Update();
+		AuthCode objRandAuthCode = new AuthCode();
+		//System.out.println("expertName:" + expertName + "expertPhone:" + expertPhone);
+		boolean isSuccess = objUpdate.updateJuryIdcodeByNamePhone(expertName,expertPhone,objRandAuthCode.getRandAuthCode(),invalidTime);
+		
+		
+		//从数据库里再得到新的 验证码和时间
+		GetJuryIdcode objGetJuryIdcode = new GetJuryIdcode();
+		List<String> codeAndTme = objGetJuryIdcode.getCodeInfoByNamePhone(expertName, expertPhone);
+		newAuthCode = codeAndTme.get(0);
+		newTime = codeAndTme.get(1);
+		
+		//feedback
+		if(isSuccess){
+			resultString = "更新成功";
+		}else {
+			resultString = "更新失败";
+		}
+		return SUCCESS;
+	}
 
 	public List<JuryIdcode> getJuryIdcodes() {
 		return juryIdcodes;
@@ -111,6 +143,30 @@ public class ForJuryIdcode extends ActionSupport{
 
 	public void setRandomNum(String randomNum) {
 		this.randomNum = randomNum;
+	}
+
+	public String getInvalidTime() {
+		return invalidTime;
+	}
+
+	public void setInvalidTime(String invalidTime) {
+		this.invalidTime = invalidTime;
+	}
+
+	public String getNewTime() {
+		return newTime;
+	}
+
+	public void setNewTime(String newTime) {
+		this.newTime = newTime;
+	}
+
+	public String getNewAuthCode() {
+		return newAuthCode;
+	}
+
+	public void setNewAuthCode(String newAuthCode) {
+		this.newAuthCode = newAuthCode;
 	}
 	
 //	public static void main(String args[]) throws Exception{

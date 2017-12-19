@@ -161,7 +161,7 @@ for(var i=0;i<cs.length;i++){
 											style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px"
 											class="button button-pill button-action" onclick="deletion(document.theForm,'用户','deleteUser.action')" />
 										<input type="button" name="reset" value="重置密码"
-											style="font-size:15px;  width:100px;padding:0 10;height:27px;line-height:27px;border-radius:0 7px 7px 0;"
+											style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 7px 7px 0;"
 											class="button button-pill button-action" onclick="resetPsw(document.theForm)"/>
 									</div>
 								</div>
@@ -195,7 +195,7 @@ for(var i=0;i<cs.length;i++){
 												<s:property value="#user.user_type" />
 											</td>
 											<td>
-												<s:property value="#user.user_dept" />
+												<s:property value="#user.user_jury" />
 											</td>
 											<td>
 												<select style="width:30%;height:27" id="user_enable" name="user_enable" >

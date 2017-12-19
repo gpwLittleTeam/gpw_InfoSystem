@@ -1,5 +1,6 @@
 package gpw.operateDatabase;
 
+import gpw.algorithm.AuthCode;
 import gpw.connection.LinkDB;
 import gpw.object.*;
 
@@ -7,7 +8,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Update {
@@ -343,15 +346,53 @@ public class Update {
 			}
 		}
 	}
-	
-	public Boolean updateJuryIdcodeByNamePhone(String expert_name,String expert_phone){
+	/**
+	 * 更改验证码管理中的专家的状态
+	 * @param expert_name 专家姓名
+	 * @param expert_phone 手机号码
+	 * @param state 状态
+	 * @return true == 更新成功；  false == 更新失败
+	 */
+	public Boolean updateJuryIdcodeStatebyNamePhone(String expert_name,String expert_phone, String state){
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-
-		String sqlValue = "update jury_idcode set code_insert_time=now()"
-					+" where expert_name='"+expert_name+"' and expert_phone='"+expert_phone+"'";
+		String sqlValue = "update jury_idcode set state = '"+ state 
+					+ "' where expert_name='"+expert_name+"' and expert_phone='"+expert_phone+"'";
+		System.out.println(sqlValue);
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(sqlValue);
+			return true;
+		} catch (Exception ex) {
+			System.out.println("Update.java-updateJuryIdcodeStatebyNamePhone wrong!");
+			ex.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				ex.printStackTrace();
+			}
+		}
+	}
+	public Boolean updateJuryIdcodeByNamePhone(String expert_name,String expert_phone, String AuthCode, String invalidTime){
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sqlValue = "update jury_idcode set id_code = '"+ AuthCode +"' , code_invalid_time = '" + invalidTime 
+					+ "' where expert_name='"+expert_name+"' and expert_phone='"+expert_phone+"'";
 		System.out.println(sqlValue);
 		try {
 			stmt = conn.createStatement();

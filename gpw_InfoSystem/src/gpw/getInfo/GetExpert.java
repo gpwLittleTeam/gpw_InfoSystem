@@ -21,7 +21,7 @@ public class GetExpert {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from expert_baseinfo where Expert_Field1 = " + number;
+		String sqlValue = "select * from expert_baseinfo where Expert_Field1 = '" + number + "'";
 		//System.out.println("GetObject.java line 19");
 		try {
 			stmt = conn.createStatement();

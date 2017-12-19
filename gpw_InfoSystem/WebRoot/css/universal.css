@@ -1,12 +1,90 @@
 @CHARSET "UTF-8";
 
+/* 常规样式  */
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+form {
+	margin-top: 10px;
+}
+
+.STYLE1 {
+	font-size: 12px
+}
+.STYLE3 {
+	color: #528311;
+	font-size: 12px;
+}
+
+.STYLE4 {
+	font-size: 12px;
+	color: #1F4A65;
+	font-weight: bold;
+}
+
+a {
+	font-size: 14px;
+	color: #06482a;
+	text-decoration: none;
+}
+
+a:visited {
+	font-size: 14px;
+	color: #06482a;
+	text-decoration: none;
+}
+
+a:hover {
+	font-size: 14px;
+	color: #FF0000;
+	text-decoration: underline;
+}
+
+a:active {
+	font-size: 14px;
+	color: #FF0000;
+	text-decoration: none;
+}
+
+.STYLE7 {
+	font-size: 12px
+}
+
+-->
+.list {
+	width: 98%;
+	text-align: center;
+	border: 1px;
+/* 	border-collapse:collapse; */  
+	border-spacing:1px;
+	background:#c0de98;  
+	margin-top:10px; 
+}
+
+.list td tr {
+	padding:0; 
+}
+.list  td {
+	text-align: center;
+	background-color: #FFFFFF;
+	font-size: 14px;
+	height: 26px;
+}
+/* 常规样式end */
+
+/* Ajax反馈Nav */
 .feedbackNav{
+	margin-top:3px;
 	height: 20px;
 	text-align: center;
 	font-size: 12px;
 	color: #F00000;
 }
-
+/*  */
 .customBtnStyleSingle{
 	font-size:15px; 
 	padding: 0 30px;
@@ -31,4 +109,17 @@
 	font-size: 14px;
 	text-align:center;
 	height: 26px;
+}
+/* 分左右两列的表格 ，such as修改密码，查询 */
+.leftTd {
+	padding-right: 10px;
+	width: 42%;
+	background-color: #FFFFFF;
+	height: 30px;
+	font-size: 14px;
+}
+
+.rightTd {
+	padding-left: 10px;
+	background-color: #FFFFFF;
 }

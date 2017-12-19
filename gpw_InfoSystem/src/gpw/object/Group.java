@@ -535,4 +535,40 @@ public class Group extends CodeModel{
 			}
 		}
 	}
+	
+	public String getGroupNoByGroupName(String groupName){
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String result = null;
+		String sqlValue1 = "select Group_no from group_dept where Group_name ='" +groupName+ "'";
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlValue1);
+			while (rs.next()) {
+				result = rs.getString("Group_no");
+			}
+			return result;
+		} catch (Exception ex) {
+			System.out.println("get group_name by group_no wrong!");
+			ex.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				ex.printStackTrace();
+			}
+		}
+	}
 }

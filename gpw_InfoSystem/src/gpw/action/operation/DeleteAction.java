@@ -114,17 +114,16 @@ public class DeleteAction extends ActionSupport {
 		/*  */
 		HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
 		// 删除后 更新专家List
-		objMethods = new Methods();
-		objUserLogin = objMethods.getCurrentUser();
-		expertList = objMethods.initializeExpertListForGPWByJuryNo(objUserLogin.getUser_jury());
+//		objMethods = new Methods();
+//		objUserLogin = objMethods.getCurrentUser();
+//		expertList = objMethods.initializeExpertListForGPWByJuryNo(objUserLogin.getUser_jury());
 		// 初始化user的默认字段
-		objUserField = new UserField();
+		/*objUserField = new UserField();
 		UserName = "zjut";
 		intDefaultFieldList = objUserField.getDefaultFieldNrByUserName(UserName);
 		chDefaultFieldList = objUserField.getDefaultFieldChNameByUserName(UserName);
 		request.getSession().setAttribute("chDefaultFieldList", chDefaultFieldList);
-		request.getSession().setAttribute("intDefaultFieldList", intDefaultFieldList);
-
+		request.getSession().setAttribute("intDefaultFieldList", intDefaultFieldList);*/
 		System.out.println("delete complete");
 		return SUCCESS;
 	}
@@ -152,9 +151,9 @@ public class DeleteAction extends ActionSupport {
 		}
 		//System.out.println(Mcheckbox);
 		
-		getJuryIdcode = new GetJuryIdcode();
+		//getJuryIdcode = new GetJuryIdcode();
 		//System.out.println(objUserLogin.getUser_jury());
-		juryIdcodes = getJuryIdcode.getJuryIdcodes(objMethods.getCurrentUser().getUser_jury());
+		//juryIdcodes = getJuryIdcode.getJuryIdcodes(objMethods.getCurrentUser().getUser_jury());
 		//
 		return SUCCESS;
 	}
@@ -202,8 +201,6 @@ public class DeleteAction extends ActionSupport {
 		} else {
 			feedback = "不允许删除自己！";
 		}
-		objGetUserLogin = new GetUserLogin();
-		listUserLogin = objGetUserLogin.getAllUserLogins();
 		return SUCCESS;
 	}
 

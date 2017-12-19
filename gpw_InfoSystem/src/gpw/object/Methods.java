@@ -246,19 +246,15 @@ public class Methods {
 		return request.getSession().getAttribute(name);
 	}
 	
+	/**
+	 * 清楚所有session，并重新加载"User" Session
+	 */
 	public void clearSession(){
 		UserLogin objUserLogin = this.getCurrentUser();
+		String currentJuryName = (String)this.getSession("currentJuryName");
 		Map session = ActionContext.getContext().getSession();
 		session.clear();
 		this.setSession("User", objUserLogin);
+		this.setSession("currentJuryName", currentJuryName);
 	}
-/*	public static void main(String args[]){
-		Methods temp = new Methods();
-//		HttpServletRequest session = (HttpServletRequest) ActionContext.getContext().getSession();
-		HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST); 
-		temp.setSession("name", "this is name");
-		System.out.println("name: " + request.getSession().getAttribute("name"));
-		temp.deleteSession("name");
-		System.out.println("name: " + request.getSession().getAttribute("name"));
-	}*/
 }

@@ -28,6 +28,9 @@ public class To_Gpwgl extends ActionSupport {
 			case "3":
 				listJury.get(i).setJury_power("正副合一");
 				break;
+			case "0":
+				listJury.get(i).setJury_power("");
+				break;
 			}
 		}
 

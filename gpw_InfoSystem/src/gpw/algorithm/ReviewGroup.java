@@ -1,9 +1,11 @@
-package gpw.randomFunc;
+package gpw.algorithm;
 
 import gpw.connection.LinkDB;
 import gpw.getInfo.GetExpert;
 import gpw.object.Expert;
 import gpw.object.Group;
+import gpw.object.Grouptitle;
+import gpw.object.Jury;
 import gpw.operateDatabase.Insert;
 
 import java.sql.Connection;
@@ -22,6 +24,8 @@ import com.opensymphony.xwork2.ActionContext;
 
 
 public class ReviewGroup {
+	String grouptitleLeaderName;
+	String grouptitleMemeberName;
 //	public List<Group> groupNames = new ArrayList<Group>(); //存储用于显示的专业组名字
 //	public String juryNo = "";	//存储所在的高评委编号
 //	public List<Expert> expertOfGroup = new ArrayList<Expert>(); //存储所需要显示信息的专业组里的专家们
@@ -31,6 +35,13 @@ public class ReviewGroup {
 //	int numberToRandom = 0;
 	
 	//传入高评委编号，然后查询所拥有的专业组并存入groupNames
+	public ReviewGroup() {
+		//初始化专业组职务的名称
+		Grouptitle objGrouptitle = new Grouptitle();
+		grouptitleLeaderName = objGrouptitle.getPostByCode("01");
+		grouptitleMemeberName = objGrouptitle.getPostByCode("02");
+	}
+	
 	public List<Group> showReviewGroup(String juryNo){
 		List<Group> groupNames = new ArrayList<Group>();
 		LinkDB link =  new LinkDB();
@@ -82,7 +93,7 @@ public class ReviewGroup {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "SELECT * FROM expert_baseinfo where (Expert_Field34 = 01 or Expert_Field34 = 02) and Expert_Field1 in (select Expert_Field1 from expert_baseinfo where Expert_Field33 = " + groupNo +")";
+		String sqlValue = "SELECT * FROM infolistview where Expert_Field1 in (select Expert_Field1 from expert_baseinfo where Expert_Field33 = " + groupNo +" and  (Expert_Field34 = 01 or Expert_Field34 = 02))";
 		//System.out.println(sqlValue);
 		//System.exit(0);
 		try {
@@ -176,16 +187,17 @@ public class ReviewGroup {
 
 			List<Expert> tempLeader = new ArrayList<Expert>();
 			List<Expert> tempMember = new ArrayList<Expert>();
-			
+
 			//System.out.println(tempExperts.size());
 			//遍历该专业组内专家
 			for(int k=0; k<tempExperts.size(); k++){
 				//如果拟任职务是组长，则将该专家从tempExperts中	加入tempLeader中
-				if(tempExperts.get(k).getExpert_Field34().equals("01")){ 
+				System.out.println("ReviewGroup.java randomFunction()-> tempExperts.get(k).getExpert_Field34:" + grouptitleLeaderName);
+				if(tempExperts.get(k).getExpert_Field34().equals(grouptitleLeaderName)){ 
 					tempLeader.add(tempExperts.get(k));
 				}
 				//如果拟任职务是组员，则将该专家从tempExperts中加入tempMember中
-				if(tempExperts.get(k).getExpert_Field34().equals("02")){
+				if(tempExperts.get(k).getExpert_Field34().equals(grouptitleMemeberName)){
 					tempMember.add(tempExperts.get(k));
 				}
 			}
@@ -234,11 +246,54 @@ public class ReviewGroup {
 		}
 	}
 	
+	public Boolean deleteHistoryTitles(String serveyear){
+		//建立连接
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		String sqlValue = "delete from history_title where expert_serveyear='" + serveyear + "'";
+//		sqlValue = sqlValue.substring(0, sqlValue.length()-3);
+//		System.out.println(sqlValue);
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(sqlValue);
+			return true;
+		} catch (Exception ex) {
+			System.out.println("ReviewGroup.java-deleteHistoryTitles:Bool wrong!");
+			ex.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				ex.printStackTrace();
+			}
+		}
+	}
+	
 	public Boolean insertResult(List<Expert> leader, List<Expert> members, String serveYear){
 		try{
 			if((leader.size() != 0) && (members.size() != 0)){
+				this.deleteHistoryTitles(serveYear);
+				Jury objJury = new Jury();
+				Group objGroup = new Group();
 				Insert insert = new Insert();
-		
+				//组长name->code
+				for(int i=0;i<leader.size();i++){  
+					leader.get(i).setExpert_Field31(objJury.getJuryNoByJuryName(leader.get(i).getExpert_Field31()));
+					leader.get(i).setExpert_Field33(objGroup.getGroupNoByGroupName(leader.get(i).getExpert_Field33()));
+				}
+				//组员name->code
+				for(int i=0;i<members.size();i++){  
+					members.get(i).setExpert_Field31(objJury.getJuryNoByJuryName(members.get(i).getExpert_Field31()));
+					members.get(i).setExpert_Field33(objGroup.getGroupNoByGroupName(members.get(i).getExpert_Field33()));
+				}
 				insert.insertGroupLeaderHistoryTitle(serveYear, leader);
 				insert.insertGroupMemberHistoryTitle(serveYear, members);
 			}
@@ -256,7 +311,7 @@ public class ReviewGroup {
 		}
 	}
 	
-	public static void main(String args[]){
+/*	public static void main(String args[]){
 		ReviewGroup test = new ReviewGroup();
 		List<Expert> leader = new ArrayList<Expert>();
 		List<Expert> members = new ArrayList<Expert>();
@@ -270,7 +325,7 @@ public class ReviewGroup {
 			System.out.println(members.get(i).getExpert_Field1());
 		}
 		test.insertResult(leader, members, "2015");
-	}
+	}*/
 	
 	//完整的测试参考此处
 //	public static void main(String args[]){

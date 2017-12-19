@@ -1,12 +1,12 @@
-package gpw.randomFunc;
+package gpw.algorithm;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import gpw.algorithm.Committee;
 import gpw.getInfo.GetExpert;
 import gpw.object.Expert;
-import gpw.randomFunc.Committee;
 
 public class Test {
 //	public static void main(String args[]){

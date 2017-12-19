@@ -9,7 +9,7 @@
 	<!-- <constant name="struts.i18n.encoding" value="utf-8"></constant> -->
 
 	<!-- 新建对象-->
-	<package name="submit" extends="struts-default">
+	<package name="insert" extends="struts-default">
 		<default-class-ref class="temp.struts2.Success"></default-class-ref>
 		<action name="login" class="gpw.action.operation.Login" method="execute">
 			<result name="gpw">/mainForGPW.jsp</result>
@@ -31,7 +31,7 @@
 		</action>
 		
 		<action name="infoEntry_submit_zj" class="gpw.action.operation.InsertAction" method="infoEntryZJ">
-			<result>/login.jsp</result>
+			<result>/register.jsp</result>
 		</action>
 
 		<action name="createJury" class="gpw.action.operation.InsertAction" method="createJury">
@@ -39,7 +39,7 @@
 		</action>
 
 		<action name="createUser" class="gpw.action.operation.InsertAction" method="createUser">
-			<result>/userManagement.jsp</result>
+			<result type="chain">to_userManagement</result>
 		</action>
 		
 		<action name="createCode" class="gpw.action.operation.InsertAction" method="createCodeForcommon">
@@ -50,8 +50,14 @@
 			<result>/codePage_add.jsp</result>
 		</action>  
 		
-		<action name="addHistoryTitle" class="gpw.action.operation.InsertAction">
+		<!-- 注释 -->
+<!-- 		<action name="addHistoryTitle" class="gpw.action.operation.InsertAction" method="addHistoryTitleForPYZ">
 			<result name="pyz">/index.jsp</result>
+		</action> -->
+		<!-- 注释 end -->
+		
+		<action name="addJuryIdcode" class="gpw.action.operation.InsertAction" method="addJuryIdcode">
+			<result type="chain">to_authCode</result>
 		</action>
 	</package>
 
@@ -65,7 +71,7 @@
 			<result>/gpwgl.jsp</result>
 		</action>
 		<action name="udpateEnable" class="gpw.action.operation.UpdateAction" method="updateEnable">
-			<result>/userManagement.jsp</result>
+			<result type="chain">to_userManagement</result>
 		</action>
 
 		<action name="xgmm" class="gpw.action.operation.UpdateAction" method="updatePsw">
@@ -78,7 +84,7 @@
 		</action>
 		
 		<action name="updateJuryIdcode" class="gpw.action.operation.UpdateAction" method="updateJuryIdcodeByNamePhone">
-			<result>/juryIdcode.jsp</result>
+			<result type="chain">to_authCode</result>
 		</action>
 
 		<action name="setDefaultFieldForGPW" class="gpw.action.operation.UpdateAction" method="setDefaultFieldForGPW">
@@ -90,7 +96,7 @@
 		</action>
 		
 		<action name="resetPsw" class="gpw.action.operation.UpdateAction"  method="resetPsw" >
-			<result>/userManagement.jsp</result>
+			<result type="chain">to_userManagement</result>
 		</action>
 		
 		<action name="updateCode" class="gpw.action.operation.UpdateAction" method="updateCode">
@@ -109,15 +115,15 @@
 		</action>
 
 		<action name="deleteExpert" class="gpw.action.operation.DeleteAction" method="deleteExpertByNumber">
-			<result>/zjgl_infoList_gpw.jsp</result>
+			<result type="chain">to_zjgl_InfoList_gpw</result>
 		</action>
 		
 		<action name="deleteJuryIdcode" class="gpw.action.operation.DeleteAction" method="deleteJuryIdcodeByNamePhone">
-			<result>/juryIdcode.jsp</result>
+			<result type="chain">to_authCode</result>
 		</action>
 		
 		<action name="deleteUser" class="gpw.action.operation.DeleteAction" method="deleteUserByName">
-			<result>/userManagement.jsp</result>
+			<result type="chain">to_userManagement</result>
 		</action>
 		
 		<action name="deleteCode" class="gpw.action.operation.DeleteAction" method="deleteCode">
@@ -174,7 +180,7 @@
 	<package name="unlogin" extends="struts-default">
 		<action name="to_zjgl_InfoEntryZJ" class="gpw.action.jump.To_infoEntry_zj" method="loadFields">
 			<result name="success">/infoEntry_zj.jsp</result>
-			<result name="error">/login.jsp</result>
+			<result name="error">/register.jsp</result>
 		</action>
 	</package>
 	
@@ -197,12 +203,15 @@
 			</result>
 		</action>
 		<action name="inportExcel" class="gpw.action.inport.ExcelAction" method="execute">
-			<result>/juryIdcode.jsp</result>
+			<result type="chain">to_authCode</result>
+		</action>
+		<action name="importExcel" class="gpw.action.inport.ExcelAction" method="execute" >
+			<result type="chain">to_authCode</result>
 		</action>
 	</package>
 	
 	<!-- 页面跳转 -->
-	<package name="gpw_getmenu" extends="MyIntercepter">
+	<package name="jump" extends="MyIntercepter">
 		<action name="to_zjgl_InfoList_gpw" class="gpw.action.jump.To_Zjgl_infoList_gpw" method="execute">
 			<result name="success">/zjgl_infoList_gpw.jsp</result>
 		</action>
@@ -252,8 +261,18 @@
 		<action name="to_userManagement" class="gpw.action.jump.To_UserManagement">
 			<result>/userManagement.jsp</result>
 		</action>
+		<!-- 注释 -->
 		<action name="to_juryIdcode" class="gpw.action.jump.To_juryIdcode">
 			<result>/juryIdcode.jsp</result>
+		</action>
+		<action name="to_authCode" class="gpw.action.jump.To_juryIdcode">
+			<result>/authCode.jsp</result>
+		</action>
+		<action name="to_authCode_add" class="gpw.action.jump.To_AuthCode_add">
+			<result>/authCode_add.jsp</result>
+		</action>
+		<action name="to_authCode_print" class="gpw.action.jump.To_AuthCode_print">
+			<result>/authCode_print.jsp</result>
 		</action>
 		<action name="to_createUser" class="gpw.action.jump.To_UserManagement_createUser">
 			<result>/userManagement_createUser.jsp</result>
@@ -279,6 +298,7 @@
 			<result name="result">/pwcq_wyh_result.jsp</result>
 			<result name="backResult">/pwcq_wyh_result.jsp</result>
 			<result name="final">/pwcq_wyh_final.jsp</result>
+			<result name="final_print">/pwcq_wyh_final_print.jsp</result>
 		</action>
 <!-- 		<action name="to_codePage_Group" class="gpw.action.jump.To_CodePage" method="toGroup">
 			<result>/codePageForGroup.jsp</result>
@@ -292,6 +312,7 @@
 			<result>/codePageForGroup_add.jsp</result>
 		</action>
 		
+		
 		<action name="signOut" class="gpw.action.operation.SignOut">
 			<result>/login.jsp</result>
 		</action>
@@ -301,13 +322,8 @@
 	</package>
 	
 	<package name="myAjax" extends="json-default">
-	
-		<action name="showMemberOfGroup" class="gpw.action.MyAjax.ForPyzDrawing" method="showGroupMember" >
-			<result type="json">
-				<param name="includeProperties">resultString</param>
-			</result>
-		</action>
 		
+		<!-- 验证码管理 -->
 		<action name="showRandomNum" class="gpw.action.MyAjax.ForJuryIdcode" method="showRandomNum" >
 			<result type="json">
 				<param name="includeProperties">resultString</param>
@@ -320,6 +336,11 @@
 			</result>
 		</action>
 		
+		<action name="updateInvalidTime" class="gpw.action.MyAjax.ForJuryIdcode" method="updateInvalidTime">
+			<result type="json">
+				<param name="includeProperties">resultString, newAuthCode, newTime</param>
+			</result>
+		</action>
 		<!-- 抽取评议组 -->
 		<action name="drawingMemeberOfGroup" class="gpw.action.MyAjax.ForPyzDrawing" method="drawGroupMemeber">
 			<result type="json">
@@ -327,6 +348,17 @@
 			</result>
 		</action>
 		
+		<action name="showMemberOfGroup" class="gpw.action.MyAjax.ForPyzDrawing" method="showGroupMember" >
+			<result type="json">
+				<param name="includeProperties">resultString</param>
+			</result>
+		</action>
+		
+		<action name="addHistoryTitleForPYZ" class="gpw.action.MyAjax.ForPyzDrawing" method="addHistoryTitleForPYZ" >
+			<result type="json">
+				<param name="includeProperties">feedback</param>
+			</result>
+		</action>
 		<!-- 抽取委员会 -->
 		<action name="drawingDirector" class="gpw.action.MyAjax.ForWyhDrawing" method="drawDirector">
 			<result type="json">

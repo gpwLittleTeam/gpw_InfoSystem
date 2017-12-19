@@ -1,11 +1,11 @@
 package gpw.action.jump;
 
+import gpw.algorithm.Committee;
 import gpw.object.Expert;
 import gpw.object.Judge;
 import gpw.object.Methods;
 import gpw.object.Titlegrade;
 import gpw.object.UserLogin;
-import gpw.randomFunc.Committee;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -98,9 +98,11 @@ public class To_Pwcq_wyh extends ActionSupport{
 	}
 	
 	public String fourthPage() {
+		int year = Integer.parseInt((String)objMethods.getSession("year"));
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
 		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
-		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector);
+		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector, year);
+		objMethods.setSession("candidateCommittee", candidateCommittee);
 		listSize = candidateCommittee.size();
 		//加载已抽的结果
 		listCommittee = (List<Expert>)objMethods.getSession("listCommittee");
@@ -197,12 +199,26 @@ public class To_Pwcq_wyh extends ActionSupport{
 		
 		if(listDirector != null)
 			directorListSize = listDirector.size();
+		else 
+			directorListSize = 0;
+		
 		if(listViceDirector != null)
 			viceDirectorListSize = listViceDirector.size();
+		else 
+			viceDirectorListSize = 0;
+		
 		if(listCommittee != null)
 			committeeListSize = listCommittee.size();
+		else 
+			committeeListSize = 0;
 		
 		return "final";
+	}
+	
+	public String finalPagePrint() {
+		finalPage();
+		
+		return "final_print";
 	}
 	
 	public String backFirst() {
@@ -224,6 +240,7 @@ public class To_Pwcq_wyh extends ActionSupport{
 	public String backSec() {
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  
 		listDirector = (List<Expert>)objMethods.getSession("listDirector");
+
 		directorListSize = listDirector.size();
 		listExpert = objCommittee.showDirectors(juryNo);  //所有参与抽取的Expert
 		listSize = listExpert.size();
@@ -246,9 +263,10 @@ public class To_Pwcq_wyh extends ActionSupport{
 	
 	public String backFourth() {
 		//候选委员
+		int year = Integer.parseInt((String)objMethods.getSession("year"));
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
 		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
-		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector);
+		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector, year);
 		listSize = candidateCommittee.size();
 		
 		//抽取结果

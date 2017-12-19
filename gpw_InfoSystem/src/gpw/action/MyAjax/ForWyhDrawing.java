@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
+import gpw.algorithm.Committee;
 import gpw.object.Expert;
 import gpw.object.Methods;
 import gpw.object.UserLogin;
-import gpw.randomFunc.Committee;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -107,30 +107,29 @@ public class ForWyhDrawing extends ActionSupport{
 		int maxCount = 100; //最大次数
 		listDirector = (List<Expert>)objMethods.getSession("listDirector");
 		listViceDirector = (List<Expert>)objMethods.getSession("listViceDirector");
-		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
 		committeeNo = (int)objMethods.getSession("committeeNo");
-		System.out.println("drawingCommittee() . remainViceDirector.size() :"+remainViceDirector.size());
+		//System.out.println("drawingCommittee() . remainViceDirector.size() :"+remainViceDirector.size());
 		//循环maxCount次
 		do{
 			listCommittee = new ArrayList<Expert>();
-			objCommittee.extractCommittee(juryNo, remainViceDirector, listCommittee, committeeNo);  //抽取委员
+			objCommittee.extractCommittee(juryNo, listCommittee, committeeNo);  //抽取委员
 			//把主任委员，副主任委员，委员合并到一个totalExpert中
 			ArrayList<Expert> totalExpert = new ArrayList<Expert>();
 			totalExpert.addAll(listDirector);
 			totalExpert.addAll(listViceDirector);
 			totalExpert.addAll(listCommittee);
 			//判断是否符合规则
-			result = objCommittee.check(totalExpert);
+			result = objCommittee.check(totalExpert,juryNo);
 			switch(result) {
 			case 0: 
-				System.out.println("符合规则"); 
+				//System.out.println("符合规则"); 
 				break;
 			case 2: 
-				System.out.println("不符合rule2  " + loopCount);
+				//System.out.println("不符合rule2  " + loopCount);
 				loopCount++;
 				break;
 			case 3: 
-				System.out.println("不符合rule3  " + loopCount);
+				//System.out.println("不符合rule3  " + loopCount);
 				loopCount++;
 				break;
 			}

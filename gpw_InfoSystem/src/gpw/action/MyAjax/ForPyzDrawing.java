@@ -1,14 +1,16 @@
 package gpw.action.MyAjax;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
+import gpw.algorithm.ReviewGroup;
 import gpw.getInfo.GetExpert;
 import gpw.getInfo.GetGroup;
 import gpw.object.Expert;
 import gpw.object.Methods;
-import gpw.randomFunc.ReviewGroup;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -55,7 +57,13 @@ public class ForPyzDrawing extends ActionSupport {
 			jsonArray = JSONArray.fromObject(memberExpert);
 			memberResult = jsonArray.toString();
 			Methods objMethods = new Methods();
-			
+			System.out.println("ForPYZDrawMemeber ->leaderExpert: " + leaderExpert.get(0).getExpert_Field1());
+			if((List<Expert>)objMethods.getSession("leaderExpert") != null)
+				leaderExpert.addAll((List<Expert>)objMethods.getSession("leaderExpert"));
+			if((List<Expert>)objMethods.getSession("memberExpert") != null)
+				memberExpert.addAll((List<Expert>)objMethods.getSession("memberExpert"));
+			objMethods.setSession("leaderExpert", leaderExpert);
+			objMethods.setSession("memberExpert", memberExpert);
 			
 /*			//储存多次抽取的结果
 			List<Expert> resultOfLeaderExpert = (List<Expert>)objMethods.getSession("resultOfLeaderExpert");
@@ -78,6 +86,38 @@ public class ForPyzDrawing extends ActionSupport {
 		return super.execute();
 	}
 
+	public String addHistoryTitleForPYZ(){
+		Methods objMethods = new Methods();
+		List<Expert> leaderExpert = (List<Expert>) objMethods.getSession("leaderExpert");
+		List<Expert> memberExpert = (List<Expert>) objMethods.getSession("memberExpert");
+
+		//当前年份
+		SimpleDateFormat format = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        String formatDate = format.format(date);
+		
+//        System.out.println("leaderResult: " + leaderResult.get(0));
+//        System.out.println("memberResult: " + memberResult.get(0));
+//        System.out.println("addHistoryTitleForPYZ -> leaderExpert: " + leaderExpert.size());
+        if(leaderExpert !=null || memberExpert != null) {
+        	if(new ReviewGroup().insertResult(leaderExpert, memberExpert, formatDate)){
+            	feedback = "抽取结果以保存到\"任职管理\"";
+            } else {
+            	feedback = "抽取结果保存失败";
+            }
+        } else {
+        	feedback = "请抽取之后再保存";
+        }
+        
+		
+		//删除session对象
+/*		objMethods.deleteSession("leaderExpert");
+		objMethods.deleteSession("memberExpert");*/
+		
+		return SUCCESS;
+	}
+	
+	//getter & setter
 	public String getGroupNo() {
 		return groupNo;
 	}

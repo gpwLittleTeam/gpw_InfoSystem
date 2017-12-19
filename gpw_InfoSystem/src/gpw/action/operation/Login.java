@@ -1,6 +1,7 @@
 package gpw.action.operation;
 
 import gpw.getInfo.GetUserLogin;
+import gpw.object.Jury;
 import gpw.object.Methods;
 import gpw.object.UserLogin;
 
@@ -34,18 +35,29 @@ public class Login extends ActionSupport {
 			return "unlogin";
 		}
 		if (psw.equals(objUserLogin.getPsdByName(account))) {
-			// System.out.println("success");
-			// this.session.put("user", "陈昊");
 			objGetUserLogin = new GetUserLogin();
-			objUserLogin = objGetUserLogin.getUserLoginByUserName(account);
-			HttpServletRequest request = (HttpServletRequest) ActionContext.getContext()
-					.get(StrutsStatics.HTTP_REQUEST);
-			request.getSession().setAttribute("User", objUserLogin);
-			if (objUserLogin.getUser_type().equals("1")) // 高评委
-				return "gpw";
-			else
-				// 2==管理员
-				return "gly";
+			objUserLogin = objGetUserLogin.getUserLoginByUserName(account);  //获得登录用户的全部信息
+			
+			if(objUserLogin.getUser_enable().equals("1")) {  //判断账户是否启用
+				HttpServletRequest request = (HttpServletRequest) ActionContext.getContext()
+						.get(StrutsStatics.HTTP_REQUEST);
+				request.getSession().setAttribute("User", objUserLogin);
+				
+				//根据用户名找到对应高评委名称
+				Methods objMethods = new Methods();
+				Jury objJury = new Jury();
+				if (objUserLogin.getUser_type().equals("1")) {// 高评委
+					objMethods.setSession("currentJuryName", "高评委用户：" + objJury.getJuryNameByJuryNo(objUserLogin.getUser_jury())); 
+					return "gpw";
+				}else {
+					// 2==管理员
+					objMethods.setSession("currentJuryName", "管理员用户");
+					return "gly";
+				}
+			} else {  //账户出于禁用状态
+				message = "该账户已被禁用";
+				return ERROR;
+			}
 		} else {
 			Methods objMethods = new Methods();
 			String error = objMethods.getError();

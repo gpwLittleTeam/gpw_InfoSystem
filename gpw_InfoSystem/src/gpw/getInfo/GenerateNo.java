@@ -82,7 +82,7 @@ public class GenerateNo {
 			if(rs.getString("temp")!=null){			//表中对应的该评委组中存在专家，所以可以直接搜索其中编号最大的人
 				//System.out.println("有数据");
 				//System.out.println(Integer.parseInt(rs.getString("temp"))+1);
-				tempResult = (Integer.parseInt(rs.getString("temp").substring(4))+1)+"";		//首先拿出来的是例如01020002这样的数字后裁剪后四位0002转为int->2后再加1
+				tempResult = (Integer.parseInt(rs.getString("temp").replace(result, ""))+1)+"";		//首先拿出来的是例如01020002这样的数字后裁剪后四位0002转为int->2后再加1
 				//System.out.println(tempResult);
 				char[] ary1 = tempResult.toCharArray();			//创建两个char来完成左边自动补上数字
 				char[] ary2 = {'0','0','0','0'};

@@ -153,7 +153,12 @@ public class QueryAction extends ActionSupport {
 		aTablestru = (Tablestru[]) request.getSession().getAttribute("aTablestru");
 		for (int i = 0; i < 9; i++) {
 			if (!theField[i].equals("0") && !theField[i].equals("")) {
-				theField[i] = new String(theField[i].getBytes("ISO-8859-1"), "utf-8"); // 不知道为什么会变成ISO-8859-1
+				/**
+				 * theField[i] = new String(theField[i].getBytes("ISO-8859-1"), "utf-8"); 
+				 * 在台式机上需要使用这一段代码
+				 * 传到服务器上的版本需要注释这段代码
+				 * **/
+				
 				/*if (i == 5) { // 所属高评委名称 -> 高评委代码
 					objJury = new Jury();
 					theField[i] = objJury.getJuryNoByJuryName(theField[i]);

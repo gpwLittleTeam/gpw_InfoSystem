@@ -7,7 +7,7 @@
 <title>抽取委员会</title>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.alertWindow.min.js"></script>
-<script src="js/d3.v3.min.js"></script>
+<%-- <script src="js/d3.js"></script> --%>
 <link rel="stylesheet" href="css/buttons.css">
 <link rel="stylesheet" type="text/css" href="css/universal.css?v=<%= System.currentTimeMillis()%>"/>
 <style type="text/css">
@@ -130,12 +130,12 @@ $(function(){
 		feedback += "<div>当前正高级专家比例为<font style='color:" + errorColor + "'>" + "<%=request.getAttribute("ratioOfSenior")%>" +"%</font>低于</div>";
 		feedback += "<div>规则要求的正高级专家比例<font style='color:" + defaultColor + "'>25.00%</font>以上</div>";
 	} else if(result == "3"){
-		feedbakc += "<div>当前45周岁以下的专家的比例为<font style>='color:" + errorColor + "'>" + "<%=request.getAttribute("ratioOfSenior")%>" +"%</font>低于</div>";
+		feedback += "<div>当前45周岁以下的专家的比例为<font style='color:" + errorColor + "'>" + "<%=request.getAttribute("ratioOfAge")%>" +"%</font>低于</div>";
 		feedback += "<div>规则要求的45周岁以下的专家比例<font style='color:" + defaultColor + "'>25.00%</font>以上</div>";
 	} else{
 		feedback = "抽取结果有未知错误";
 	}
-	//alert(feedback);
+//	alert(feedback);
 	if(result != "0") {
 		jQuery.alertWindow("无法抽取期望结果", feedback , "#A5DE37"); 
 	}
@@ -357,6 +357,7 @@ $(function(){
 		</tr>
 	</table>
 	<%-- <script src="https://d3js.org/d3.v3.min.js"></script> --%>
+	<script src="js/d3.v3.min.js"></script>
 	<script>
 	;( function() {
 	  var data = {

@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,gpw.object.*,gpw.paged.*"
+<%@ page language="java" import="java.util.*,gpw.object.*"
 	pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <jsp:useBean id="pq" scope="page" class="gpw.paged.PageQuery" />
@@ -392,6 +392,10 @@ function formSubmit(mapping){
 											class="STYLE1">专业组职务</th> -->
 									</tr>
 									<%
+										//当expertList == null 防止报错
+										if(expertList == null) {
+											expertList = new ArrayList<Expert>();
+										}
 										for (int i = 0; i < expertList.size(); i++) {
 									%>
 									<tr class="list">

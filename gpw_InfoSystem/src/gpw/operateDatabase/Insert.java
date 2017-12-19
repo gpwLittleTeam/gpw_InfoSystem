@@ -78,10 +78,12 @@ public class Insert {
 				HttpServletRequest request = (HttpServletRequest)
 						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
 				request.setAttribute("Error", "repeat");
+				System.out.println("Insert.java-InsertNewExpert(Expert):Boolean repeat!");
 				return false;
 			} catch (com.mysql.jdbc.MysqlDataTruncation e){
 				HttpServletRequest request = (HttpServletRequest)
 						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+				System.out.println("Insert.java-InsertNewExpert(Expert):Boolean dataTooLong!");
 				request.setAttribute("Error", "dataTooLong");
 				return false;
 			} catch (Exception ex) {
@@ -868,7 +870,6 @@ public class Insert {
 			LinkDB link =  new LinkDB();
 			Connection conn = link.getConn();
 			Statement stmt = null;
-			
 			String sqlValue = "insert into history_title(expert_no,expert_name,expert_jury,"
 					+ "expert_group,expert_post,expert_serveyear) values";
 			for(int i=0; i<resultExperts.size(); i++){
@@ -881,6 +882,7 @@ public class Insert {
 						+ serveYear + "'),";
 			}
 			sqlValue = sqlValue.substring(0, sqlValue.length()-1);
+//			System.out.println(sqlValue);
 //			String sqlValue = "insert into history_title(expert_no,expert_name,expert_jury,"
 //					+ "expert_group,expert_post,expert_serveyear) values('" 
 //							+ resultExpert.getExpert_Field1() + "','"
@@ -1044,7 +1046,7 @@ public class Insert {
 						+ serveYear + "'),";
 			}
 			sqlValue = sqlValue.substring(0, sqlValue.length()-1);
-			
+			System.out.println("insertGroupLeaderHistoryTitle -> sqlValue:" + sqlValue);
 			try {
 				stmt = conn.createStatement();
 				stmt.executeUpdate(sqlValue);
@@ -1143,6 +1145,60 @@ public class Insert {
 			
 			//System.out.println("insertSex() sqlValue"+sqlValue);
 			try {
+				stmt = conn.createStatement();
+				stmt.executeUpdate(sqlValue);
+				return true;
+			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e){
+				HttpServletRequest request = (HttpServletRequest)
+						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+				request.setAttribute("Error", "repeat");
+				return false;
+			} catch (com.mysql.jdbc.MysqlDataTruncation e){
+				HttpServletRequest request = (HttpServletRequest)
+						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+				request.setAttribute("Error", "dataTooLong");
+				return false;
+			} catch (Exception ex) {
+				System.out.println("Insert.java-insertJuryIdcode(JuryIdcode):Boolean wrong!");
+				ex.printStackTrace();
+				return false;
+			} finally {
+				try {
+					if (stmt != null) {
+						stmt.close();
+					}
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (SQLException ex) {
+					System.out.println("Close Error!!!!!!");//
+					ex.printStackTrace();
+				}
+			}
+		}
+		
+		public Boolean insertJuryIdcodes(List<JuryIdcode> jic){
+			//建立连接
+			LinkDB link =  new LinkDB();
+			Connection conn = link.getConn();
+			Statement stmt = null;
+			String sqlValue = "insert into jury_idcode(jury_no,expert_name,expert_phone,id_code,state,code_invalid_time) values";
+			for(int i=0;i<jic.size();i++){
+				sqlValue += "('" 
+							+ jic.get(i).getJuryNo() + "','"
+							+ jic.get(i).getExpert_name() + "','"
+							+ jic.get(i).getExpert_phone() + "','"
+							+ jic.get(i).getId_code() + "','"
+							+ jic.get(i).getState() + "','"
+							+ jic.get(i).getCode_invalid_time() + "')";
+				if((i+1) == jic.size()){
+					sqlValue += ";";
+				} else{
+					sqlValue += ",";
+				}
+			}
+			try {
+				System.out.println("sqlValue:" + sqlValue);
 				stmt = conn.createStatement();
 				stmt.executeUpdate(sqlValue);
 				return true;

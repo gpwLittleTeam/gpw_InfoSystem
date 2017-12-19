@@ -6,6 +6,7 @@
 <title>密码修改</title>
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="css/buttons.css">
+<link rel="stylesheet" href="css/universal.css"/>
 <style type="text/css">
 body {
 	margin-left: 0px;
@@ -57,18 +58,7 @@ a:active {
 	font-weight: bold;
 }
 
-.leftTd {
-	padding-right: 10px;
-	width: 35%;
-	background-color: #FFFFFF;
-	height: 30px;
-	font-size: 14px;
-}
 
-.rightTd {
-	padding-left: 10px;
-	background-color: #FFFFFF;
-}
 
 </style>
 
@@ -185,9 +175,9 @@ function checkPsw2(){
 																		
 																</table>
 																
-																<div style="width:97%" align="right">
+																<div style="width:97%">
 																		<input style="font-size:15px;margin-top:10px;line-height: 27px; height: 27px;"
-																				class="button button-action button-rounded" type="submit" value="确定"/>
+																				class="button button-action button-rounded" type="submit" value="保存"/>
 																</div>
 														</form>
 												</td>

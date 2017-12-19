@@ -7,7 +7,8 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" type="text/css" href="css/jquery.editable-select.min.css" />
-<link rel="stylesheet" href="css/buttons.css">
+<link rel="stylesheet" type="text/css" href="css/buttons.css">
+<link rel="stylesheet" type="text/css" href="css/universal.css"/>
 <style type="text/css">
 <!--
 body {
@@ -54,19 +55,6 @@ a:active {
 .STYLE7 {
 	font-size: 14px;
 	font-weight: bold;
-}
-
-.leftTd {
-	padding-right: 10px;
-	width: 35%;
-	background-color: #FFFFFF;
-	height: 30px;
-	font-size: 14px;
-}
-
-.rightTd {
-	padding-left: 10px;
-	background-color: #FFFFFF;
 }
 -->
 </style>
@@ -279,7 +267,7 @@ for(i=0;i<cs.length;i++){
 
 
 								</table>
-								<div style="width:97%" align="right">
+								<div style="width:97%">
 									<input style="font-size:15px;margin-top:10px;line-height: 27px; height: 27px;"
 										class="button button-action button-rounded" type="submit" value="搜索" />
 								</div>

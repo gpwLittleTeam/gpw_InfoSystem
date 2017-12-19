@@ -1,7 +1,5 @@
 function deletion(formId,objectAddress,action) {
-	alert("deletion");
 	var aCheckbox=document.getElementsByName("nrOfCheckbox");
-	alert("deletion2");
 	console.log(aCheckbox);
 	for(var i=0;i<aCheckbox.length;i++) {
 		if(aCheckbox[i].checked == true) {
@@ -44,3 +42,36 @@ function CheckSelect()
 		}
 	} 
 }
+
+
+//表格 行变色
+var  highlightcolor='#eafcd5';
+//此处clickcolor只能用win系统颜色代码才能成功,如果用#xxxxxx的代码就不行,还没搞清楚为什么:(
+var  clickcolor='#51b2f6';
+function  changeto(){
+	source=event.srcElement;
+	
+	if  (source.tagName=="TR"||source.tagName=="TABLE")
+		return;
+	
+	while(source.tagName!="TD")
+		source=source.parentElement;
+	
+	source=source.parentElement;
+	cs  =  source.children;
+	//alert(cs.length);
+	if  (cs[1].style.backgroundColor!=highlightcolor&&source.id!="nc"&&cs[1].style.backgroundColor!=clickcolor)
+		for(var i=0;i<cs.length;i++){
+			cs[i].style.backgroundColor=highlightcolor;
+		}
+}
+
+function  changeback(){
+	if  (event.fromElement.contains(event.toElement)||source.contains(event.toElement)||source.id=="nc")
+	return;
+	if  (event.toElement!=source&&cs[1].style.backgroundColor!=clickcolor)
+		for(var i=0;i<cs.length;i++){
+			cs[i].style.backgroundColor="";
+		}
+}
+//表格行变色 end

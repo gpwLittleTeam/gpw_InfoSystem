@@ -3,6 +3,7 @@ package gpw.action.jump;
 import java.util.List;
 
 import gpw.getInfo.GetUserLogin;
+import gpw.object.Jury;
 import gpw.object.UserLogin;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,6 +13,7 @@ public class To_UserManagement extends ActionSupport{
 	private GetUserLogin objGetUserLogin;
 	
 	public String execute() throws Exception {
+		Jury objJury = new Jury();
 		objGetUserLogin = new GetUserLogin();
 		listUserLogin = objGetUserLogin.getAllUserLogins();
 		for(int i = 0; i<listUserLogin.size();i++){
@@ -20,6 +22,8 @@ public class To_UserManagement extends ActionSupport{
 			} else if(listUserLogin.get(i).getUser_type().equals("2")){
 				listUserLogin.get(i).setUser_type("管理员用户");
 			}
+			
+			listUserLogin.get(i).setUser_jury(objJury.getJuryNameByJuryNo(listUserLogin.get(i).getUser_jury()));
 		}
 		return super.execute();
 	}

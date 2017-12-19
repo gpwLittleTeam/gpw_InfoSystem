@@ -232,9 +232,22 @@ for(var i=0;i<cs.length;i++){
 										<span class="STYLE7">类型</span>
 									</td>
 									<td class="secTd" >
-										<select name="objJury.Jury_type">
-											<option value="0">按专业（学科）组建</option>  
-											<option value="1">按职务类别或相近专业（二级学科）组建</option>
+										<select name="objJury.Jury_type" >
+											<s:if test="%{objJury.Jury_type == 1}">
+												<option value="0"></option>  
+												<option value="1" selected>按职务类别或相近专业（二级学科）组建</option>
+												<option value="2">按专业（学科）组建</option>
+											</s:if>
+											<s:elseif test="%{objJury.Jury_type == 2}">
+												<option value="0"></option>  
+												<option value="1">按职务类别或相近专业（二级学科）组建</option>
+												<option value="2" selected>按专业（学科）组建</option>
+											</s:elseif>
+											<s:else>
+												<option value="0"></option>  
+												<option value="1">按职务类别或相近专业（二级学科）组建</option>
+												<option value="2">按专业（学科）组建</option>
+											</s:else>
 										</select>
 									</td>
 								</tr>
@@ -243,10 +256,32 @@ for(var i=0;i<cs.length;i++){
 										<span class="STYLE7">评审权限</span>
 									</td>
 									<td class="secTd" >
-										<select name="objJury.Jury_power">
-											<option value="0">正高职称</option>  
-											<option value="1">副高职称 </option>
-											<option value="2">正副合一</option>
+										<select name="objJury.Jury_power" >
+											<s:if test="%{objJury.Jury_power == 1}">
+												<option value="0" ></option>
+												<option value="1" selected>正高职称</option>
+												<option value="2">副高职称 </option>
+												<option value="3">正副合一</option>
+											</s:if>  
+											<s:elseif test="%{objJury.Jury_power == 2}">
+												<option value="0" ></option>
+												<option value="1" >正高职称</option>
+												<option value="2" selected>副高职称 </option>
+												<option value="3">正副合一</option>
+											</s:elseif>  
+											<s:elseif test="%{objJury.Jury_power == 3}">
+												<option value="0" ></option>
+												<option value="1" >正高职称</option>
+												<option value="2" >副高职称 </option>
+												<option value="3" selected>正副合一</option>
+											</s:elseif>  
+											<s:else>
+												<option value="0" selected></option>
+												<option value="1" >正高职称</option>
+												<option value="2" >副高职称 </option>
+												<option value="3" >正副合一</option>
+											</s:else>
+																							
 										</select>
 									</td>
 								</tr>

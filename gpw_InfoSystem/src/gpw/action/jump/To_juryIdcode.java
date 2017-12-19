@@ -2,6 +2,7 @@ package gpw.action.jump;
 
 import gpw.getInfo.GetJuryIdcode;
 import gpw.object.JuryIdcode;
+import gpw.object.Methods;
 import gpw.object.UserLogin;
 
 import java.util.List;
@@ -23,14 +24,14 @@ public class To_juryIdcode extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-		HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST); 
-		
+		Methods objMethods = new Methods();
 		getJuryIdcode = new GetJuryIdcode();
-		objUserLogin = (UserLogin)request.getSession().getAttribute("User");
-		//System.out.println(objUserLogin.getUser_jury());
-		juryIdcodes = getJuryIdcode.getJuryIdcodes(objUserLogin.getUser_jury());
-		
-//		System.out.println("To_zjgl_infoList_gpw.java + field10:" + expertList.get(0).getExpert_Field10());
+		juryIdcodes = getJuryIdcode.getJuryIdcodes(objMethods.getCurrentUser().getUser_jury());
+		for(int i=0;i<juryIdcodes.size();i++) {
+			System.out.println("name:" + juryIdcodes.get(i).getExpert_name());
+			System.out.println("state:" + juryIdcodes.get(i).getState());
+		}
+		//System.out.println("To_zjgl_infoList_gpw.java + field10:" + juryIdcodes.get(0).getCode_invalid_time());
 //		System.out.println("To_Zjgl_infoList_gpw:"+expertList.get(2).getExpert_Field4());
 		
 		return super.execute();

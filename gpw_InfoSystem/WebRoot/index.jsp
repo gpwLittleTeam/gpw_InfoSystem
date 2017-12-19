@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*,views.View" 
 pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -24,15 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body >
+  <h1><s:property value="#session.currentJuryName"/></h1>
   <h1>欢迎使用职称评审系统！ </h1><br>
-
-
-																			
-
-
-
-
-	
-
   </body>
 </html>

@@ -155,7 +155,7 @@ menu.push( {
 menu.push( {
 	id : 6,
 	parentId : 0,
-	name : '评委会用户管理',
+	name : '高评委用户管理',
 	url : 'to_userManagement.action',
 	level : 1
 });

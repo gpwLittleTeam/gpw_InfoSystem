@@ -203,31 +203,29 @@ for(var i=0;i<cs.length;i++){
 										<span class="STYLE7">高评委代码</span>
 									</td>
 									<td class="secTd" >
-										<input name="objJury.Jury_no"  type="text" value=""/>
+										<input name="objJury.Jury_no"  type="text" value="" required/>
+										<span style="color:#999999;font-size:13px">*创建成功后不能修改</span>
 									</td>
-									<td class="thirdTd" >*创建成功后不能修改</td>
 								</tr>
 								<tr>
 									<td class="firTd">
 										<span class="STYLE7">高评委名称</span>
 									</td>
 									<td class="secTd" >
-										<input name="objJury.Jury_name"  type="text" value=""/>
+										<input name="objJury.Jury_name"  type="text" value="" required/>
 									</td>
-									<td class="thirdTd">*</td>
 								</tr>
 								<tr>
 									<td class="firTd">
 										<span class="STYLE7">类型</span>
 									</td>
 									<td class="secTd" >
-										<select name="objJury.Jury_type" >
+										<select name="objJury.Jury_type" required>
 											<option value="0"></option>  
 											<option value="1">按职务类别或相近专业（二级学科）组建</option>
 											<option value="2">按专业（学科）组建</option>
 										</select>
 									</td>
-									<td class="thirdTd">*</td>
 								</tr>
 								<tr>
 									<td class="firTd">
@@ -241,34 +239,30 @@ for(var i=0;i<cs.length;i++){
 											<option value="3">正副合一</option>
 										</select>
 									</td>
-									<td class="thirdTd">*</td>
 								</tr>
 								<tr>
 									<td class="firTd">
 										<span class="STYLE7">所评资格名称</span>
 									</td>
 									<td class="secTd" >
-										<input name="objJury.Jury_qualiname"  type="text" value=""/>
+										<input name="objJury.Jury_qualiname"  type="text" value="" required/>
 									</td>
-									<td class="thirdTd">*</td>
 								</tr>
 								<tr>
 									<td class="firTd">
 										<span class="STYLE7">材料接收单位</span>
 									</td>
 									<td class="secTd" >
-										<input name="objJury.Jury_dept" type="text" value=""/>
+										<input name="objJury.Jury_dept" type="text" value="" required/>
 									</td>
-									<td class="thirdTd">*</td>
 								</tr>
 								<tr>
 									<td class="firTd">
 										<span class="STYLE7">设立时间</span>
 									</td>
 									<td class="secTd" >
-										<input name="objJury.Jury_date"  type="date" value=""/>
+										<input name="objJury.Jury_date"  type="date" value="" required/>
 									</td>
-									<td class="thirdTd">*</td>
 								</tr>
 								<tr>
 									<td class="firTd">
@@ -277,7 +271,6 @@ for(var i=0;i<cs.length;i++){
 									<td class="secTd" >
 										<textarea  name="objJury.Jury_comments" rows="4" cols="45" maxlength="100"></textarea>
 									</td>
-									<td class="thirdTd"></td>
 								</tr>
 							</table>
 						

@@ -85,7 +85,6 @@ a:active {
 	font-size: 12px
 }
 
--->
 .list  td {
 	text-align: center;
 	background-color: #FFFFFF;
@@ -98,10 +97,7 @@ a:active {
 	$.ajaxSetup({  //同步处理
     	async : false  
 	});    
-	
-	function test(){
-		alert("test");
-	}
+
 	
 	function doCheck(form) {
 		//
@@ -125,7 +121,6 @@ a:active {
 				}else{
 				form.action = 'inportExcel.action';
 				form.submit();
-				/* alert("125"); */
 				}
 			}
 		}	

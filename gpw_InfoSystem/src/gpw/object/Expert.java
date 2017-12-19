@@ -61,6 +61,45 @@ public class Expert {
 			 String Expert_Field30, String Expert_Field31, String Expert_Field32,
 			 String Expert_Field33, String Expert_Field34, String Expert_Field35){
 //		this.Expert_id = Expert_id;
+		if(Expert_Field1 == null){Expert_Field1 = "";}
+		if(Expert_Field2 == null){Expert_Field2 = "";}
+		if(Expert_Field3 == null){Expert_Field3 = "";}
+		if(Expert_Field4 == null){Expert_Field4 = "";}
+		if(Expert_Field5 == null){Expert_Field5 = "";}
+		if(Expert_Field6 == null){Expert_Field6 = "";}
+		if(Expert_Field7 == null){Expert_Field7 = "";}
+		if(Expert_Field8 == null){Expert_Field8 = "";}
+		if(Expert_Field9 == null){Expert_Field9 = "";}
+		if(Expert_Field10 == null){Expert_Field10 = "";}
+		if(Expert_Field11 == null){Expert_Field11 = "";}
+		if(Expert_Field12 == null){Expert_Field12 = "";}
+		if(Expert_Field13 == null){Expert_Field13 = "";}
+		if(Expert_Field14 == null){Expert_Field14 = "";}
+		if(Expert_Field15 == null){Expert_Field15 = "";}
+		if(Expert_Field16 == null){Expert_Field16 = "";}
+		if(Expert_Field17 == null){Expert_Field17 = "";}
+		if(Expert_Field18 == null){Expert_Field18 = "";}
+		if(Expert_Field19 == null){Expert_Field19 = "";}
+		if(Expert_Field20 == null){Expert_Field20 = "";}
+		if(Expert_Field21 == null){Expert_Field21 = "";}
+		if(Expert_Field22 == null){Expert_Field22 = "";}
+		if(Expert_Field23 == null){Expert_Field23 = "";}
+		if(Expert_Field24 == null){Expert_Field24 = "";}
+		if(Expert_Field25 == null){Expert_Field25 = "";}
+		if(Expert_Field26 == null){Expert_Field26 = "";}
+		if(Expert_Field27 == null){Expert_Field27 = "";}
+		if(Expert_Field28 == null){Expert_Field28 = "";}
+		if(Expert_Field29 == null){Expert_Field29 = "";}
+		if(Expert_Field30 == null){Expert_Field30 = "";}
+		if(Expert_Field31 == null){Expert_Field31 = "";}
+		if(Expert_Field32 == null){Expert_Field32 = "";}
+		if(Expert_Field33 == null){Expert_Field33 = "";}
+		if(Expert_Field34 == null){Expert_Field34 = "";}
+		if(Expert_Field35 == null){Expert_Field35 = "";}
+		
+		
+
+		
 		this.Expert_Field1 = Expert_Field1;
 		this.Expert_Field2 = Expert_Field2;
 		this.Expert_Field3 = Expert_Field3;

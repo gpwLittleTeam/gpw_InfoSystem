@@ -1,6 +1,7 @@
 package gpw.action.operation;
 
 import gpw.action.jump.To_infoBrowsing;
+import gpw.algorithm.AuthCode;
 import gpw.getInfo.GetCounciltitle;
 import gpw.getInfo.GetDegree;
 import gpw.getInfo.GetEducation;
@@ -35,7 +36,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -211,7 +214,6 @@ public class UpdateAction extends ActionSupport {
 		objGetUserLogin = new GetUserLogin();
 //		System.out.println("user_name " + user_name);
 		objUpdate.updateEnableByUserName(user_name,user_enable);  //直接传入数组，只更新enable
-		listUserLogin = objGetUserLogin.getAllUserLogins();
 		feedback = "用户状态更新成功";
 		return SUCCESS;
 	}
@@ -222,20 +224,41 @@ public class UpdateAction extends ActionSupport {
 		objUpdate.updateJury(objJury);
 		objGetJury = new GetJury();
 		listJury = objGetJury.getAllJurys();
+		
+		// 评审权限
+		for (int i = 0; i < listJury.size(); i++) {
+			switch (listJury.get(i).getJury_power()) {
+			case "1":
+				listJury.get(i).setJury_power("正高职称");
+				break;
+			case "2":
+				listJury.get(i).setJury_power("副高职称");
+				break;
+			case "3":
+				listJury.get(i).setJury_power("正副合一");
+				break;
+			case "0":
+				listJury.get(i).setJury_power("");
+				break;
+			}
+		}
 		return SUCCESS;
 	}
 	
 	//重生效JuryIdcode
 	public String updateJuryIdcodeByNamePhone() throws Exception {
 		objUpdate = new Update();
+		AuthCode objRandAuthCode = new AuthCode();
 		for(int i=0; i<nrOfCheckbox.length; i++){
 			jsonobject = JSONObject.fromObject(nrOfCheckbox[i]);
-			objUpdate.updateJuryIdcodeByNamePhone(jsonobject.getString("expert_name"),jsonobject.getString("expert_phone"));
+			
+			objUpdate.updateJuryIdcodeByNamePhone(jsonobject.getString("expert_name"),jsonobject.getString("expert_phone"), 
+					objRandAuthCode.getRandAuthCode(), objRandAuthCode.getValidDate());
 		}
 		
-		getJuryIdcode = new GetJuryIdcode();
+		//getJuryIdcode = new GetJuryIdcode();
 		//System.out.println(objUserLogin.getUser_jury());
-		juryIdcodes = getJuryIdcode.getJuryIdcodes(objMethods.getCurrentUser().getUser_jury());
+		//juryIdcodes = getJuryIdcode.getJuryIdcodes(objMethods.getCurrentUser().getUser_jury());
 		
 		return SUCCESS;
 	}

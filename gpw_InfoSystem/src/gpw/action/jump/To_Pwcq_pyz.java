@@ -3,13 +3,13 @@ package gpw.action.jump;
 import java.util.ArrayList;
 import java.util.List;
 
+import gpw.algorithm.ReviewGroup;
 import gpw.getInfo.GetExpert;
 import gpw.getInfo.GetGroup;
 import gpw.object.Expert;
 import gpw.object.Group;
 import gpw.object.Methods;
 import gpw.object.UserLogin;
-import gpw.randomFunc.ReviewGroup;
 
 import com.opensymphony.xwork2.ActionSupport;
 

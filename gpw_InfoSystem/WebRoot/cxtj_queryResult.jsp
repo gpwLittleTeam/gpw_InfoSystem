@@ -226,7 +226,7 @@ for(var i=0;i<cs.length;i++){
 									<td><input type="checkbox" name="zjgl_infoList_checkbox"  value="1"/></td>
 									<td>组长</td>
 									<td>20140101</td>
-									<td><a style="font-size:14px;" target="_blank" href="./zjgl_infoBrowsing.jsp">陈昊</a></td>
+									<td><a style="font-size:14px;" target="_blank" href="./zjgl_infoBrowsing.jsp">CH</a></td>
 									<td>男</td>
 									<td>博士</td>
 									<td>高级</td>
@@ -236,7 +236,7 @@ for(var i=0;i<cs.length;i++){
 									<td><input type="checkbox" name="zjgl_infoList_checkbox"  value="1"/></td>
 									<td>组员</td>
 									<td>20140101</td>
-									<td><a style="font-size:14px;" target="_blank" href="./zjgl_infoBrowsing.jsp">高天宇</a></td>
+									<td><a style="font-size:14px;" target="_blank" href="./zjgl_infoBrowsing.jsp">GTY</a></td>
 									<td>男</td>
 									<td>博士</td>
 									<td>高级</td>

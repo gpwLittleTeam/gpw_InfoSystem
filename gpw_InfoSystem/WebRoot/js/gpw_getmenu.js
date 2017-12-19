@@ -24,15 +24,6 @@ menu.push( {
 	url : 'to_zjgl_InfoEntry.action',
 	level : 2,
 });
-//menu.push( {
-//	id : 103,
-//	parentId : 1,
-//	name : 'test',
-//	url : 'to_zjgl_InfoEntryZJ.action',
-//	level : 2,
-//});
-
-//****************
 
 menu.push( {
 	id : 2,
@@ -114,12 +105,21 @@ menu.push( {
 	css : 'nobg'
 });
 
-menu.push( {
+/*menu.push( {
 	id : 7,
 	parentId : 0,
 	name : '验证码管理',
 	url : 'to_juryIdcode',
 	target : null,
+	level : 1,
+	css : 'nobg'
+});*/
+
+menu.push( {
+	id : 8,
+	parentId : 0,
+	name : '验证码管理',
+	url : 'to_authCode',
 	level : 1,
 	css : 'nobg'
 });

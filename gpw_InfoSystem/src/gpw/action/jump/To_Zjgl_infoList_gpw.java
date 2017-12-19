@@ -26,8 +26,9 @@ public class To_Zjgl_infoList_gpw extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
+		//System.out.println("expertList.size() " + expertList.size());
 		HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST); 
-		request.getSession().setAttribute("expertList", expertList);
+		//request.getSession().setAttribute("expertList", expertList);
 		//初始化列表的成员 显示用户所在高评委的专家
 		objUserLogin = (UserLogin)request.getSession().getAttribute("User"); 
 		objMethods = new Methods();

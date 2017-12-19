@@ -16,15 +16,26 @@ public class GetJuryIdcode {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
+		String invalidTime = ""; 
 		List<JuryIdcode> result = new ArrayList<JuryIdcode>();
-		String sqlValue = "select expert_name,expert_phone,id_code,code_insert_time from jury_idcode where jury_no='"+juryNo+"'";
+		String sqlValue = "select expert_name,expert_phone,id_code,state,code_invalid_time from jury_idcode where jury_no='"+juryNo+"'";
 		//System.out.println("getJuryNo: "+sqlValue);
 		try {
 			stmt = conn.createStatement();
+			//System.out.println("24行：" + sqlValue);			
 			rs = stmt.executeQuery(sqlValue);
+			//System.out.println("26行：" + sqlValue);
 			while(rs.next()){
+				//处理从数据库取出时间的精度过高问题
+				if(rs.getString("code_invalid_time") != null){
+					invalidTime = rs.getString("code_invalid_time").replace(".0", "");
+				} else {
+					invalidTime = "";
+				}
+				//System.out.println("rs.getString(code_invalid_time)" + rs.getString("code_invalid_time"));
 				JuryIdcode temp = new JuryIdcode(rs.getString("expert_name"), rs.getString("expert_phone"), 
-						rs.getString("id_code"), rs.getString("code_insert_time"));
+						rs.getString("id_code"),rs.getString("state"), invalidTime);
+				//System.out.println("rs.getString(code_invalid_time)" + rs.getString("code_invalid_time"));
 				result.add(temp);
 			}
 			
@@ -87,20 +98,28 @@ public class GetJuryIdcode {
 			}
 		}
 	}
-	public List<String> getJuryIdcodeByNamePhone(String expertName, String expertPhone){
+	
+	/**
+	 * 根据姓名和手机号码得到专家的验证码和失效时间
+	 * @param expertName 专家的姓名
+	 * @param expertPhone 专家的手机号
+	 * @return List<String> get(0)==验证码, get(1)==失效时间, get(2)==状态
+	 */
+	public List<String> getCodeInfoByNamePhone(String expertName, String expertPhone){
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> result = new ArrayList<String>();
-		String sqlValue = "select id_code,code_insert_time from jury_idcode where expert_name='"+expertName+"' and expert_phone='"+expertPhone+"'";
-//		System.out.println("getJuryIdcodeByNamePhone: "+sqlValue);
+		String sqlValue = "select id_code,state,code_invalid_time from jury_idcode where expert_name='"+expertName+"' and expert_phone='"+expertPhone+"'";
+		System.out.println("getJuryIdcodeByNamePhone: "+sqlValue);
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while(rs.next()){
 				result.add(rs.getString("id_code"));
-				result.add(rs.getString("code_insert_time"));
+				result.add(rs.getString("code_invalid_time").replace(".0", "")); //处理从mysql中取值精度过高问题
+				result.add(rs.getString("state"));
 			}
 			
 			return result;
@@ -132,7 +151,7 @@ public class GetJuryIdcode {
 		ResultSet rs = null;
 		String result = "";
 		String sqlValue = "select insertRandomIdcode('"+juryNo+"','"+expertName+"','"+expertPhone+"') as random, now() as time";
-		//System.out.println(sqlValue);
+		System.out.println(sqlValue);
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -140,7 +159,7 @@ public class GetJuryIdcode {
 				result += "{\"random\":\"" + rs.getString("random") + "\",";
 				result += "\"time\":\"" + rs.getString("time") + "\"}";
 			}
-			//System.out.println(result);
+			System.out.println(result);
 			return result;
 		} catch (Exception ex) {
 			System.out.println("GetJuryIdcode.java-generateJuryIdcode(String,String,String):String wrong!");
