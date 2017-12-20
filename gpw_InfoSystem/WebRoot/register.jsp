@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/json2.js"></script>
 <script type="text/javascript" src="js/jquery.alertWindowLogin.min.js?a=12"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>浙江省高评委信息管理系统</title>
+<title>高评委专家库网络信息管理服务系统</title>
 <style type="text/css">
 <!--
 body {
@@ -100,7 +100,7 @@ body {
 													<td height="30" align="left" style="position: absolute;bottom: -35;">
 														<!-- <input type="button" value="登录" onclick="window.location.href='login.jsp';" /> -->
 													</td>
-													<td height="30" align="right" colspan="2" style="position: absolute;left: 126px;bottom: -35;">
+													<td height="30" align="center" colspan="2" style="position: absolute;left: 80px;bottom: -35;">
 														<input type="submit" value="录入" style="margin-right:10px"/>
 													</td>
 												</tr>

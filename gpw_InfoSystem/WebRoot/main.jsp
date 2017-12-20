@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>职称评审系统</title>
+		<title>高评委专家库网络信息管理服务系统</title>
 	</head>
 	<jsp:include page="<%=View.SESSION %>"></jsp:include>
 	<frameset rows="61,*,24" cols="*" framespacing="0" frameborder="no" border="0" >

@@ -59,6 +59,7 @@
 		<action name="addJuryIdcode" class="gpw.action.operation.InsertAction" method="addJuryIdcode">
 			<result type="chain">to_authCode</result>
 		</action>
+		
 	</package>
 
 	<!-- 更新操作 -->
@@ -322,6 +323,13 @@
 	</package>
 	
 	<package name="myAjax" extends="json-default">
+		
+		<!-- 发送短信 -->
+		<action name="testSend" class="gpw.action.msg.sendMsg" method="sendIdcodes">
+			<result type="json">
+				<param name="includeProperties"></param>
+			</result>
+		</action> 
 		
 		<!-- 验证码管理 -->
 		<action name="showRandomNum" class="gpw.action.MyAjax.ForJuryIdcode" method="showRandomNum" >

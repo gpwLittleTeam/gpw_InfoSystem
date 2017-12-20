@@ -227,7 +227,7 @@ for(var i=0;i<cs.length;i++){
 																								<s:property value='#obj.expert_no' />
 																						</td>
 																						<td>
-																								<a href=""><s:property value='#obj.expert_name' /></a>
+																								<s:property value='#obj.expert_name' />
 																						</td>
 																						<td>
 																								<s:property value='#obj.expert_jury' />

@@ -83,6 +83,20 @@ a:active {
 		$(obj).parent().siblings().html(htmlBlock);
 	}
 	
+	function sendMsg() {
+		var chkValue = ""; 
+		$('input[name="nrOfCheckbox"]:checked').each(function(){ 
+			chkValue += $(this).val(); 
+			chkValue += ",";
+		});
+		/* var jsonChkValue = JSON.stringify(chkValue); */
+		alert(chkValue);
+		/* alert(jsonChkValue); */
+		$.post("testSend.action",{jsonChkValue : chkValue},function(data){
+			alert("发送成功");
+		});
+	}
+	
 	function updateInvalidTime(obj, name ,phone) {
 		
 		$.post("updateInvalidTime.action", {invalidTime: $(obj).val(), expertName: name, expertPhone: phone},function(data){
@@ -139,7 +153,7 @@ a:active {
 												<button type="button"
 													style="font-size:15px;  width:130px;padding:0 10px;height:27px;line-height:27px;border-radius:0 0 0 0;"
 													class="button button-pill button-action"
-													onclick="deleteJuryIdcode(document.theForm,'验证码','deleteJuryIdcode.action')">发送短信</button>
+													onclick="sendMsg()">发送短信</button>
 												<button type="button"
 													style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 5px 5px 0;"
 													class="button button-pill button-action"
@@ -165,10 +179,9 @@ a:active {
 										<tr class="list">
 											<td ><input type="checkbox" id="checkbox<s:property value="#count.index+1"/>"
 												name="nrOfCheckbox"
-												value='{"expert_name":"<s:property value="#juryIdcodes.expert_name" />","expert_phone":"<s:property value="#juryIdcodes.expert_phone"/>"}' />
+												value='{"expert_name":"<s:property value="#juryIdcodes.expert_name" />","expert_phone":"<s:property value="#juryIdcodes.expert_phone"/>","id_code":"<s:property value="#juryIdcodes.id_code"/>"}' />
 											</td>
-											<td><s:property value="#juryIdcodes.expert_name" /> <input type="hidden"
-												name="expert_name" value="<s:property value="#juryIdcodes.expert_name" />" /></td>
+											<td><s:property value="#juryIdcodes.expert_name" /> <input type="hidden" name="expert_name" value="<s:property value="#juryIdcodes.expert_name" />" /></td>
 											<td><s:property value="#juryIdcodes.expert_phone" /></td>
 											<td><s:property value="#juryIdcodes.id_code" /></td>
 											<td><s:property value="#juryIdcodes.state" /></td>

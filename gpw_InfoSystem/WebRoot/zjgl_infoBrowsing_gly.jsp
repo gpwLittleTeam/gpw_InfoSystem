@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>信息浏览</title>
+<title>${expert_Info[1] }</title>
 <link rel="stylesheet" href="css/buttons.css">
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">

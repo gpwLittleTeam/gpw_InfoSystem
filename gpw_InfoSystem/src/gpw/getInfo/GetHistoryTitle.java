@@ -539,7 +539,7 @@ public class GetHistoryTitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from historytitleview where expert_jury='"+expertJury+"'";
+		String sqlValue = "select * from historytitleview where expert_jury='"+expertJury+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
