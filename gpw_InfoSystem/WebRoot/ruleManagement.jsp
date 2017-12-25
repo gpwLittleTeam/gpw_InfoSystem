@@ -45,44 +45,47 @@
 						<tr>
 							<td width="9" background="images/tab_12.gif">&nbsp;</td>
 							<td bgcolor="#f3ffe3" align="center">
-								
-								<nav id="feedbackNav" class="feedbackNav"></nav>
 								<span class="button-group" style="margin-right:1%;float: right">
-												<button type="button"
-													style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:5px 0 0 5px;"
-													class="button button-pill button-action"onclick="window.location.href='to_authCode_add.action'">增加</button>
-												<button type="button"
-													style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 0 0 0;"
-													class="button button-pill button-action"onclick="">删除</button>
-												<button type="button"
-													style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 0 0 0;"
-													class="button button-pill button-action"onclick="">启用</button>
-												<button type="button"
-													style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 5px 5px 0;"
-													class="button button-pill button-action"onclick="window.open('to_authCode_print.action')">禁用</button>
-											</span>
+									<button type="button"
+										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:5px 0 0 5px;"
+										class="button button-pill button-action"onclick="window.location.href='to_ruleManagement_add.action'">增加</button>
+									<button type="button"
+										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 0 0 0;"
+										class="button button-pill button-action"onclick="">删除</button>
+									<button type="button"
+										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 0 0 0;"
+										class="button button-pill button-action"onclick="">启用</button>
+									<button type="button"
+										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 5px 5px 0;"
+										class="button button-pill button-action"onclick="window.open('to_authCode_print.action')">禁用</button>
+								</span>
+								<div style="clear:both"></div>
+								<nav id="feedbackNav" class="feedbackNav"></nav>
 								<table class="list" align="center" style="margin-top:0px;"
 									 onmouseover="changeto()" onmouseout="changeback()">
 									<tr>
-										<th width="1%" background="images/tab_14.gif" class="STYLE1"><input type="checkbox"
-											name="chooseAll" value="0" onclick="CheckSelect()" /></th>
-										<th width="80%" height="18" background="images/tab_14.gif" class="STYLE1">规则</th>
-										<th width="19%" height="18" background="images/tab_14.gif" class="STYLE1">状态</th>
+										<th  background="images/tab_14.gif" class="STYLE1"><input type="checkbox" name="chooseAll" value="0" onclick="CheckSelect()" /></th>
+										<th height="" background="images/tab_14.gif" class="STYLE1">规则编号</th>
+										<th height="18" background="images/tab_14.gif" class="STYLE1">规则内容</th>
+										<th height="18" background="images/tab_14.gif" class="STYLE1">适用范围</th>
+										<th height="18" background="images/tab_14.gif" class="STYLE1">是否强制</th>
+										<th height="18" background="images/tab_14.gif" class="STYLE1">是否启用</th>
 									</tr>
 									<tr>
-										<td ><input type="checkbox" id=""  name="nrOfCheckbox" checked/></td>
+										<td><input type="checkbox" id=""  name="nrOfCheckbox" /></td>
+										<td>0001</td>
 										<td>具有正副高级合一及正高级评审权限的委员会，正高级专家占四分之一以上。 </td>
-										<td>已启用</td>
+										<td>正高级评审权限</td>
+										<td><input type="checkbox" id=""  name="forceUse"/></td>
+										<td><input type="checkbox" id=""  name="turnNo"/></td>
 									</tr>
 									<tr>
-										<td><input type="checkbox" id=""  name="nrOfCheckbox" checked/></td>
-										<td>具有正副高级合一及正高级评审权限的委员会，<input type="number" style="width:40px;" max="150" min="0" value="50"/>周岁以下的专家占评委会的<input type="number" class="inputPrecent" max="100" min="0" value="50"/>%以上；而具有副高级评审权限的委员会，<input type="number" style="width:40px;" max="150" min="0" value="50"/>岁以下的专家占评委会的<input type="number" class="inputPrecent" max="100" min="0" value="30"/>%以上。 </td>
-										<td>已启用</td>
-									</tr>
-									<tr>
-										<td ><input type="checkbox" id=""  name="nrOfCheckbox" /></td>
-										<td>上一年执行评委随机保留<input type="number" class="inputPrecent" max="100" min="0" value="50"/>%，剩余部分随机抽取。</td>
-										<td>已禁用</td>
+										<td><input type="checkbox" id=""  name="nrOfCheckbox" /></td>
+										<td>0002</td>
+										<td>具有正副高级合一及正高级评审权限的委员会，<input type="number" style="width:40px;" max="150" min="0" value="50"/>周岁以下的专家占评委会的<input type="number" class="inputPrecent" max="100" min="0" value="50"/>%以上；而具有副高级评审权限的委员会，<input type="number" style="width:40px;" max="150" min="0" value="50"/>岁以下的专家占评委会的<input type="number" class="inputPrecent" max="100" min="0" value="30"/>%以上。  </td>
+										<td>正高级评审权限</td>
+										<td><input type="checkbox" id=""  name="forceUse"/></td>
+										<td><input type="checkbox" id=""  name="turnNo"/></td>
 									</tr>
 								</table>
 								<div style="width:97%">

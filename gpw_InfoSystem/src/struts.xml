@@ -312,6 +312,12 @@
 		<action name="to_codeForGrouopAdd" class="gpw.action.jump.To_CodeAdd" method="forGroup">
 			<result>/codePageForGroup_add.jsp</result>
 		</action>
+		<action name="to_ruleManagement" class="gpw.action.jump.To_ruleManagement">
+			<result>/ruleManagement.jsp</result>
+		</action>
+		<action name="to_ruleManagement_add" class="gpw.action.jump.To_ruleManagement_add">
+			<result>/ruleManagement_add.jsp</result>
+		</action>
 		
 		
 		<action name="signOut" class="gpw.action.operation.SignOut">

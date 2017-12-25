@@ -20,6 +20,37 @@
 </style>
 
 <script>
+$(function(){
+	$("#conditionSelect").change(function(){
+	 	var value = $(this).children('option:selected').val();
+	 	var HtmlBlock = "";
+		if(value == "年龄"){
+			HtmlBlock = " <select id='conditionSign'><option>等于</option> <option>大于</option><option>小于</option></select> <input id='conditionValue'/>";
+		}else if(value == "资格级别"){
+			HtmlBlock = " <select id='conditionSign'><option>等于</option> </select> <select id='conditionValue'> <option>正高级</option> <option>副高级</option> </select>";
+		}
+		$("#additionSpan").html(HtmlBlock);
+	});
+	$("#conditionSelect,#additionSpan,#percentageSign,#percentageValue,#range").on("change",function(){
+		preview();
+	});
+});
+function preview() {
+	isNull = false;
+	//alert(isNull);
+	$("#conditionSelect,#conditionSign,#conditionValue,#percentageSign,#percentageValue,#range").each(function(){
+		if($(this).val() == ""){
+			isNull = true;
+		}
+	});
+	var HtmlBlock = "";
+	if(isNull == false){
+		HtmlBlock += $("#range").val() + "的高评委,";
+		HtmlBlock += "抽取结果中" + $("#conditionSelect").val() + $("#conditionSign").val() + $("#conditionValue").val() + "的专家的人数";
+		HtmlBlock += "需" + $("#percentageSign").val() + "总抽取人数的" + $("#percentageValue").val() + "%";
+		$("#previewDiv").text(HtmlBlock);
+	}
+}
 </script>
 </head>
 
@@ -45,33 +76,90 @@
 						<tr>
 							<td width="9" background="images/tab_12.gif">&nbsp;</td>
 							<td bgcolor="#f3ffe3" align="center">
-								<nav id="feedbackNav" class="feedbackNav"></nav>
-								
-								<select>
-									<option value="年龄">年龄</option>
-									<option value="性别">性别</option>
-									<option value="资格级别">资格级别</option>
-								</select>
-								<select>
-									<option value="=">=</option>
-									<option value=">">&gt;</option>
-									<option value="<">&lt;</option>
-								</select>
-								<select>
-									<option value="正高级">正高级</option>
-									<option value="副高级">副高级</option>
-									<option value="初级">初级</option>
-								</select>
-								<select>
-									<option value="-">-</option>
-									<option value="或者">或者</option>
-									<option value="并且">并且</option>
-								</select>
-								
+								<form style="margin:0;" action="cxtj_query.action">
+								<table width="97%" border="0" align="center" cellpadding="0" cellspacing="1"
+									bgcolor="#c0de98" style="margin-top:10px;">
+									<tr>
+										<td class="leftTd" align="right">
+											<label for="">规则编号</label>
+										</td>
+										<td class="rightTd">
+											0003
+										</td>
+									</tr>
+									<tr>
+										<td class="leftTd" align="right">
+											<label for="conditionSelect">条件定义</label>
+										</td>
+										<td class="rightTd">
+											<select id="conditionSelect" >
+												<option value=""></option>
+												<option value="年龄">年龄</option>
+												<option value="资格级别">资格级别</option>
+											</select>
+											<span id="additionSpan"></span>
+										</td>
+									</tr>
+									<tr>
+										<td class="leftTd" align="right">
+											<label for="">条件占比</label>
+										</td>
+										<td class="rightTd">
+											<select id="percentageSign">
+												<option value="等于">等于</option>
+												<option value="大于">大于</option>
+												<option value="小于">小于</option>
+											</select>
+											<input id="percentageValue"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="leftTd" align="right">
+											<label for="">适用范围</label>
+										</td>
+										<td class="rightTd">
+											<select id="range">
+												<option value="所有">所有</option>
+												<option value="正高职称">正高职称</option>
+												<option value="副高职称">副高职称</option>
+												<option value="正副合一">正副合一</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td class="leftTd" align="right">
+											<label for="">是否强制</label>
+										</td>
+										<td class="rightTd">
+											<select>
+												<option value="">否</option>
+												<option value="">是</option>
+											</select>
+										</td>
+									</tr>
+
+									<tr>
+										<td class="leftTd" align="right">
+											<label for="">是否启用</label>
+										</td>
+										<td class="rightTd">
+											<select>
+												<option value="">否</option>
+												<option value="">是</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td style="background-color: #FFFFFF;height: 30px;text-align:center;color:#99CC33;font-size:14px" colspan="2">
+											<div id="previewDiv"></div>
+										</td>
+									</tr>
+								</table>
 								<div style="width:97%">
 									<input style="font-size:15px;margin-top:10px;line-height: 27px; height: 27px;"
 										class="button button-action button-rounded" type="submit" value="保存" />
 								</div>
+							</form>
 							</td>
 							<td width="9" background="images/tab_16.gif">&nbsp;</td>
 						</tr>

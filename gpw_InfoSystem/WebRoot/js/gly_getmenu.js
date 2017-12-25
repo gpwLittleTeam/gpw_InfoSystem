@@ -159,6 +159,15 @@ menu.push( {
 	url : 'to_userManagement.action',
 	level : 1
 });
+
+menu.push( {
+	id : 7,
+	parentId : 0,
+	name : '抽取规则管理',
+	url : 'to_ruleManagement.action',
+	level : 1
+});
+
 menu.push( {
 	id : 7,
 	parentId : 0,

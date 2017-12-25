@@ -73,7 +73,7 @@ public class To_infoEntry_zj extends ActionSupport {
 			// 如果验证码正确，验证码未超时且从未提交过
 			if (codeInfo.get(0).equals(expertIdcode)) {
 				if(isValid) {
-					boolean unSubmit = !(codeInfo.get(2).equals("已录入"));
+					boolean unSubmit = !codeInfo.get(2).equals("已录入");
 					if(unSubmit) {
 						// 得到对应的juryNo
 						juryNo = objGetJuryIdcode.getJuryNo(expertIdcode, expertName,
