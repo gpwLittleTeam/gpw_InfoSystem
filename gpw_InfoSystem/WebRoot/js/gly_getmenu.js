@@ -47,10 +47,10 @@ menu.push( {
 	id : 302,
 	parentId : 3,
 	name : '信息统计',
-	url :'./cxtj_statistics.jsp',
+	url :'to_statistic1.action',
 	level : 2,
+	css : 'nobg '
 });
-
 
 
 menu.push( {

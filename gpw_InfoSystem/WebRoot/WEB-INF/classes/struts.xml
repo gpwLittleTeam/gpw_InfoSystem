@@ -326,6 +326,12 @@
 		<action name="test" class="temp.struts2.test">
 			<result>/index.jsp</result>
 		</action>
+		
+		<!-- 查询统计跳转 -->
+		<action name="to_statistic1" class="gpw.action.jump.To_Statistic_gpw">
+			<result>/statistic1.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="myAjax" extends="json-default">

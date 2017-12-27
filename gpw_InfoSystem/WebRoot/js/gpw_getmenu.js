@@ -69,9 +69,31 @@ menu.push( {
 	id : 302,
 	parentId : 3,
 	name : '信息统计',
-	url :'./cxtj_statistics.jsp',
+	url :'',
 	level : 2,
 });
+menu.push( {
+	id : 30201,
+	parentId: 302,
+	name : '统计1',
+	url : 'to_statistic1.action',
+	level : 3,
+});
+menu.push( {
+	id : 30202,
+	parentId : 302,
+	name : '统计2',
+	url : './statistic2.jsp',
+	level : 3,
+});
+menu.push( {
+	id : 30203,
+	parentId : 302,
+	name : '统计3',
+	url : './statistic3.jsp',
+	level : 3,
+});
+
 
 menu.push( {
 	id : 4,
