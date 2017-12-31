@@ -199,7 +199,7 @@ public class GetJuryIdcode {
 //		long intervalMilli = d.getTime() - date.getTime();
 //		System.out.println(intervalMilli/(60*60*1000));
 		
-		GetJuryIdcode test = new GetJuryIdcode();
-		System.out.println(test.generateJuryIdcode("0102", "李华", "13857898888"));
+//		GetJuryIdcode test = new GetJuryIdcode();
+//		System.out.println(test.generateJuryIdcode("0102", "李华", "13857898888"));
 	}
 }

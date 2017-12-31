@@ -5,7 +5,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
-List<Expert> expertList = (List<Expert>) request.getSession().getAttribute("expertList");   //列表里要显示的专家
+/* List<Expert> expertList = (List<Expert>) request.getSession().getAttribute("expertList");   //列表里要显示的专家 */
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -34,8 +34,13 @@ List<Expert> expertList = (List<Expert>) request.getSession().getAttribute("expe
 	<script type="text/javascript">
     	var myChart = echarts.init(document.getElementById("main"));
     	
-    	var dataTest = "${expertList}";
-    	/* console.log(dataTest); */
+    	var dataMaster = "${resultNumberOfMaster}";
+    	dataMaster = dataMaster.substring(1,23);
+    	dataMaster = dataMaster.split(",");
+	
+		var dataPhD = "${resultNumberOfPhD}";
+		dataPhD = dataPhD.substring(1,23);
+    	dataPhD = dataPhD.split(",");
 	
 		// 指定图表的配置项和数据
 		var option = {
@@ -83,7 +88,7 @@ List<Expert> expertList = (List<Expert>) request.getSession().getAttribute("expe
 				{
 					name : '硕士人数',
 					type : 'bar',
-					data : [ 5, 3, 1, 1, 0, 0, 0, 0 ],
+					data : dataMaster,
 					markPoint : {
 						data : [
 							{
@@ -108,7 +113,7 @@ List<Expert> expertList = (List<Expert>) request.getSession().getAttribute("expe
 				{
 					name : '博士人数',
 					type : 'bar',
-					data : [ 1, 2, 3, 4, 5, 6, 8, 8 ],
+					data : dataPhD,
 					markPoint : {
 						/* data : [
 						    {name : '年最高', value : 8, xAxis: 7, yAxis: 8},
