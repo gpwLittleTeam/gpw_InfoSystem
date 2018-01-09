@@ -22,11 +22,11 @@
 <script>
 $(function(){
 	$("#conditionSelect").change(function(){
-	 	var value = $(this).children('option:selected').val();
+	 	var type = $(this).children('option:selected').attr('fieldType');
 	 	var HtmlBlock = "";
-		if(value == "年龄"){
+		if(type == "3"){
 			HtmlBlock = " <select id='conditionSign'><option>等于</option> <option>大于</option><option>小于</option></select> <input id='conditionValue'/>";
-		}else if(value == "资格级别"){
+		}else if(type == "1"){
 			HtmlBlock = " <select id='conditionSign'><option>等于</option> </select> <select id='conditionValue'> <option>正高级</option> <option>副高级</option> </select>";
 		}
 		$("#additionSpan").html(HtmlBlock);
@@ -94,8 +94,9 @@ function preview() {
 										<td class="rightTd">
 											<select id="conditionSelect" >
 												<option value=""></option>
-												<option value="年龄">年龄</option>
-												<option value="资格级别">资格级别</option>
+												<s:iterator id="list" value="listRuleField">
+													<option value="<s:property value='#list.field_name'/>"  fieldType="<s:property value='#list.field_type'/>"><s:property value='#list.field_chname'/></option>
+												</s:iterator>
 											</select>
 											<span id="additionSpan"></span>
 										</td>
