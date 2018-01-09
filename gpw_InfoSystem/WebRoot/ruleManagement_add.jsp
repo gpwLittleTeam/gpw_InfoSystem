@@ -89,7 +89,7 @@ function preview() {
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">
-											<label for="conditionSelect">条件定义</label>
+											<label for="conditionSelect">规则定义</label>
 										</td>
 										<td class="rightTd">
 											<select id="conditionSelect" >
@@ -102,7 +102,7 @@ function preview() {
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">
-											<label for="">条件占比</label>
+											<label for="">规则比例</label>
 										</td>
 										<td class="rightTd">
 											<select id="percentageSign">
