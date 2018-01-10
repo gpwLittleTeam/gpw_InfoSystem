@@ -27,6 +27,7 @@ $(function(){
 		if(type == "3"){
 			HtmlBlock = " <select id='conditionSign'><option>等于</option> <option>大于</option><option>小于</option></select> <input id='conditionValue'/>";
 		}else if(type == "1"){
+			$.post()
 			HtmlBlock = " <select id='conditionSign'><option>等于</option> </select> <select id='conditionValue'> <option>正高级</option> <option>副高级</option> </select>";
 		}
 		$("#additionSpan").html(HtmlBlock);
