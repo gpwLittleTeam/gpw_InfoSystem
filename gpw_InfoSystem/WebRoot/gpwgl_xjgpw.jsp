@@ -233,7 +233,6 @@ for(var i=0;i<cs.length;i++){
 									</td>
 									<td class="secTd" >
 										<select name="objJury.Jury_power" >
-											<option value="0"></option>  
 											<option value="1">正高职称</option>
 											<option value="2">副高职称 </option>
 											<option value="3">正副合一</option>

@@ -409,5 +409,12 @@
 				<param name="includeProperties">feedback,nextStep</param>
 			</result>
 		</action>
+		
+		<!-- 规则管理 -->
+		<action name="getCodeList" class="gpw.action.MyAjax.ForRuleManagement" method="getCodeList">
+			<result type="json">
+				<param name="includeProperties">jsonListCodeModel</param>
+			</result>
+		</action>
 	</package>
 </struts>

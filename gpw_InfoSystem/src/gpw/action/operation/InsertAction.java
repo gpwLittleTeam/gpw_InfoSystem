@@ -408,6 +408,10 @@ public class InsertAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String addRule() {
+		
+		return SUCCESS;
+	}
 	
 	
 	//getter&setter

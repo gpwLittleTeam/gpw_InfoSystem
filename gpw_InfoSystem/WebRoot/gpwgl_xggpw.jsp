@@ -258,25 +258,25 @@ for(var i=0;i<cs.length;i++){
 									<td class="secTd" >
 										<select name="objJury.Jury_power" >
 											<s:if test="%{objJury.Jury_power == 1}">
-												<option value="0" ></option>
+												<!-- <option value="0" ></option> -->
 												<option value="1" selected>正高职称</option>
 												<option value="2">副高职称 </option>
 												<option value="3">正副合一</option>
 											</s:if>  
 											<s:elseif test="%{objJury.Jury_power == 2}">
-												<option value="0" ></option>
+												<!-- <option value="0" ></option> -->
 												<option value="1" >正高职称</option>
 												<option value="2" selected>副高职称 </option>
 												<option value="3">正副合一</option>
 											</s:elseif>  
 											<s:elseif test="%{objJury.Jury_power == 3}">
-												<option value="0" ></option>
+												<!-- <option value="0" ></option> -->
 												<option value="1" >正高职称</option>
 												<option value="2" >副高职称 </option>
 												<option value="3" selected>正副合一</option>
 											</s:elseif>  
 											<s:else>
-												<option value="0" selected></option>
+												<!-- <option value="0" selected></option> -->
 												<option value="1" >正高职称</option>
 												<option value="2" >副高职称 </option>
 												<option value="3" >正副合一</option>

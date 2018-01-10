@@ -23,14 +23,28 @@
 $(function(){
 	$("#conditionSelect").change(function(){
 	 	var type = $(this).children('option:selected').attr('fieldType');
+	 	var code = $(this).children('option:selected').attr('fieldCode');
 	 	var HtmlBlock = "";
 		if(type == "3"){
-			HtmlBlock = " <select id='conditionSign'><option>等于</option> <option>大于</option><option>小于</option></select> <input id='conditionValue'/>";
+			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option>等于</option> <option>大于</option><option>小于</option></select> <input id='conditionValue' name='conditionValue'/>";
+			$("#additionSpan").html(HtmlBlock);
 		}else if(type == "1"){
-			$.post()
-			HtmlBlock = " <select id='conditionSign'><option>等于</option> </select> <select id='conditionValue'> <option>正高级</option> <option>副高级</option> </select>";
+			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option>等于</option> </select>";
+			HtmlBlock += " <select id='conditionValue' name='conditionValue'>";
+			
+			$.post("getCodeList", {fieldCode:code}, function(data){
+				//alert(1);
+				//console.log(data);
+				var listCodeModel = JSON.parse(data.jsonListCodeModel);
+				//console.log(listCodeModel);
+				$.each(listCodeModel, function(i, listCodeModel){
+					//alert(listCodeModel.codeName);
+					HtmlBlock += "<option>"+ listCodeModel.codeName +"</option>";
+				});
+				HtmlBlock += "</select>";
+				$("#additionSpan").html(HtmlBlock);
+			});
 		}
-		$("#additionSpan").html(HtmlBlock);
 	});
 	$("#conditionSelect,#additionSpan,#percentageSign,#percentageValue,#range").on("change",function(){
 		preview();
@@ -93,10 +107,10 @@ function preview() {
 											<label for="conditionSelect">规则定义</label>
 										</td>
 										<td class="rightTd">
-											<select id="conditionSelect" >
+											<select id="conditionSelect" name="conditionSelect">
 												<option value=""></option>
 												<s:iterator id="list" value="listRuleField">
-													<option value="<s:property value='#list.field_name'/>"  fieldType="<s:property value='#list.field_type'/>"><s:property value='#list.field_chname'/></option>
+													<option value="<s:property value='#list.field_chname'/>" fieldCode="<s:property value='#list.field_code'/>"  fieldType="<s:property value='#list.field_type'/>"><s:property value='#list.field_chname'/></option>
 												</s:iterator>
 											</select>
 											<span id="additionSpan"></span>
@@ -107,12 +121,12 @@ function preview() {
 											<label for="">规则比例</label>
 										</td>
 										<td class="rightTd">
-											<select id="percentageSign">
+											<select id="percentageSign" name="percentageSign">
 												<option value="等于">等于</option>
 												<option value="大于">大于</option>
 												<option value="小于">小于</option>
 											</select>
-											<input id="percentageValue"/>
+											<input id="percentageValue" name="percentageValue"/>
 										</td>
 									</tr>
 									<tr>
@@ -120,7 +134,7 @@ function preview() {
 											<label for="">适用范围</label>
 										</td>
 										<td class="rightTd">
-											<select id="range">
+											<select id="range" name="range">
 												<option value="所有">所有</option>
 												<option value="正高职称">正高职称</option>
 												<option value="副高职称">副高职称</option>
@@ -133,7 +147,7 @@ function preview() {
 											<label for="">是否强制</label>
 										</td>
 										<td class="rightTd">
-											<select>
+											<select name="force">
 												<option value="">否</option>
 												<option value="">是</option>
 											</select>
@@ -145,7 +159,7 @@ function preview() {
 											<label for="">是否启用</label>
 										</td>
 										<td class="rightTd">
-											<select>
+											<select name="enabled">
 												<option value="">否</option>
 												<option value="">是</option>
 											</select>
