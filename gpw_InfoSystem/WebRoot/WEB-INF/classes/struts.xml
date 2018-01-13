@@ -60,6 +60,9 @@
 			<result type="chain">to_authCode</result>
 		</action>
 		
+		<action name="addRule" class="gpw.action.operation.InsertAction" method="addRule">
+			<result type="chain">to_ruleManagement</result>
+		</action>
 	</package>
 
 	<!-- 更新操作 -->

@@ -28,7 +28,7 @@ public class GetCounciltitle {
 			while (rs.next()) {
 				Counciltitle temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("name");
+				String field2 = rs.getString("counciltitle");
 				String field3 = rs.getString("comments");
 				temp = new Counciltitle(field1, field2, field3);
 				result.add(temp);
@@ -70,7 +70,7 @@ public class GetCounciltitle {
 			while (rs.next()) {
 				Counciltitle temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("name");
+				String field2 = rs.getString("counciltitle");
 				String field3 = rs.getString("comments");
 				temp = new Counciltitle(field1, field2, field3);
 				result.add(temp);
@@ -105,14 +105,14 @@ public class GetCounciltitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from code_counciltitle where name = '" + name + "'";
+		String sqlValue = "select * from code_counciltitle where counciltitle = '" + name + "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
 				Counciltitle temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("name");
+				String field2 = rs.getString("counciltitle");
 				String field3 = rs.getString("comments");
 				temp = new Counciltitle(field1, field2, field3);
 				result.add(temp);

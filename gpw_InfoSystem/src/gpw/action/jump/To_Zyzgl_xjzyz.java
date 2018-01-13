@@ -1,6 +1,6 @@
 package gpw.action.jump;
 
-import gpw.getInfo.GenerateNo;
+import gpw.algorithm.GenerateNo;
 
 import java.util.Random;
 

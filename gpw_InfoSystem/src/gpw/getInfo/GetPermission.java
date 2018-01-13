@@ -1,7 +1,7 @@
 package gpw.getInfo;
 
 import gpw.connection.LinkDB;
-import gpw.object.*;
+import gpw.object.Permission;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,33 +10,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetGrouptitle {
-	public GetGrouptitle(){
-		
-	}
-	
-	public List<Grouptitle> getAllGrouptitles(){
-		List<Grouptitle> result = new ArrayList<Grouptitle>();
+public class GetPermission {
+	public List<Permission> GetAllPermission(){
+		List<Permission> result = new ArrayList<Permission>();
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from code_grouptitle";
+		String sqlValue = "select * from code_permission";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				Grouptitle temp = null;
+				Permission temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("grouptitle");
+				String field2 = rs.getString("permission");
 				String field3 = rs.getString("comments");
-				temp = new Grouptitle(field1, field2,field3);
+				temp = new Permission(field1, field2, field3);
 				result.add(temp);
 			}
 			
 			return result;
 		} catch (Exception ex) {
-			System.out.println("GetGrouptitle.java-getAllGrouptitles() wrong!");
+			System.out.println("GetPermission.java-GetAllPermission() wrong!");
 			//ex.printStackTrace();
 			return null;
 		} finally {
@@ -57,28 +53,28 @@ public class GetGrouptitle {
 		}
 	}
 	
-	public List<Grouptitle> getGrouptitleByCode(String code){
-		List<Grouptitle> result = new ArrayList<Grouptitle>();
+	public List<Permission> getPermissionByCode(String code){
+		List<Permission> result = new ArrayList<Permission>();
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from code_grouptitle where code='" + code + "'";
+		String sqlValue = "select * from code_permission where code='" + code + "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				Grouptitle temp = null;
+				Permission temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("grouptitle");
+				String field2 = rs.getString("permission");
 				String field3 = rs.getString("comments");
-				temp = new Grouptitle(field1, field2,field3);
+				temp = new Permission(field1, field2, field3);
 				result.add(temp);
 			}
 			
 			return result;
 		} catch (Exception ex) {
-			System.out.println("GetGrouptitle.java-getGrouptitleByCode(String) wrong!");
+			System.out.println("GetPermission.java-getPermissionByCode(String) wrong!");
 			//ex.printStackTrace();
 			return null;
 		} finally {
@@ -99,28 +95,33 @@ public class GetGrouptitle {
 		}
 	}
 	
-	public List<Grouptitle> getGrouptitleByPost(String post){
-		List<Grouptitle> result = new ArrayList<Grouptitle>();
+	/**
+	 * 通过评审权限名称获取该对象
+	 * @param name 评审权限的中文名称
+	 * @return 对象
+	 */
+	public List<Permission> getDegreeByName(String name){
+		List<Permission> result = new ArrayList<Permission>();
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from code_grouptitle where grouptitle = '" + post + "'";
+		String sqlValue = "select * from code_permission where permission = '" + name + "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				Grouptitle temp = null;
+				Permission temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("grouptitle");
+				String field2 = rs.getString("permission");
 				String field3 = rs.getString("comments");
-				temp = new Grouptitle(field1, field2,field3);
+				temp = new Permission(field1, field2, field3);
 				result.add(temp);
 			}
 			
 			return result;
 		} catch (Exception ex) {
-			System.out.println("GetGrouptitle.java-getGrouptitleByPost(String) wrong!");
+			System.out.println("GetPermission.java-getDegreeByName(String) wrong!");
 			//ex.printStackTrace();
 			return null;
 		} finally {
@@ -140,9 +141,4 @@ public class GetGrouptitle {
 			}
 		}
 	}
-	
-//	public static void main(String args[]){
-//		GetGrouptitle test = new GetGrouptitle();
-//		System.out.println(test.getAllGrouptitles());
-//	}
 }

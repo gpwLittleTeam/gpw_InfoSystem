@@ -4,9 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.JsonArray;
+import javax.swing.ListModel;
 
 import net.sf.json.JSONArray;
+import gpw.getInfo.GetCounciltitle;
+import gpw.getInfo.GetDegree;
+import gpw.getInfo.GetEducation;
+import gpw.getInfo.GetEngage;
+import gpw.getInfo.GetGrouptitle;
+import gpw.getInfo.GetSeries;
 import gpw.getInfo.GetSex;
+import gpw.getInfo.GetSpecial;
+import gpw.getInfo.GetTitle;
 import gpw.getInfo.GetTitlegrade;
 import gpw.object.*;
 
@@ -25,11 +34,68 @@ public class ForRuleManagement extends ActionSupport{
 		System.out.println("fieldName:" + fieldCode);
 		
 		switch (fieldCode) {
+		case "code_counciltitle" :
+			GetCounciltitle objCounciltitle = new GetCounciltitle();
+			List<Counciltitle> listCounciltitles = objCounciltitle.getAllCounciltitles();
+			for(int i=0;i<listCounciltitles.size();i++){
+				listCodeModel.add(listCounciltitles.get(i));
+			}
+			break;
+		case "code_degree" :
+			GetDegree objDegree = new GetDegree();
+			List<Degree> listDegrees =  objDegree.getAllDegrees();
+			for(int i=0;i<listDegrees.size();i++){
+				listCodeModel.add(listDegrees.get(i));
+			}
+			break;
+		case "code_education" :
+			GetEducation objEducation = new GetEducation();
+			List<Education> listEducations = objEducation.getAllEducations();
+			for(int i=0;i<listEducations.size();i++){
+				listCodeModel.add(listEducations.get(i));
+			}
+			break;
+		case "code_engage" :
+			GetEngage  objEngage = new GetEngage();
+			List<Engage> listEngages = objEngage.getAllEngages();
+			for(int i=0;i<listEngages.size();i++){
+				listCodeModel.add(listEngages.get(i));
+			}
+			break;
+		case "code_grouptitle" :
+			GetGrouptitle objGetGrouptitle = new GetGrouptitle();
+			List<Grouptitle> listGrouptitles = objGetGrouptitle.getAllGrouptitles();
+			for(int i=0;i<listGrouptitles.size();i++){
+				listCodeModel.add(listGrouptitles.get(i));
+			}
+			break;
+		case "code_serise" :
+			GetSeries objGetSeries = new GetSeries();
+			List<Series> listSeries = objGetSeries.getAllSeriess();
+			for(int i=0;i<listSeries.size();i++){
+				listCodeModel.add(listSeries.get(i));
+			}
+			break;
 		case "code_sex":
 			GetSex objGetSex = new GetSex();
 			List<Sex> listSex = objGetSex.getAllSexs();
 			for(int i=0;i<listSex.size();i++){
 				listCodeModel.add(listSex.get(i));
+			}
+			break;
+		case "code_special":
+			GetSpecial objGetSpecial = new GetSpecial();
+			List<Special> listSpecials = objGetSpecial.getAllSpecials();
+			for(int i=0;i<listSpecials.size();i++){
+				listCodeModel.add(listSpecials.get(i));
+			}
+			break;
+			
+		case "code_ title" :
+			GetTitle objGetTitle = new GetTitle();
+			List<Title> listTitles = objGetTitle.getAllTitles();
+			for(int i=0;i<listTitles.size();i++){
+				listCodeModel.add(listTitles.get(i));
 			}
 			break;
 		case "code_titlegrade" :

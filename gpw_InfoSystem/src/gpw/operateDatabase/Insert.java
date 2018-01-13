@@ -1198,7 +1198,7 @@ public class Insert {
 				}
 			}
 			try {
-				System.out.println("sqlValue:" + sqlValue);
+				//System.out.println("sqlValue:" + sqlValue);
 				stmt = conn.createStatement();
 				stmt.executeUpdate(sqlValue);
 				return true;
@@ -1214,6 +1214,56 @@ public class Insert {
 				return false;
 			} catch (Exception ex) {
 				System.out.println("Insert.java-insertJuryIdcode(JuryIdcode):Boolean wrong!");
+				ex.printStackTrace();
+				return false;
+			} finally {
+				try {
+					if (stmt != null) {
+						stmt.close();
+					}
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (SQLException ex) {
+					System.out.println("Close Error!!!!!!");//
+					ex.printStackTrace();
+				}
+			}
+		}
+		
+		
+		public Boolean insertRuleManagement(RuleManagement obj) {
+			//建立连接
+			LinkDB link =  new LinkDB();
+			Connection conn = link.getConn();
+			Statement stmt = null;
+			String sqlValue = "insert into rule_management(rule_no,rule_field,rule_relation,rule_value,rule_percent,rule_percentRelation,rule_range,rule_force,rule_enabled) values ('"
+						+ obj.getRule_no() + "','"
+						+ obj.getRule_field() + "','"
+						+ obj.getRule_relation() + "','"
+						+ obj.getRule_value() + "','"
+						+ obj.getRule_percent() + "','"
+						+ obj.getRule_percentRelation() + "','"
+						+ obj.getRule_range() + "','"
+						+ obj.getRule_force() + "','"
+						+ obj.getRule_enabled() + "')";
+			try {
+				System.out.println("sqlValue:" + sqlValue);
+				stmt = conn.createStatement();
+				stmt.executeUpdate(sqlValue);
+				return true;
+			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e){
+				HttpServletRequest request = (HttpServletRequest)
+						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+				request.setAttribute("Error", "repeat");
+				return false;
+			} catch (com.mysql.jdbc.MysqlDataTruncation e){
+				HttpServletRequest request = (HttpServletRequest)
+						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+				request.setAttribute("Error", "dataTooLong");
+				return false;
+			} catch (Exception ex) {
+				System.out.println("Insert.java-insertRuleManagement(RuleManagement):Boolean wrong!");
 				ex.printStackTrace();
 				return false;
 			} finally {

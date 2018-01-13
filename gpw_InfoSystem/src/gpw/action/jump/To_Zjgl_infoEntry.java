@@ -6,7 +6,7 @@ package gpw.action.jump;
  * 然后传给前端
  * 前段就只需接受一个对象 即可 类似List<Experts>
  * */
-import gpw.getInfo.GenerateNo;
+import gpw.algorithm.GenerateNo;
 import gpw.getInfo.GetTableStru;
 import gpw.object.*;
 

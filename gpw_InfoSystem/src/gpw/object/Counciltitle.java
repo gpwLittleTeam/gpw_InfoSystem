@@ -24,16 +24,16 @@ public class Counciltitle extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> result = new ArrayList<String>();
-		String sqlValue = "select name from code_counciltitle";
+		String sqlValue = "select counciltitle from code_counciltitle";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				result.add(rs.getString("name"));
+				result.add(rs.getString("counciltitle"));
 			}
 			return result;
 		} catch (Exception ex) {
-			System.out.println("get all name wrong!");
+			System.out.println("get all counciltitle wrong!");
 			ex.printStackTrace();
 			return null;
 		} finally {
@@ -132,16 +132,16 @@ public class Counciltitle extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select name from code_counciltitle where code ='" +code+ "'";
+		String sqlValue1 = "select counciltitle from code_counciltitle where code ='" +code+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
 			while (rs.next()) {
-				result = rs.getString("name");
+				result = rs.getString("counciltitle");
 			}
 			return result;
 		} catch (Exception ex) {
-			System.out.println("get name by code wrong!");
+			System.out.println("get counciltitle by code wrong!");
 			ex.printStackTrace();
 			return null;
 		} finally {
@@ -168,7 +168,7 @@ public class Counciltitle extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select code from code_counciltitle where name ='" +name+ "'";
+		String sqlValue1 = "select code from code_counciltitle where counciltitle ='" +name+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
@@ -177,7 +177,7 @@ public class Counciltitle extends CodeModel{
 			}
 			return result;
 		} catch (Exception ex) {
-			System.out.println("get code by name wrong!");
+			System.out.println("get code by counciltitle wrong!");
 			ex.printStackTrace();
 			return null;
 		} finally {
@@ -204,7 +204,7 @@ public class Counciltitle extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select comments from code_counciltitle where name ='" +name+ "'";
+		String sqlValue1 = "select comments from code_counciltitle where counciltitle ='" +name+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
@@ -213,7 +213,7 @@ public class Counciltitle extends CodeModel{
 			}
 			return result;
 		} catch (Exception ex) {
-			System.out.println("get comments by name wrong!");
+			System.out.println("get comments by counciltitle wrong!");
 			ex.printStackTrace();
 			return null;
 		} finally {

@@ -71,22 +71,30 @@
 										<th height="18" background="images/tab_14.gif" class="STYLE1">是否强制</th>
 										<th height="18" background="images/tab_14.gif" class="STYLE1">是否启用</th>
 									</tr>
-									<tr>
-										<td><input type="checkbox" id=""  name="nrOfCheckbox" /></td>
-										<td>0001</td>
-										<td>具有正副高级合一及正高级评审权限的委员会，正高级专家占四分之一以上。 </td>
-										<td>正高级评审权限</td>
-										<td><input type="checkbox" id=""  name="forceUse"/></td>
-										<td><input type="checkbox" id=""  name="turnNo"/></td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" id=""  name="nrOfCheckbox" /></td>
-										<td>0002</td>
-										<td>具有正副高级合一及正高级评审权限的委员会，<input type="number" style="width:40px;" max="150" min="0" value="50"/>周岁以下的专家占评委会的<input type="number" class="inputPrecent" max="100" min="0" value="50"/>%以上；而具有副高级评审权限的委员会，<input type="number" style="width:40px;" max="150" min="0" value="50"/>岁以下的专家占评委会的<input type="number" class="inputPrecent" max="100" min="0" value="30"/>%以上。  </td>
-										<td>正高级评审权限</td>
-										<td><input type="checkbox" id=""  name="forceUse"/></td>
-										<td><input type="checkbox" id=""  name="turnNo"/></td>
-									</tr>
+									<s:iterator id="list" value="listRuleManagements">
+										<tr>
+											<td><input type="checkbox" id="nrOfCheckbox"  name="nrOfCheckbox" /></td>
+											<td><s:property value="#list.rule_no"/></td>
+											<td><s:property value="#list.rule_field"/></td>
+											<td><s:property value="#list.rule_range"/></td>
+											<td>
+												<s:if test="%{#list.rule_force == '0'.toString()}">
+													<input type="checkbox" id="forceUse"  name="forceUse" />
+												</s:if>
+												<s:else>
+													<input type="checkbox" id="forceUse"  name="forceUse" checked/>
+												</s:else>
+											</td>
+											<td>
+												<s:if test="%{#list.rule_enabled == '0'.toString()}">
+													<input type="checkbox" id="turnNo"  name="turnNo" />
+												</s:if>
+												<s:else>
+													<input type="checkbox" id="turnNo"  name="turnNo" checked/>
+												</s:else>
+											</td>
+										</tr>
+									</s:iterator>
 								</table>
 								<div style="width:97%">
 									<input style="font-size:15px;margin-top:10px;line-height: 27px; height: 27px;"

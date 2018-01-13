@@ -12,6 +12,22 @@ public class RuleManagement {
 	private String rule_enabled;
 	
 	
+	public RuleManagement() {
+		super();
+	}
+	public RuleManagement(String rule_no, String rule_field, String rule_relation, String rule_value,
+			String rule_percent, String rule_percentRelation, String rule_range, String rule_force, String rule_enabled) {
+		super();
+		this.rule_no = rule_no;
+		this.rule_field = rule_field;
+		this.rule_relation = rule_relation;
+		this.rule_value = rule_value;
+		this.rule_percent = rule_percent;
+		this.rule_percentRelation = rule_percentRelation;
+		this.rule_range = rule_range;
+		this.rule_force = rule_force;
+		this.rule_enabled = rule_enabled;
+	}
 	public String getRule_no() {
 		return rule_no;
 	}

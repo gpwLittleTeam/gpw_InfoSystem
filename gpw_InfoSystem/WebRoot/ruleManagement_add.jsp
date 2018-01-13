@@ -26,10 +26,10 @@ $(function(){
 	 	var code = $(this).children('option:selected').attr('fieldCode');
 	 	var HtmlBlock = "";
 		if(type == "3"){
-			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option>等于</option> <option>大于</option><option>小于</option></select> <input id='conditionValue' name='conditionValue'/>";
+			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option value='='>等于</option> <option value='>'>大于</option><option value='<'>小于</option></select> <input id='conditionValue' name='conditionValue'/>";
 			$("#additionSpan").html(HtmlBlock);
 		}else if(type == "1"){
-			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option>等于</option> </select>";
+			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option value='='>等于</option> </select>";
 			HtmlBlock += " <select id='conditionValue' name='conditionValue'>";
 			
 			$.post("getCodeList", {fieldCode:code}, function(data){
@@ -39,7 +39,7 @@ $(function(){
 				//console.log(listCodeModel);
 				$.each(listCodeModel, function(i, listCodeModel){
 					//alert(listCodeModel.codeName);
-					HtmlBlock += "<option>"+ listCodeModel.codeName +"</option>";
+					HtmlBlock += "<option value=" + listCodeModel.codeNo + ">"+ listCodeModel.codeName +"</option>";
 				});
 				HtmlBlock += "</select>";
 				$("#additionSpan").html(HtmlBlock);
@@ -60,9 +60,9 @@ function preview() {
 	});
 	var HtmlBlock = "";
 	if(isNull == false){
-		HtmlBlock += $("#range").val() + "的高评委,";
-		HtmlBlock += "抽取结果中" + $("#conditionSelect").val() + $("#conditionSign").val() + $("#conditionValue").val() + "的专家的人数";
-		HtmlBlock += "需" + $("#percentageSign").val() + "总抽取人数的" + $("#percentageValue").val() + "%";
+		HtmlBlock += $("#range").find("option:selected").text() + "的高评委,";
+		HtmlBlock += "抽取结果中" + $("#conditionSelect").find("option:selected").text() + $("#conditionSign").find("option:selected").text() + $("#conditionValue").find("option:selected").text() + "的专家的人数";
+		HtmlBlock += "需" + $("#percentageSign").find("option:selected").text() + "总抽取人数的" + $("#percentageValue").val() + "%";
 		$("#previewDiv").text(HtmlBlock);
 	}
 }
@@ -86,20 +86,20 @@ function preview() {
 		</tr>
 		<tr>
 			<td>
-				<!-- <form id="theForm" name="theForm" action="" method="post" style="margin:0"> -->
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="9" background="images/tab_12.gif">&nbsp;</td>
 							<td bgcolor="#f3ffe3" align="center">
-								<form style="margin:0;" action="cxtj_query.action">
+								<form action="addRule" method="post" style="margin:0;" action="cxtj_query.action">
 								<table width="97%" border="0" align="center" cellpadding="0" cellspacing="1"
 									bgcolor="#c0de98" style="margin-top:10px;">
 									<tr>
 										<td class="leftTd" align="right">
-											<label for="">规则编号</label>
+											规则编号
 										</td>
 										<td class="rightTd">
-											0003
+											<s:property value="ruleNo"/>
+											<input type="hidden" name ="ruleNo" value="<s:property value='ruleNo'/>">
 										</td>
 									</tr>
 									<tr>
@@ -110,7 +110,7 @@ function preview() {
 											<select id="conditionSelect" name="conditionSelect">
 												<option value=""></option>
 												<s:iterator id="list" value="listRuleField">
-													<option value="<s:property value='#list.field_chname'/>" fieldCode="<s:property value='#list.field_code'/>"  fieldType="<s:property value='#list.field_type'/>"><s:property value='#list.field_chname'/></option>
+													<option value="<s:property value='#list.field_name'/>" fieldCode="<s:property value='#list.field_code'/>"  fieldType="<s:property value='#list.field_type'/>"><s:property value='#list.field_chname'/></option>
 												</s:iterator>
 											</select>
 											<span id="additionSpan"></span>
@@ -118,50 +118,50 @@ function preview() {
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">
-											<label for="">规则比例</label>
+											<label for="percentageSign">规则比例</label>
 										</td>
 										<td class="rightTd">
 											<select id="percentageSign" name="percentageSign">
-												<option value="等于">等于</option>
-												<option value="大于">大于</option>
-												<option value="小于">小于</option>
+												<option value=">">大于</option>
+												<option value="<">小于</option>
+												<option value="=">等于</option>
 											</select>
 											<input id="percentageValue" name="percentageValue"/>
 										</td>
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">
-											<label for="">适用范围</label>
+											<label for="range">适用范围</label>
 										</td>
 										<td class="rightTd">
 											<select id="range" name="range">
-												<option value="所有">所有</option>
-												<option value="正高职称">正高职称</option>
-												<option value="副高职称">副高职称</option>
-												<option value="正副合一">正副合一</option>
+												<option value="0">所有</option>
+												<s:iterator id="list" value="listPermissions">
+													<option value="<s:property value='#list.codeNo'/>"><s:property value='#list.codeName'/></option>
+												</s:iterator>
 											</select>
 										</td>
 									</tr>
 									<tr>
 										<td class="leftTd" align="right">
-											<label for="">是否强制</label>
+											<label for="force">是否强制</label>
 										</td>
 										<td class="rightTd">
-											<select name="force">
-												<option value="">否</option>
-												<option value="">是</option>
+											<select id="force" name="force">
+												<option value="0">否</option>
+												<option value="1">是</option>
 											</select>
 										</td>
 									</tr>
 
 									<tr>
 										<td class="leftTd" align="right">
-											<label for="">是否启用</label>
+											<label for="enabled">是否启用</label>
 										</td>
 										<td class="rightTd">
-											<select name="enabled">
-												<option value="">否</option>
-												<option value="">是</option>
+											<select id="enabled" name="enabled">
+												<option value="0">否</option>
+												<option value="1">是</option>
 											</select>
 										</td>
 									</tr>

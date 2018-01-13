@@ -28,7 +28,7 @@ public class GetEngage {
 			while (rs.next()) {
 				Engage temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("employ");
+				String field2 = rs.getString("engage");
 				String field3 = rs.getString("comments");
 				temp = new Engage(field1, field2, field3);
 				result.add(temp);
@@ -70,7 +70,7 @@ public class GetEngage {
 			while (rs.next()) {
 				Engage temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("employ");
+				String field2 = rs.getString("engage");
 				String field3 = rs.getString("comments");
 				temp = new Engage(field1, field2, field3);
 				result.add(temp);
@@ -105,14 +105,14 @@ public class GetEngage {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from code_engage where employ = '" + employ + "'";
+		String sqlValue = "select * from code_engage where engage = '" + employ + "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
 				Engage temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("employ");
+				String field2 = rs.getString("engage");
 				String field3 = rs.getString("comments");
 				temp = new Engage(field1, field2, field3);
 				result.add(temp);

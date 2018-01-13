@@ -25,22 +25,23 @@ public class GetCode {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
+		String fieldName = name.replace("code_", "");  //
 		String sqlValue = "select * from " + name;
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				Education temp = null;
-				String field1 = rs.getString("code"); // error
-				String field2 = rs.getString("education"); //error
-				String field3 = rs.getString("comments"); //error
-				temp = new Education(field1, field2, field3);
+				CodeModel temp = null;
+				String field1 = rs.getString("code"); 
+				String field2 = rs.getString(fieldName); 
+				String field3 = rs.getString("comments"); 
+				temp = new CodeModel(field1, field2, field3);
 				result.add(temp);
 			}
 			
 			return result;
 		} catch (Exception ex) {
-			System.out.println("GetEducation.java-getAllEducations() wrong!");
+			System.out.println("GetCode.java-GetCodeByTableName() wrong!");
 			//ex.printStackTrace();
 			return null;
 		} finally {
@@ -60,4 +61,5 @@ public class GetCode {
 			}
 		}
 	}
+	
 }

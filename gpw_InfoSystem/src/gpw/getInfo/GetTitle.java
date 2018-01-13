@@ -28,7 +28,7 @@ public class GetTitle {
 			while (rs.next()) {
 				Title temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("titlename");
+				String field2 = rs.getString("title");
 				String field3 = rs.getString("comments");
 				temp = new Title(field1, field2, field3);
 				result.add(temp);
@@ -70,7 +70,7 @@ public class GetTitle {
 			while (rs.next()) {
 				Title temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("titlename");
+				String field2 = rs.getString("title");
 				String field3 = rs.getString("comments");
 				temp = new Title(field1, field2, field3);
 				result.add(temp);
@@ -105,14 +105,14 @@ public class GetTitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from code_title where titlename = '" + titlename + "'";
+		String sqlValue = "select * from code_title where title = '" + titlename + "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
 				Title temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("titlename");
+				String field2 = rs.getString("title");
 				String field3 = rs.getString("comments");
 				temp = new Title(field1, field2, field3);
 				result.add(temp);

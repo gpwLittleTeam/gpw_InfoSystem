@@ -28,7 +28,7 @@ public class GetSpecial {
 			while (rs.next()) {
 				Special temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("specialname");
+				String field2 = rs.getString("special");
 				String field3 = rs.getString("comments");
 				temp = new Special(field1, field2,field3);
 				result.add(temp);
@@ -70,7 +70,7 @@ public class GetSpecial {
 			while (rs.next()) {
 				Special temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("specialname");
+				String field2 = rs.getString("special");
 				String field3 = rs.getString("comments");
 				temp = new Special(field1, field2,field3);
 				result.add(temp);
@@ -105,14 +105,14 @@ public class GetSpecial {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from code_special where specialname = '" + specialname + "'";
+		String sqlValue = "select * from code_special where special = '" + specialname + "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
 				Special temp = null;
 				String field1 = rs.getString("code");
-				String field2 = rs.getString("specialname");
+				String field2 = rs.getString("special");
 				String field3 = rs.getString("comments");
 				temp = new Special(field1, field2,field3);
 				result.add(temp);

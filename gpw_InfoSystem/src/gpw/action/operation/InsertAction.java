@@ -48,6 +48,7 @@ import gpw.object.Expert;
 import gpw.object.Group;
 import gpw.object.Jury;
 import gpw.object.Methods;
+import gpw.object.RuleManagement;
 import gpw.object.Sex;
 import gpw.object.UserField;
 import gpw.object.UserLogin;
@@ -120,6 +121,18 @@ public class InsertAction extends ActionSupport {
 	//private List<JuryIdcode> expertFromAuthCode;
 	private String[] expert_name;
 	private String[] expert_phone;
+	
+	//rule management
+	private String ruleNo;
+	private String conditionSelect;
+	private String conditionSign; 
+	private String conditionValue;
+	private String percentageSign;
+	private String percentageValue;
+	private String range;
+	private String force;
+	private String enabled;
+	
 	
 	public String execute() throws Exception {
 		return SUCCESS;
@@ -257,7 +270,7 @@ public class InsertAction extends ActionSupport {
 		//
 		objInsert = new Insert();
 		objInsert.insertNewGroup(objGroup);
-		System.out.println("objGroup: " + objGroup.getGroup_name());
+		//System.out.println("objGroup: " + objGroup.getGroup_name());
 		// to_zyzgl.jsp
 		objGetGroup = new GetGroup();
 		objGroupList = objGetGroup.getGroupByJury(juryNo);
@@ -303,7 +316,7 @@ public class InsertAction extends ActionSupport {
 	public String createUser() {
 		//所属高评委名称-》编号
 		objJury = new Jury();
-		System.out.println("objUserLogin.getUser_jury():"+objUserLogin.getUser_jury());
+		//System.out.println("objUserLogin.getUser_jury():"+objUserLogin.getUser_jury());
 		objUserLogin.setUser_jury(objJury.getJuryNoByJuryName(objUserLogin.getUser_jury()));
 		
 		if(objInsert.insertNewUserLogin(objUserLogin)){
@@ -408,8 +421,14 @@ public class InsertAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	/**
+	 * 规则添加
+	 * @return
+	 */
 	public String addRule() {
 		
+		RuleManagement objManagement = new RuleManagement(ruleNo,conditionSelect,conditionSign,conditionValue,percentageValue,percentageSign,range,force,enabled);
+		objInsert.insertRuleManagement(objManagement);
 		return SUCCESS;
 	}
 	
@@ -699,6 +718,78 @@ public class InsertAction extends ActionSupport {
 
 	public void setExpert_phone(String[] expert_phone) {
 		this.expert_phone = expert_phone;
+	}
+
+	public String getConditionSelect() {
+		return conditionSelect;
+	}
+
+	public void setConditionSelect(String conditionSelect) {
+		this.conditionSelect = conditionSelect;
+	}
+
+	public String getConditionSign() {
+		return conditionSign;
+	}
+
+	public void setConditionSign(String conditionSign) {
+		this.conditionSign = conditionSign;
+	}
+
+	public String getConditionValue() {
+		return conditionValue;
+	}
+
+	public void setConditionValue(String conditionValue) {
+		this.conditionValue = conditionValue;
+	}
+
+	public String getPercentageSign() {
+		return percentageSign;
+	}
+
+	public void setPercentageSign(String percentageSign) {
+		this.percentageSign = percentageSign;
+	}
+
+	public String getPercentageValue() {
+		return percentageValue;
+	}
+
+	public void setPercentageValue(String percentageValue) {
+		this.percentageValue = percentageValue;
+	}
+
+	public String getRange() {
+		return range;
+	}
+
+	public void setRange(String range) {
+		this.range = range;
+	}
+
+	public String getForce() {
+		return force;
+	}
+
+	public void setForce(String force) {
+		this.force = force;
+	}
+
+	public String getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getRuleNo() {
+		return ruleNo;
+	}
+
+	public void setRuleNo(String ruleNo) {
+		this.ruleNo = ruleNo;
 	}
 
 }

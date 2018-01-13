@@ -1,6 +1,6 @@
 package gpw.action.jump;
 
-import gpw.getInfo.GenerateNo;
+import gpw.algorithm.GenerateNo;
 import gpw.getInfo.GetJuryIdcode;
 /*
  * 之前一个个返回tableStru的值
