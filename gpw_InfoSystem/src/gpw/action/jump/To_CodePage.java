@@ -76,8 +76,8 @@ public class To_CodePage extends ActionSupport{
 			break;
 		case "series":
 			objGetSeries = new GetSeries();
-			for(int i=0;i<objGetSeries.getAllSeriess().size();i++){
-				objCodeModel = objGetSeries.getAllSeriess().get(i);
+			for(int i=0;i<objGetSeries.getAllSeries().size();i++){
+				objCodeModel = objGetSeries.getAllSeries().get(i);
 				listCodeModel.add(objCodeModel);
 			}
 			break;

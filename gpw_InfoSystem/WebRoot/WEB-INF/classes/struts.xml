@@ -106,6 +106,10 @@
 		<action name="updateCode" class="gpw.action.operation.UpdateAction" method="updateCode">
 			<result>/codePage.jsp</result>
 		</action>
+		
+		<action name="updateRuleForceAndEnable" class="gpw.action.operation.UpdateAction" method="updateRuleForceAndEnable">
+			<result type="chain">to_ruleManagement</result>
+		</action>
 	</package>
 
 	<!-- 删除操作 -->
@@ -141,7 +145,9 @@
 		<action name="deleteJury" class="gpw.action.operation.DeleteAction" method="deleteJury">
 			<result>/gpwgl.jsp</result>
 		</action>
-		
+		<action name="deleteRule" class="gpw.action.operation.DeleteAction" method="deleteRule">
+			<result type="chain">to_ruleManagement</result>
+		</action>
 	</package>
 
 

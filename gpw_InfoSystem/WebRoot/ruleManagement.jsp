@@ -20,6 +20,12 @@
 </style>
 
 <script>
+function save() {
+	var form = document.getElementById("theForm");
+	//alert(form.name);
+	form.action = "updateRuleForceAndEnable.action";
+	form.submit();
+}
 </script>
 </head>
 
@@ -40,27 +46,22 @@
 		</tr>
 		<tr>
 			<td>
-				<!-- <form id="theForm" name="theForm" action="" method="post" style="margin:0"> -->
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="9" background="images/tab_12.gif">&nbsp;</td>
-							<td bgcolor="#f3ffe3" align="center">
-								<span class="button-group" style="margin-right:1%;float: right">
-									<button type="button"
-										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:5px 0 0 5px;"
-										class="button button-pill button-action"onclick="window.location.href='to_ruleManagement_add.action'">增加</button>
-									<button type="button"
-										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 0 0 0;"
-										class="button button-pill button-action"onclick="">删除</button>
-									<button type="button"
-										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 0 0 0;"
-										class="button button-pill button-action"onclick="">启用</button>
-									<button type="button"
-										style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 5px 5px 0;"
-										class="button button-pill button-action"onclick="window.open('to_authCode_print.action')">禁用</button>
-								</span>
-								<div style="clear:both"></div>
-								<nav id="feedbackNav" class="feedbackNav"></nav>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="9" background="images/tab_12.gif">&nbsp;</td>
+						<td bgcolor="#f3ffe3" align="center">
+							<span class="button-group" style="margin-right:1%;float: right">
+								<button type="button"
+									style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:5px 0 0 5px;"
+									class="button button-pill button-action"onclick="window.location.href='to_ruleManagement_add.action'">增加</button>
+								<button type="button"
+									style="font-size:15px;  width:130px;padding:0 10;height:27px;line-height:27px;border-radius:0 5px 5px 0;"
+									class="button button-pill button-action" onclick="deletion(document.theForm,'规则','deleteRule.action')">删除</button>
+
+							</span>
+							<div style="clear:both"></div>
+							<nav id="feedbackNav" class="feedbackNav"></nav>
+							<form id="theForm" name="theForm" action="" method="post" style="margin:0">
 								<table class="list" align="center" style="margin-top:0px;"
 									 onmouseover="changeto()" onmouseout="changeback()">
 									<tr>
@@ -73,38 +74,38 @@
 									</tr>
 									<s:iterator id="list" value="listRuleManagements">
 										<tr>
-											<td><input type="checkbox" id="nrOfCheckbox"  name="nrOfCheckbox" /></td>
+											<td><input type="checkbox" id="nrOfCheckbox"  name="nrOfCheckbox" value="<s:property value='#list.rule_no'/>" /></td>
 											<td><s:property value="#list.rule_no"/></td>
 											<td><s:property value="#list.rule_field"/></td>
 											<td><s:property value="#list.rule_range"/></td>
 											<td>
 												<s:if test="%{#list.rule_force == '0'.toString()}">
-													<input type="checkbox" id="forceUse"  name="forceUse" />
+													<input type="checkbox" id="forceUse"  name="forceUse" value="<s:property value='#list.rule_no'/>"/>
 												</s:if>
 												<s:else>
-													<input type="checkbox" id="forceUse"  name="forceUse" checked/>
+													<input type="checkbox" id="forceUse"  name="forceUse" value="<s:property value='#list.rule_no'/>" checked/>
 												</s:else>
 											</td>
 											<td>
 												<s:if test="%{#list.rule_enabled == '0'.toString()}">
-													<input type="checkbox" id="turnNo"  name="turnNo" />
+													<input type="checkbox" id="enabled"  name="enabled" value="<s:property value='#list.rule_no'/>"/>
 												</s:if>
 												<s:else>
-													<input type="checkbox" id="turnNo"  name="turnNo" checked/>
+													<input type="checkbox" id="enabled"  name="enabled" value="<s:property value='#list.rule_no'/>" checked/>
 												</s:else>
 											</td>
 										</tr>
 									</s:iterator>
 								</table>
-								<div style="width:97%">
-									<input style="font-size:15px;margin-top:10px;line-height: 27px; height: 27px;"
-										class="button button-action button-rounded" type="submit" value="保存" />
-								</div>
-							</td>
-							<td width="9" background="images/tab_16.gif">&nbsp;</td>
-						</tr>
-					</table>
-			<!-- 	</form> -->
+							</form>
+							<div style="width:97%">
+								<input style="font-size:15px;margin-top:10px;line-height: 27px; height: 27px;"
+									class="button button-action button-rounded" type="button" onclick="save()" value="保存" />
+							</div> 
+						</td>
+						<td width="9" background="images/tab_16.gif">&nbsp;</td>
+					</tr>
+				</table>
 			</td>
 		</tr>
 		<tr>

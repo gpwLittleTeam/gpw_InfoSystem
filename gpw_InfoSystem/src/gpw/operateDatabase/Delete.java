@@ -237,19 +237,47 @@ public class Delete {
 		}
 		
 		public Boolean deleteJuryIdcodeByNamePhone(String expert_name, String expert_phone){
-			
 			//建立连接
 			LinkDB link =  new LinkDB();
 			Connection conn = link.getConn();
 			Statement stmt = null;
 			String sqlValue = "delete from jury_idcode where expert_name = '" +expert_name+"' and expert_phone='"+expert_phone+"'";
-			System.out.println(sqlValue);
+			//System.out.println(sqlValue);
 			try {
 				stmt = conn.createStatement();
 				stmt.executeUpdate(sqlValue);
 				return true;
 			} catch (Exception ex) {
 				System.out.println("Delete.java-deleteJuryIdcodeByNamePhone(String,String):Boolean wrong!");
+				ex.printStackTrace();
+				return false;
+			} finally {
+				try {
+					if (stmt != null) {
+						stmt.close();
+					}
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (SQLException ex) {
+					System.out.println("Close Error!!!!!!");//
+					ex.printStackTrace();
+				}
+			}
+		}
+		
+		public Boolean deleteRuleByNo(String ruleNo) {
+			LinkDB link =  new LinkDB();
+			Connection conn = link.getConn();
+			Statement stmt = null;
+			String sqlValue = "delete from rule_management where rule_no = '" + ruleNo + "'";
+			System.out.println(sqlValue);
+			try {
+				stmt = conn.createStatement();
+				stmt.executeUpdate(sqlValue);
+				return true;
+			} catch (Exception ex) {
+				System.out.println("Delete.java-deleteRuleByNo(String):Boolean wrong!");
 				ex.printStackTrace();
 				return false;
 			} finally {

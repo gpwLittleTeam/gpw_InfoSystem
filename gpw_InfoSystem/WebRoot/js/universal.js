@@ -1,3 +1,4 @@
+/** formId-->> document.XXX */
 function deletion(formId,objectAddress,action) {
 	var aCheckbox=document.getElementsByName("nrOfCheckbox");
 	console.log(aCheckbox);
@@ -44,7 +45,7 @@ function CheckSelect()
 }
 
 
-//表格 行变色
+/*表格 行变色*/
 var  highlightcolor='#eafcd5';
 //此处clickcolor只能用win系统颜色代码才能成功,如果用#xxxxxx的代码就不行,还没搞清楚为什么:(
 var  clickcolor='#51b2f6';
@@ -74,4 +75,4 @@ function  changeback(){
 			cs[i].style.backgroundColor="";
 		}
 }
-//表格行变色 end
+/*表格行变色 end

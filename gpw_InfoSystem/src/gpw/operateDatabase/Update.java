@@ -464,6 +464,12 @@ public class Update {
 	}
 	
 	//以下三个是控制用户禁用状态的接口，由updateUnableByUserName根据传入值判断后调用对用的setEnable1和setEnable0两接口
+	/**
+	 * 控制用户账户的禁用状态的接口
+	 * @param name 用户名
+	 * @param enable 只有两个值，0禁用，1启用
+	 * @return
+	 */
 	public Boolean updateEnableByUserName(List<String> name, List<String> enable){
 		try{
 			List<String> nameToSet1 = new ArrayList<String>();
@@ -565,6 +571,65 @@ public class Update {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param forcedRule 需要设为强制使用的规则编号
+	 * @param enabledRule  需要设为启用的规则编号
+	 * @ 已判断是否为控制
+	 * @return
+	 */
+	public Boolean updateRuleForceAndEnable(List<String> forcedRule, List<String> enabledRule) {
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			String sqlValueForForce1 = "update rule_management set rule_force='0'";
+			stmt.executeUpdate(sqlValueForForce1);
+			if(forcedRule != null){
+				String sqlValueForForce2 = "update rule_management set rule_force='1' where rule_no in(";
+				for(int i=0;i<forcedRule.size();i++){
+					sqlValueForForce2 += "'"+forcedRule.get(i)+"',";
+				}
+				sqlValueForForce2 = sqlValueForForce2.substring(0, sqlValueForForce2.length()-1);
+				sqlValueForForce2 += ")";
+				stmt.executeUpdate(sqlValueForForce2);
+			}
+			
+			String sqlValueForEnabled1 = "update rule_management set rule_enabled='0'";
+			stmt.executeUpdate(sqlValueForEnabled1);
+			if(enabledRule != null){
+				String sqlValueForEnabled2 = "update rule_management set rule_enabled='1' where rule_no in(";
+				for(int i=0;i<enabledRule.size();i++){
+					sqlValueForEnabled2 += "'"+enabledRule.get(i)+"',";
+				}
+				sqlValueForEnabled2 = sqlValueForEnabled2.substring(0, sqlValueForEnabled2.length()-1);
+				sqlValueForEnabled2 += ")";
+				stmt.executeUpdate(sqlValueForEnabled2);
+			}
+			return true;
+		} catch (Exception ex) {
+			System.out.println("Update.java-updateRuleForceAndEnable(List<String>):Boolean wrong!");
+			ex.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				ex.printStackTrace();
+			}
+		}
+	}
 //	public static void main(String args[]){
 //		Update test = new Update();
 //		List<String> temp1 = new ArrayList<String>();

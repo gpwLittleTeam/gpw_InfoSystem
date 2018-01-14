@@ -114,6 +114,9 @@ public class UpdateAction extends ActionSupport {
 	private CodeModel objCodeModel;
 	private String table;
 	private List<CodeModel> listCodeModel;
+	//更新规则管理
+	private List<String> enabled;
+	private List<String> forceUse;
 	
 	
 	public String execute() throws Exception {
@@ -446,8 +449,8 @@ public class UpdateAction extends ActionSupport {
 			break;
 		case "series":
 			objGetSeries = new GetSeries();
-			for(int i=0;i<objGetSeries.getAllSeriess().size();i++){
-				objCodeModel = objGetSeries.getAllSeriess().get(i);
+			for(int i=0;i<objGetSeries.getAllSeries().size();i++){
+				objCodeModel = objGetSeries.getAllSeries().get(i);
 				listCodeModel.add(objCodeModel);
 			}
 			break;
@@ -481,7 +484,15 @@ public class UpdateAction extends ActionSupport {
 
 		return SUCCESS;
 	}
-	
+	/**
+	 * 可以优化为只更新做过更改的选项，而非全部更新
+	 * @return
+	 */
+	public String updateRuleForceAndEnable() {
+		objUpdate.updateRuleForceAndEnable(forceUse, enabled);
+
+		return SUCCESS;
+	}
 	
 //	public List<String> getMcheckbox() {
 //		return Mcheckbox;
@@ -490,7 +501,7 @@ public class UpdateAction extends ActionSupport {
 //	public void setMcheckbox(List<String> mcheckbox) {
 //		Mcheckbox = mcheckbox;
 //	}
-
+	/* getter and setter */
 	public JSONObject getJsonobject() {
 		return jsonobject;
 	}
@@ -884,5 +895,20 @@ public class UpdateAction extends ActionSupport {
 		this.listCodeModel = listCodeModel;
 	}
 
+	public List<String> getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(List<String> enabled) {
+		this.enabled = enabled;
+	}
+
+	public List<String> getForceUse() {
+		return forceUse;
+	}
+
+	public void setForceUse(List<String> forceUse) {
+		this.forceUse = forceUse;
+	}
 
 }

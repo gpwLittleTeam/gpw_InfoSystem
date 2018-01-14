@@ -69,9 +69,9 @@ public class ForRuleManagement extends ActionSupport{
 				listCodeModel.add(listGrouptitles.get(i));
 			}
 			break;
-		case "code_serise" :
+		case "code_series" :
 			GetSeries objGetSeries = new GetSeries();
-			List<Series> listSeries = objGetSeries.getAllSeriess();
+			List<Series> listSeries = objGetSeries.getAllSeries();
 			for(int i=0;i<listSeries.size();i++){
 				listCodeModel.add(listSeries.get(i));
 			}

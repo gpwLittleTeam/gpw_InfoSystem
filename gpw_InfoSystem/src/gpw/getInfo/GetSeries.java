@@ -15,7 +15,7 @@ public class GetSeries {
 		
 	}
 	
-	public List<Series> getAllSeriess(){
+	public List<Series> getAllSeries(){
 		List<Series> result = new ArrayList<Series>();
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();

@@ -95,7 +95,6 @@ public class DeleteAction extends ActionSupport {
 
 	// 删除专家
 	public String deleteExpertByNumber() {
-		objDelete = new Delete();
 		// System.out.println("call deleteExpertByNumber()");
 		objDelete.deleteExpertByNumber(nrOfCheckbox);
 
@@ -130,7 +129,6 @@ public class DeleteAction extends ActionSupport {
 
 	// 删除专业组
 	public String deleteGroupByNumber() {
-		objDelete = new Delete();
 		objDelete.deleteGroupByNo(nrOfCheckbox);
 
 		// 显示列表
@@ -143,7 +141,6 @@ public class DeleteAction extends ActionSupport {
 	
 	//删除JuryIdcode
 	public String deleteJuryIdcodeByNamePhone() {
-		objDelete = new Delete();
 		for(int i=0; i<nrOfCheckbox.size(); i++){
 //			System.out.println(temp);
 			jsonobject = JSONObject.fromObject(nrOfCheckbox.get(i));
@@ -286,8 +283,8 @@ public class DeleteAction extends ActionSupport {
 			success = objDelete.deleteSeries(nrOfCheckbox);
 			
 			objGetSeries = new GetSeries();
-			for(int i=0;i<objGetSeries.getAllSeriess().size();i++){
-				objCodeModel = objGetSeries.getAllSeriess().get(i);
+			for(int i=0;i<objGetSeries.getAllSeries().size();i++){
+				objCodeModel = objGetSeries.getAllSeries().get(i);
 				listCodeModel.add(objCodeModel);
 			}
 			
@@ -376,6 +373,16 @@ public class DeleteAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String deleteRule() throws Exception {
+		for(int i=0; i<nrOfCheckbox.size(); i++){
+			//System.out.println("nrOfCheckbox " + i + ":" + nrOfCheckbox);
+			objDelete.deleteRuleByNo(nrOfCheckbox.get(i));
+			
+		}
+		
+		return SUCCESS;
+	}
+	
 	// getter & setter
 
 	public List<JuryIdcode> getJuryIdcodes() {
