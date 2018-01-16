@@ -1,6 +1,6 @@
-<%@ page language="java" import="java.util.*,gpw.object.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-
+ 
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -47,7 +47,8 @@ $(function(){
 		}
 	});
 	$("#conditionSelect,#additionSpan,#percentageSign,#percentageValue,#range").on("change",function(){
-		preview();
+		//暂时先注释，以后有时间再改一下
+		//preview();
 	});
 });
 function preview() {
@@ -60,6 +61,7 @@ function preview() {
 	});
 	var HtmlBlock = "";
 	if(isNull == false){
+		$("#conditionSelect").children('option:selected').attr('fieldType');
 		HtmlBlock += $("#range").find("option:selected").text() + "的高评委,";
 		HtmlBlock += "抽取结果中" + $("#conditionSelect").find("option:selected").text() + $("#conditionSign").find("option:selected").text() + $("#conditionValue").find("option:selected").text() + "的专家的人数";
 		HtmlBlock += "需" + $("#percentageSign").find("option:selected").text() + "总抽取人数的" + $("#percentageValue").val() + "%";

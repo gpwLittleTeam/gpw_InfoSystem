@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css/buttons.css">
 <link rel="stylesheet" href="css/universal.css">
-<script type="text/javascript" src="js/universal.js"></script>
+<script type="text/javascript" src="js/universal.js?a=1"></script>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/json2.js"></script>
 

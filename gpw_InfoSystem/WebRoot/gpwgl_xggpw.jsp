@@ -257,17 +257,29 @@ for(var i=0;i<cs.length;i++){
 									</td>
 									<td class="secTd" >
 										<select name="objJury.Jury_power" >
-											<s:if test="%{objJury.Jury_power == 1}">
+											<s:iterator id="list" value="listPermissions">
+												
+												<s:if test="%{objJury.Jury_power == #list.codeNo}">
+													<option value="<s:property value='#list.codeNo'/>" selected><s:property value='#list.codeName'/></option>
+												</s:if>
+												<s:else>
+													<option value="<s:property value='#list.codeNo'/>">
+														<s:property value='#list.codeName'/>
+													</option>
+												</s:else>
+											</s:iterator>
+											
+											<%-- <s:if test="%{objJury.Jury_power == 1}">
 												<!-- <option value="0" ></option> -->
-												<option value="1" selected>正高职称</option>
-												<option value="2">副高职称 </option>
-												<option value="3">正副合一</option>
+												<option value="2" selected>正高职称</option>
+												<option value="3">副高职称 </option>
+												<option value="5">正副合一</option>
 											</s:if>  
 											<s:elseif test="%{objJury.Jury_power == 2}">
 												<!-- <option value="0" ></option> -->
-												<option value="1" >正高职称</option>
-												<option value="2" selected>副高职称 </option>
-												<option value="3">正副合一</option>
+												<option value="2" >正高职称</option>
+												<option value="3" selected>副高职称 </option>
+												<option value="5">正副合一</option>
 											</s:elseif>  
 											<s:elseif test="%{objJury.Jury_power == 3}">
 												<!-- <option value="0" ></option> -->
@@ -280,7 +292,7 @@ for(var i=0;i<cs.length;i++){
 												<option value="1" >正高职称</option>
 												<option value="2" >副高职称 </option>
 												<option value="3" >正副合一</option>
-											</s:else>
+											</s:else> --%>
 																							
 										</select>
 									</td>

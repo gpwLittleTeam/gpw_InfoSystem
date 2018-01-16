@@ -9,6 +9,7 @@ import gpw.object.CodeModel;
 import gpw.object.Permission;
 import gpw.object.RuleField;
 import gpw.object.RuleManagement;
+import gpw.algorithm.*;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -18,53 +19,14 @@ public class To_ruleManagement extends ActionSupport {
 	public String execute() throws Exception {
 		GetRuleManagement objGetRuleManagement = new GetRuleManagement();
 		listRuleManagements = objGetRuleManagement.getAllRuleManagement();
-		GetRuleField objGetRuleField = new GetRuleField();
-		CodeModel objCodeModel = new CodeModel();
-		
+		List<String> ruleContent = new ForRuleContent().getRuleContent(); 
 		RuleManagement tempRuleManagement;
-		RuleField tempRuleField;
-		String ruleContent = "";  //规则的自然语言
-		
 		
 		for(int i=0;i<listRuleManagements.size();i++){
 			tempRuleManagement = listRuleManagements.get(i);  //第i条 rule
-			tempRuleField = objGetRuleField.getRuleFieldByFieldName(tempRuleManagement.getRule_field());
-			
-			/*将数据拼装成自然语言*/
-			ruleContent = "抽取结果中";
-			ruleContent += tempRuleField.getField_chname();
-			
-			//处理 = > <
-			switch (tempRuleManagement.getRule_relation()) {
-			case "=" : ruleContent += "为"; break;
-			case ">" : ruleContent += "大于"; break;
-			case "<" : ruleContent += "小于"; break;
-			default: System.out.println("jump.To_ruleManagement.execute() switch{relation} wrong");break;
-			}
-			
-			//判断是 类型1 还是类型3
-			// 等于3 说明是数值型的
-			if(tempRuleField.getField_type().equals("3")){
-				ruleContent += tempRuleManagement.getRule_value() + tempRuleField.getField_code();
-			} else if(tempRuleField.getField_type().equals("1")){
-				String codeNameZH = objCodeModel.GetCodeNameByTableNameAndCode(tempRuleField.getField_code(), tempRuleManagement.getRule_value());
-				ruleContent += codeNameZH;
-			}
-			
-			ruleContent += "的专家人数需";
-			
-			//处理占比percent
-			switch (tempRuleManagement.getRule_percentRelation()) {
-			case "=" : ruleContent += "占"; break;
-			case ">" : ruleContent += "大于"; break;
-			case "<" : ruleContent += "小于"; break;
-			default: System.out.println("jump.To_ruleManagement.execute() switch{percentRelation} wrong");break;
-			}
-			ruleContent += "总抽取专家人数的";
-			ruleContent += tempRuleManagement.getRule_percent() + "%";
 			
 			//规则内容覆盖在rule_field中
-			tempRuleManagement.setRule_field(ruleContent);
+			tempRuleManagement.setRule_field(ruleContent.get(i));
 			/*将数据拼装成自然语言 end*/
 			
 			/*评审权限转换*/

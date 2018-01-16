@@ -91,7 +91,7 @@ public class ForRuleManagement extends ActionSupport{
 			}
 			break;
 			
-		case "code_ title" :
+		case "code_title" :
 			GetTitle objGetTitle = new GetTitle();
 			List<Title> listTitles = objGetTitle.getAllTitles();
 			for(int i=0;i<listTitles.size();i++){

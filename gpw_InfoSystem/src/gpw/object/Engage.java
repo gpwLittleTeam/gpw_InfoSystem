@@ -24,12 +24,12 @@ public class Engage extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> result = new ArrayList<String>();
-		String sqlValue = "select Employ from code_engage";
+		String sqlValue = "select engage from code_engage";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				result.add(rs.getString("Employ"));
+				result.add(rs.getString("engage"));
 			}
 			return result;
 		} catch (Exception ex) {
@@ -132,12 +132,12 @@ public class Engage extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select Employ from code_engage where code ='" +code+ "'";
+		String sqlValue1 = "select engage from code_engage where code ='" +code+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
 			while (rs.next()) {
-				result = rs.getString("Employ");
+				result = rs.getString("engage");
 			}
 			return result;
 		} catch (Exception ex) {
@@ -168,7 +168,7 @@ public class Engage extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select code from code_engage where Employ ='" +Employ+ "'";
+		String sqlValue1 = "select code from code_engage where engage ='" +Employ+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
@@ -204,7 +204,7 @@ public class Engage extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select comments from code_engage where Employ ='" +Employ+ "'";
+		String sqlValue1 = "select comments from code_engage where engage ='" +Employ+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);

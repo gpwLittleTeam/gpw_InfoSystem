@@ -24,12 +24,12 @@ public class Title extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> result = new ArrayList<String>();
-		String sqlValue = "select Titlename from code_title";
+		String sqlValue = "select title from code_title";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				result.add(rs.getString("Titlename"));
+				result.add(rs.getString("title"));
 			}
 			return result;
 		} catch (Exception ex) {
@@ -132,12 +132,12 @@ public class Title extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select Titlename from code_title where code ='" +code+ "'";
+		String sqlValue1 = "select title from code_title where code ='" +code+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
 			while (rs.next()) {
-				result = rs.getString("Titlename");
+				result = rs.getString("title");
 			}
 			return result;
 		} catch (Exception ex) {
@@ -168,7 +168,7 @@ public class Title extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select code from code_title where Titlename ='" +Titlename+ "'";
+		String sqlValue1 = "select code from code_title where title ='" +Titlename+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
@@ -204,7 +204,7 @@ public class Title extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select comments from code_title where Titlename ='" +Titlename+ "'";
+		String sqlValue1 = "select comments from code_title where title ='" +Titlename+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);

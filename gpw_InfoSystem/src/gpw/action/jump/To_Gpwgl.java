@@ -1,9 +1,13 @@
 package gpw.action.jump;
 
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 import gpw.getInfo.GetJury;
+import gpw.getInfo.GetPermission;
 import gpw.object.Jury;
+import gpw.object.Permission;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -15,26 +19,24 @@ public class To_Gpwgl extends ActionSupport {
 	public String execute() throws Exception {
 		objGetJury = new GetJury();
 		listJury = objGetJury.getAllJurys();
-
+		GetPermission objGetPermission = new GetPermission();
+		List<Permission> listPermissions = objGetPermission.GetAllPermission();
+		//用字典便于查找
+		HashMap<String, String> permissionMap= new HashMap<String, String>();
+		for(int i=0;i<listPermissions.size();i++){
+			permissionMap.put(listPermissions.get(i).getCodeNo(), listPermissions.get(i).getCodeName());
+		}
 		// 评审权限
 		for (int i = 0; i < listJury.size(); i++) {
-			switch (listJury.get(i).getJury_power()) {
-			case "1":
-				listJury.get(i).setJury_power("正高职称");
-				break;
-			case "2":
-				listJury.get(i).setJury_power("副高职称");
-				break;
-			case "3":
-				listJury.get(i).setJury_power("正副合一");
-				break;
-			case "0":
-				listJury.get(i).setJury_power("");
-				break;
-			}
+			listJury.get(i).setJury_power(permissionMap.get(listJury.get(i).getJury_power()));
 		}
 
 		return super.execute();
+	}
+	
+	private String getPermissionByCode(String code, List<Permission> listPermissions) {
+		String name = "";
+		return name;
 	}
 
 	public GetJury getObjGetJury() {

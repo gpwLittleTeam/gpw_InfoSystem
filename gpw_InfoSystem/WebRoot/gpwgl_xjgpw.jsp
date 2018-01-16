@@ -1,16 +1,10 @@
-<%@ page language="java"
-	pageEncoding="UTF-8"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%@ page language="java"	pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
+
 
 <!DOCTYPE HTML>
 <html>
 <head>
-<base href="<%=basePath%>">
 
 <title>新建高评委</title>
 <meta charset="utf-8" />
@@ -233,9 +227,9 @@ for(var i=0;i<cs.length;i++){
 									</td>
 									<td class="secTd" >
 										<select name="objJury.Jury_power" >
-											<option value="1">正高职称</option>
-											<option value="2">副高职称 </option>
-											<option value="3">正副合一</option>
+											<s:iterator id="list" value="listPermissions">
+												<option value="<s:property value='#list.codeNo'/>"><s:property value='#list.codeName'/></option>
+											</s:iterator>
 										</select>
 									</td>
 								</tr>

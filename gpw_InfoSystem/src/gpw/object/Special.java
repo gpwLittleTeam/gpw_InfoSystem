@@ -24,12 +24,12 @@ public class Special extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> result = new ArrayList<String>();
-		String sqlValue = "select specialname from code_special";
+		String sqlValue = "select special from code_special";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				result.add(rs.getString("specialname"));
+				result.add(rs.getString("special"));
 			}
 			return result;
 		} catch (Exception ex) {
@@ -96,12 +96,12 @@ public class Special extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select Specialname from code_special where code ='" +code+ "'";
+		String sqlValue1 = "select special from code_special where code ='" +code+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
 			while (rs.next()) {
-				result = rs.getString("Specialname");
+				result = rs.getString("special");
 			}
 			return result;
 		} catch (Exception ex) {
@@ -132,7 +132,7 @@ public class Special extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select code from code_special where Specialname ='" +Specialname+ "'";
+		String sqlValue1 = "select code from code_special where special ='" +Specialname+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);

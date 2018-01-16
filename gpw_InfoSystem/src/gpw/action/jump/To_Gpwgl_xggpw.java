@@ -1,7 +1,11 @@
 package gpw.action.jump;
 
+import java.util.List;
+
 import gpw.getInfo.GetJury;
+import gpw.getInfo.GetPermission;
 import gpw.object.Jury;
+import gpw.object.Permission;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -9,13 +13,14 @@ public class To_Gpwgl_xggpw extends ActionSupport {
 	private Jury objJury;
 	private String jury_no;
 	private GetJury objGetJury;
+	private List<Permission> listPermissions;
 	@Override
 	public String execute() throws Exception {
-		//System.out.println("To_Gpwgl_xggpw :" + objJury);
-		//System.out.println("To_Gpwgl_xggpw :" + jury_no);
 		objGetJury = new GetJury();
 		objJury = objGetJury.getJuryByNo(jury_no);
 		//System.out.println("To_Gpwgl_xggpw  objJury :" + objJury.getJury_name());
+		GetPermission objGetPermission = new GetPermission();
+		listPermissions = objGetPermission.GetAllPermission(); 
 		return super.execute();
 	}
 
@@ -41,5 +46,13 @@ public class To_Gpwgl_xggpw extends ActionSupport {
 
 	public void setObjGetJury(GetJury objGetJury) {
 		this.objGetJury = objGetJury;
+	}
+
+	public List<Permission> getListPermissions() {
+		return listPermissions;
+	}
+
+	public void setListPermissions(List<Permission> listPermissions) {
+		this.listPermissions = listPermissions;
 	}
 }

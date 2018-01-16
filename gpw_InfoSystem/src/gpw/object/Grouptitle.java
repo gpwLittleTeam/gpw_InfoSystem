@@ -24,12 +24,12 @@ public class Grouptitle extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> result = new ArrayList<String>();
-		String sqlValue = "select Post from code_grouptitle";
+		String sqlValue = "select grouptitle from code_grouptitle";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			while (rs.next()) {
-				result.add(rs.getString("Post"));
+				result.add(rs.getString("grouptitle"));
 			}
 			return result;
 		} catch (Exception ex) {
@@ -96,12 +96,12 @@ public class Grouptitle extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select Post from code_grouptitle where code ='" +code+ "'";
+		String sqlValue1 = "select grouptitle from code_grouptitle where code ='" +code+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
 			while (rs.next()) {
-				result = rs.getString("Post");
+				result = rs.getString("grouptitle");
 			}
 			return result;
 		} catch (Exception ex) {
@@ -132,7 +132,7 @@ public class Grouptitle extends CodeModel{
 		Statement stmt = null;
 		ResultSet rs = null;
 		String result = null;
-		String sqlValue1 = "select code from code_grouptitle where Post ='" +Post+ "'";
+		String sqlValue1 = "select code from code_grouptitle where grouptitle ='" +Post+ "'";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue1);
