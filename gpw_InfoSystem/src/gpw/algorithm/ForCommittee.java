@@ -1,12 +1,17 @@
 package gpw.algorithm;
 
 import gpw.connection.LinkDB;
+import gpw.object.CodeModel;
 import gpw.object.Expert;
 import gpw.object.Methods;
+import gpw.object.RuleField;
+import gpw.object.RuleManagement;
 import gpw.operateDatabase.Insert;
 import gpw.object.Jury;
+import gpw.getInfo.GetCode;
 import gpw.getInfo.GetExpert;
 import gpw.getInfo.GetHistoryTitle;
+import gpw.getInfo.GetRuleField;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,7 +36,7 @@ import com.opensymphony.xwork2.ActionContext;
  * 使用方法：
  * 		1.实例化后传入高评委编号，想抽取的副主任委员数量和委员数量，年份
  */
-public class Committee {
+public class ForCommittee {
 	
 	private Jury temp = new Jury();
 	
@@ -64,7 +69,7 @@ public class Committee {
 	 */
 
 	
-	public Committee(String juryNo, int VDNumber, int CNumber, int Year){
+	public ForCommittee(String juryNo, int VDNumber, int CNumber, int Year){
 		this.juryNo = juryNo;
 		this.VDNumber = VDNumber;
 		this.CNumber = CNumber;
@@ -75,7 +80,7 @@ public class Committee {
 		this.rule4Number = Math.round((float)this.totalNumber / 2);
 		
 	}
-	public Committee(){
+	public ForCommittee(){
 		
 	}
 	
@@ -383,7 +388,12 @@ public class Committee {
 		}
 	}
 	
-	//用于检查是否满足 rule2——正高级专家占四分之一以上
+	/**
+	 * [旧]用于检查是否满足 rule2——正高级专家占四分之一以上
+	 * @param listToCheck
+	 * @param juryNo
+	 * @return
+	 */
 	private Boolean checkRule2(List<Expert> listToCheck, String juryNo){
 		String jury_power = new Jury().getJuryPowerByJuryNo(juryNo);
 		if(jury_power.equals("1")){
@@ -407,7 +417,13 @@ public class Committee {
 		return true;
 	}
 	
-	//用于检查是否满足 rule3
+	/**
+	 * [旧]用于检查是否满足 rule3
+	 * @param listToCheck
+	 * @param juryNo
+	 * @return
+	 * @throws ParseException
+	 */
 	private Boolean checkRule3(List<Expert> listToCheck,String juryNo) throws ParseException{
 		int numberOfAge45 = 0; // 45岁以下数量
 		long timeDistance;  //年龄（s）
@@ -450,24 +466,135 @@ public class Committee {
 		 */
 	}
 	
-	/*调用该函数来判断是否满足规则
-	 *根据返回值判断结果
-	 *0：满足规则
-	 *1：不符合规则1
-	 *2：不符合规则2
-	 *以此类推……
+	/**
+	 * 调用该函数来判断是否满足规则,根据返回值判断结果
+	 * @param listToCheck 抽取的专家结果
+	 * @param rules 需要满足的规则集合
+	 * @return 返回规则结果
+	 * 			0：满足规则
+	 * 			1：不符合规则1
+	 * 			2：不符合规则2
+	 * 			以此类推……
+	 * @throws ParseException
 	 */
-	
-	public int check(List<Expert> listToCheck, String juryNo) throws ParseException {
-		int result = 0;
-		if(!checkRule2(listToCheck,juryNo)){
+	public String check(List<Expert> listToCheck, List<RuleManagement> rules) throws ParseException {
+		String result = "0";
+		/*[旧]*/
+		/*if(!checkRule2(listToCheck,juryNo)){
 			result = 2;
 			return result;
 		} else if(!checkRule3(listToCheck,juryNo)){
 			result = 3;
 			return result;
+		}*/
+		for(int i=0;i<rules.size();i++){
+			if(!checkWithOneRule(listToCheck,rules.get(i))){
+				result = rules.get(i).getRule_no();
+				System.err.println("algorithm.ForCommittee.check(List<Expert>, List<RuleManagement>)不符合规则：" + result);
+				break;
+			}
 		}
 		return result;
+	}
+	
+	
+	/**
+	 * 检测抽取结果是否满足规则
+	 * @param listToCheck 被检测的抽取结果
+	 * @param rule
+	 * @return 满足规则返回true;不满足规则返回false;
+	 * @throws ParseException 
+	 */
+	/* 1. 通过field判断类型
+	 * 2. 数List中 符合rulemanagement里的value的个数
+	 */
+	private Boolean checkWithOneRule(List<Expert> listToCheck,RuleManagement rule) throws ParseException{
+		float counter = 0f; 
+		GetRuleField objGetRuleField = new  GetRuleField();
+		RuleField objRuleField = objGetRuleField.getRuleFieldByFieldName(rule.getRule_field());
+		if(objRuleField.getField_type().equals("1")){
+			for(int i=0;i<listToCheck.size();i++){
+				String value = listToCheck.get(i).getExpertInfoByFieldId(rule.getRule_field()); //需要去判断的值
+				//防止报错
+				if(value == null){
+					value = "";
+				}
+				//判断是否符合（等于）规则
+				if(value.equals(rule.getRule_value())){
+					counter += 1; //float
+				}
+			}
+		} else if(objRuleField.getField_type().equals("3")){
+			for(int i=0;i<listToCheck.size();i++){
+				String value = listToCheck.get(i).getExpertInfoByFieldId(rule.getRule_field()); //需要去判断的值
+				//防止报错
+				if(value != null && !value.equals("")){
+					//都是年份，需要换算
+					//System.out.println("No:" + listToCheck.get(i).getExpert_Field1() + "  String日期:" + value);
+					Date date = new SimpleDateFormat("yyyy-MM-dd").parse(value);
+					long timeDifference =  System.currentTimeMillis() - date.getTime();
+					long years = timeDifference / (1000L * 60L * 60L * 24L * 365L);
+					//System.out.println("years:" + years);
+					int ruleValue = Integer.parseInt(rule.getRule_value());
+					//判断是否满足条件
+					if(rule.getRule_relation().equals("==")){
+						if(years == ruleValue){
+							counter += 1f;
+						} 
+					} else if(rule.getRule_relation().equals(">=")){
+						if(years >= ruleValue){
+							counter += 1f;
+						} 
+					} else if(rule.getRule_relation().equals("<=")){
+						if(years <= ruleValue){
+							counter += 1f;
+						} 
+					}
+				}
+			}
+		}
+		//判断是否满足百分比
+		if(checkForPercent(counter, listToCheck.size(), rule.getRule_percentRelation(), Float.parseFloat(rule.getRule_percent()))){
+			return true;
+		} else{
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param counter  满足条件的人数
+	 * @param total 参与抽取的专家的总人数
+	 * @param percentRelation 数据库规则的占比符号
+	 * @param rulePercent 规则的值，无需处理
+	 * @return
+	 */
+	private Boolean checkForPercent(float counter, int total,String percentRelation, float rulePercent){
+		float realPercent = counter / total;
+		rulePercent = rulePercent / 100f;
+		System.err.println("realPercent:" + realPercent + " 需要 " + percentRelation + "  rulePercent:" + rulePercent);
+		if(percentRelation.equals("==")){
+			if(realPercent == rulePercent){
+				return true;
+			} else {
+				return false;
+			}
+		} else if(percentRelation.equals(">=")){
+			if(realPercent >= rulePercent){
+				return true;
+			} else {
+				return false;
+			}
+		} else if(percentRelation.equals("<=")){
+			if(realPercent <= rulePercent){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			System.out.println("algorithm.ForCommittee.checkForPercent(float, int, String) 符号错误");
+			return false;
+		}
 	}
 	
 	
@@ -589,7 +716,6 @@ public class Committee {
 	}*/
 	
 	
-
 	
 	//根据juryNo查询所有候选主任
 	public List<Expert> showDirectors(String juryNo){
@@ -785,11 +911,19 @@ public class Committee {
 	
 	//抽取副主任，此接口调用上面的showViceDirectors，返回抽取出来的viceDirector以及未抽中的专家留到下一步中
 	//number 抽取的人数， expertsAfterExtractingDirector 抽完剩余的人
+	/**
+	 * 抽取副主任委员
+	 * @param juryNo  用户所在的高评委juryNo
+	 * @param expertsAfterExtractingDirector  在抽取主任委员的环节中没有被抽中的人
+	 * @param viceDirector  抽中的专家
+	 * @param number  抽取的数目
+	 * @return 剩余没有被抽中为副主任委员的人
+	 */
 	public List<Expert> extractViceDirector(String juryNo, List<Expert> expertsAfterExtractingDirector, List<Expert> viceDirector, int number){
 		List<Expert> expertsToExtract = this.showViceDirectors(juryNo, expertsAfterExtractingDirector);
 		try{		
 			if(expertsToExtract.size() >= number){
-				//抽取
+				//抽取 同时抽取
 				/*Random ra = new Random();
 				for(int i=0;i<number;i++){
 					int randomDirector = ra.nextInt(expertsToExtract.size());
@@ -798,8 +932,9 @@ public class Committee {
 				}*/
 				Random_custom obj = new Random_custom();
 				int[] directorNo = obj.randomsNoRepeat(0, expertsToExtract.size()-1, number);
+				//抽取 一个个抽
 				for(int i=0;i<number;i++){
-					System.out.println(expertsToExtract.get(directorNo[i]-i).getExpert_Field2());
+					//System.out.println(expertsToExtract.get(directorNo[i]-i).getExpert_Field2());
 					viceDirector.add(expertsToExtract.get(directorNo[i]-i));  //每次减掉一个之后，i之后的专家会往前移一位 
 					expertsToExtract.remove(directorNo[i]-i);
 				}
@@ -817,8 +952,17 @@ public class Committee {
 			return expertsToExtract;
 		}
 	}
-
-	//根据juryNo查询所有候选委员，并与传入的上面未抽中的专家合并为候选委员，并且还要加上去年的委员
+	
+	
+	/**
+	 * [旧]根据juryNo查询所有候选委员，并与传入的上面未抽中的专家合并为候选委员，并且还加上去年的委员
+	 * 
+	 * @param juryNo
+	 * @param expertsAfterExtractingViceDirector
+	 * @param thisYear
+	 * @return
+	 */
+	/*
 	public List<Expert> showCommittee(String juryNo, List<Expert> expertsAfterExtractingViceDirector, int thisYear){
 		String juryName = temp.getJuryNameByJuryNo(juryNo);
 		List<Expert> expertsToBeCommittee = new ArrayList<Expert>();
@@ -935,6 +1079,8 @@ public class Committee {
 			}
 		}
 	}
+	*/
+	
 	//返回去年参与的委员
 	private List<Expert> lastYearCommittees(int thisYear, String juryNo) {
 		List<Expert> experts = new ArrayList<Expert>();
@@ -1020,11 +1166,16 @@ public class Committee {
 			}
 		}
 	}
-	/*
-	 * 1. 先从去年的专家里抽，至满足去年人数的二分之一
+	
+	/* 1. 先从去年的专家里抽，至满足去年人数的二分之一
 	 * 2. 剩下的名额从所有委员候选人中抽（不要重复）
 	 */
-	////抽取委员，从session中得到委员候选人，返回抽取出来的committee //因为是抽取的最后一步，所以没有必要有返回值
+	/**
+	 * [旧]抽取委员，从session中得到委员候选人，返回抽取出来的committee //因为是抽取的最后一步，所以没有必要有返回值
+	 * @param juryNo
+	 * @param committee
+	 * @param number
+	 */
 	public void extractCommittee(String juryNo, List<Expert> committee, int number){
 		Methods objMethods = new Methods();
 		List<Expert> expertsToExtract = (List<Expert>)objMethods.getSession("candidateCommittee");//来自gpw.action.jump.To_Pwcq_wyh.fourthPage() //包含去年的专家
@@ -1069,16 +1220,6 @@ public class Committee {
 			e.printStackTrace();
 		}
 	}
-	
-//	public Boolean exchange(Expert tempExpert){
-//		Jury temp1 = new Jury();
-//		Group temp2 = new Group();
-//		Counciltitle temp3 = new Counciltitle();
-//		
-//		tempExpert.setExpert_Field31(temp1.getJuryNoByJuryName(tempExpert.getExpert_Field31()));
-//		tempExpert.setExpert_Field32(temp2.get(tempExpert.getExpert_Field32()));
-//		
-//	}
 	
 	public Boolean deleteHistoryTitles(String serveyear){
 		//建立连接
@@ -1153,7 +1294,139 @@ public class Committee {
 		}
 	}
 
+	/**
+	 * [新]显示所有委员抽取候选人的函数，委员候选人 = 拟任委员的候选人+未被抽取为副主任委员的候选人
+	 * @param juryNo
+	 * @param expertsAfterExtractingViceDirector 未被抽取为副主任委员的候选人
+	 * @return
+	 */
+	/*[新]*/
+	public List<Expert> showCommittee(String juryNo, List<Expert> expertsAfterExtractingViceDirector){
+		String juryName = temp.getJuryNameByJuryNo(juryNo);
+		List<Expert> expertsToBeCommittee = new ArrayList<Expert>(); //委员抽取候选人 = 拟任委员的候选人+未被抽取为副主任委员的候选人
+		
+		expertsToBeCommittee.addAll(expertsAfterExtractingViceDirector);
+		/*链接数据库获取拟任委员的候选人*/
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sqlValue = "select * from infolistview where Expert_Field31='"+juryName+"' and"
+				+ " Expert_Field32='委员'";
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlValue);
+			while (rs.next()) {
+				Expert tempExpert = null;
+//				String id = rs.getString("Expert_id");
+				String field1 = rs.getString("Expert_Field1");
+				String field2 = rs.getString("Expert_Field2");
+				String field3 = rs.getString("Expert_Field3");
+				String field4 = rs.getString("Expert_Field4");
+				String field5 = rs.getString("Expert_Field5");
+				String field6 = rs.getString("Expert_Field6");
+				String field7 = rs.getString("Expert_Field7");
+				String field8 = rs.getString("Expert_Field8");
+				String field9 = rs.getString("Expert_Field9");
+				String field10 = rs.getString("Expert_Field10");
+				String field11 = rs.getString("Expert_Field11");
+				String field12 = rs.getString("Expert_Field12");
+				String field13 = rs.getString("Expert_Field13");
+				String field14 = rs.getString("Expert_Field14");
+				String field15 = rs.getString("Expert_Field15");
+				String field16 = rs.getString("Expert_Field16");
+				String field17 = rs.getString("Expert_Field17");
+				String field18 = rs.getString("Expert_Field18");
+				String field19 = rs.getString("Expert_Field19");
+				String field20 = rs.getString("Expert_Field20");
+				String field21 = rs.getString("Expert_Field21");
+				String field22 = rs.getString("Expert_Field22");
+				String field23 = rs.getString("Expert_Field23");
+				String field24 = rs.getString("Expert_Field24");
+				String field25 = rs.getString("Expert_Field25");
+				String field26 = rs.getString("Expert_Field26");
+				String field27 = rs.getString("Expert_Field27");
+				String field28 = rs.getString("Expert_Field28");
+				String field29 = rs.getString("Expert_Field29");
+				String field30 = rs.getString("Expert_Field30");
+				String field31 = rs.getString("Expert_Field31");
+				String field32 = rs.getString("Expert_Field32");
+				String field33 = rs.getString("Expert_Field33");
+				String field34 = rs.getString("Expert_Field34");
+				String field35 = rs.getString("Expert_Field35");
+				tempExpert = new Expert(field1, field2, field3, field4, field5,
+										field6, field7, field8, field9, field10,
+										field11, field12, field13, field14, field15,
+										field16, field17, field18, field19, field20,
+										field21, field22, field23, field24, field25, 
+										field26, field27, field28, field29, field30, 
+										field31, field32, field33, field34, field35);
+				expertsToBeCommittee.add(tempExpert);
+			}
+			/*获取拟任委员的候选人，并整合进expertsToBeCommittee end*/
+			return expertsToBeCommittee;
+		} catch (Exception ex) {
+			System.out.println("Committee.java-showCommittee(String,List<Expert>):List<Expert> wrong!");
+			ex.printStackTrace();
+			return expertsToBeCommittee;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				ex.printStackTrace();
+			}
+		}
+	}
 	
+	/**
+	 * [新]抽取委员， 返回抽中的委员
+	 * @param juryNo  用户所在高评委的编号
+	 * @param number 抽取的数目
+	 * @return 抽中的委员
+	 */
+	public List<Expert> extractCommittee(String juryNo, int number) {
+		Methods objMethods = new Methods();
+		List<Expert> expertsToExtract = (List<Expert>)objMethods.getSession("candidateCommittee");//来自gpw.action.jump.To_Pwcq_wyh.fourthPage()
+		List<Expert> committeeMemeber = new ArrayList<Expert>(); //用于储存抽取到的委员
+		try{		
+			if(expertsToExtract.size() >= number){
+				//抽取 同时抽取
+				/*Random ra = new Random();
+				for(int i=0;i<number;i++){
+					int randomDirector = ra.nextInt(expertsToExtract.size());
+					viceDirector.add(expertsToExtract.get(randomDirector));
+					expertsToExtract.remove(randomDirector);
+				}*/
+				Random_custom obj = new Random_custom();
+				int[] randomNo = obj.randomsNoRepeat(0, expertsToExtract.size()-1, number);
+				//System.out.println("randomNo 是有序的吗：" + randomNo);
+				//抽取 一个个抽
+				for(int i=0;i<number;i++){
+					committeeMemeber.add(expertsToExtract.get(randomNo[i])); 
+				}
+			}
+			else{
+				System.out.println("抽取数量大于被抽取的人数");
+				HttpServletRequest request = (HttpServletRequest)
+						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+				request.setAttribute("Error", "NoExpertsToExtractCommittee");
+				return committeeMemeber;
+			}
+			return committeeMemeber;
+		}catch(Exception e){
+			System.out.println("Committee.java-extractDirector(List<Expert>,Lit<Expert>,int):Boolean wrong!");
+			return committeeMemeber;
+		}
+	}
 //	public static void main(String args[]){
 //		List<Expert> experts = new ArrayList<Expert>();
 //		List<Expert> director = new ArrayList<Expert>();

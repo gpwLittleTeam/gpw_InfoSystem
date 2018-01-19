@@ -165,4 +165,158 @@ public class GetRuleManagement {
 			}
 		}
 	}
+	
+	/**
+	 * 得到满足该评审权限下的所有强制要求使用的规则
+	 * @param JuryPower 评审权限
+	 * @return
+	 */
+	public List<RuleManagement> getForceRuleManagementByJuryPower(String JuryPower){
+		List<RuleManagement> result = new ArrayList<RuleManagement>();  
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sqlValue = "select * from rule_management where rule_range % " + JuryPower + " = 0 and rule_force = 1";
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlValue);
+			while (rs.next()) {
+				RuleManagement objRuleManagement = null;
+				String field1 = rs.getString("rule_no");
+				String field2 = rs.getString("rule_relation");
+				String field3 = rs.getString("rule_value");
+				String field4 = rs.getString("rule_percent");
+				String field5 = rs.getString("rule_percentRelation");
+				String field6 = rs.getString("rule_range");
+				String field7 = rs.getString("rule_force");
+				String field8 = rs.getString("rule_enabled");
+				String field9 = rs.getString("rule_field");
+				objRuleManagement = new RuleManagement(field1,field9,field2,field3,field4,field5,field6,field7,field8);
+				result.add(objRuleManagement);
+			}
+			return result;
+		} catch (Exception ex) {
+			System.out.println("GetRuleManagement.getForceRuleManagementByJuryPower() wrong!");
+			ex.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				//ex.printStackTrace();
+			}
+		}
+	}
+	
+	public List<RuleManagement> getRuleManagementByRuleNo(List<String> ruleNo){
+		List<RuleManagement> result = new ArrayList<RuleManagement>();  
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<String> sqlValue = new ArrayList<String>();
+		for(int i=0;i<ruleNo.size();i++){
+			sqlValue.add("select * from rule_management where rule_no = '" + ruleNo.get(i) + "'");
+			//System.out.println(sqlValue.get(i));
+		}
+		try {
+			stmt = conn.createStatement();
+			for(int i=0;i<ruleNo.size();i++){
+				rs = stmt.executeQuery(sqlValue.get(i));
+				while (rs.next()) {
+					RuleManagement objRuleManagement = null;
+					String field1 = rs.getString("rule_no");
+					String field2 = rs.getString("rule_relation");
+					String field3 = rs.getString("rule_value");
+					String field4 = rs.getString("rule_percent");
+					String field5 = rs.getString("rule_percentRelation");
+					String field6 = rs.getString("rule_range");
+					String field7 = rs.getString("rule_force");
+					String field8 = rs.getString("rule_enabled");
+					String field9 = rs.getString("rule_field");
+					objRuleManagement = new RuleManagement(field1,field9,field2,field3,field4,field5,field6,field7,field8);
+					result.add(objRuleManagement);
+				}
+			}
+			return result;
+		} catch (Exception ex) {
+			System.out.println("GetRuleManagement.GetRuleManagementByRuleNo(List<String>) wrong!");
+			ex.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				//ex.printStackTrace();
+			}
+		}
+	}
+	
+	public RuleManagement getRuleManagementByRuleNo(String ruleNo){
+		RuleManagement result = new RuleManagement();  
+		LinkDB link =  new LinkDB();
+		Connection conn = link.getConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sqlValue;
+		sqlValue = "select * from rule_management where rule_no = '" + ruleNo + "'";
+		try {
+			stmt = conn.createStatement();
+		
+			rs = stmt.executeQuery(sqlValue);
+			while (rs.next()) {
+				RuleManagement objRuleManagement = null;
+				String field1 = rs.getString("rule_no");
+				String field2 = rs.getString("rule_relation");
+				String field3 = rs.getString("rule_value");
+				String field4 = rs.getString("rule_percent");
+				String field5 = rs.getString("rule_percentRelation");
+				String field6 = rs.getString("rule_range");
+				String field7 = rs.getString("rule_force");
+				String field8 = rs.getString("rule_enabled");
+				String field9 = rs.getString("rule_field");
+				objRuleManagement = new RuleManagement(field1,field9,field2,field3,field4,field5,field6,field7,field8);
+				result = objRuleManagement;
+			}
+			return result;
+		} catch (Exception ex) {
+			System.out.println("GetRuleManagement.GetRuleManagementByRuleNo(String) wrong!");
+			ex.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException ex) {
+				System.out.println("Close Error!!!!!!");//
+				//ex.printStackTrace();
+			}
+		}
+	}
 }

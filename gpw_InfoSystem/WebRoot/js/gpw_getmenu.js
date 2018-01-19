@@ -51,7 +51,7 @@ menu.push( {
 	id : 203,
 	parentId : 2,
 	name : '抽取委员会 New',
-	url : 'to_pwcq_wyh_new!firstPage.action',
+	url : 'to_pwcq_wyh!firstPage.action',
 	level : 2
 });
 

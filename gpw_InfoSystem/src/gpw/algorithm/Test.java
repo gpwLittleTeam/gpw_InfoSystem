@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import gpw.algorithm.Committee;
+import gpw.algorithm.ForCommittee;
 import gpw.getInfo.GetExpert;
 import gpw.object.Expert;
 
@@ -34,7 +34,7 @@ public class Test {
 //		System.out.println(timeDistance/(60*60*1000*24)/365);
 //	}
 	public static void main(String args[]) throws ParseException{
-		Committee test = new Committee("0102", 1, 3, 2016);
+		ForCommittee test = new ForCommittee("0102", 1, 3, 2016);
 		GetExpert obj = new GetExpert();
 		
 		List<Expert> expertsLastYear = obj.getExpertByJury("0102");

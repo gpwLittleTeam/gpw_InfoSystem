@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import gpw.action.jump.To_Gpwgl;
 import gpw.algorithm.AuthCode;
-import gpw.algorithm.Committee;
+import gpw.algorithm.ForCommittee;
 import gpw.algorithm.ReviewGroup;
 import gpw.getInfo.GetCounciltitle;
 import gpw.getInfo.GetDegree;

@@ -96,7 +96,7 @@ a:hover {
 									&nbsp;&nbsp;&nbsp;
 									<br />
 								</div>
-								<script type="text/javascript" src="js/gpw_getmenu.js?a=3"
+								<script type="text/javascript" src="js/gpw_getmenu.js?a=4"
 									charset="UTF-8"></script>
 								<script type="text/javascript" src="js/TreeMenu.js"></script>
 								<script type="text/javascript">

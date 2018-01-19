@@ -6,6 +6,8 @@ public class RuleField {
 	private String field_type;
 	private String field_code;
 	
+	
+	
 	public RuleField(String field_name, String field_chname, String field_type, String field_code) {
 		super();
 		this.field_name = field_name;

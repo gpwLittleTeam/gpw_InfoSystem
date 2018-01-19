@@ -26,10 +26,10 @@ $(function(){
 	 	var code = $(this).children('option:selected').attr('fieldCode');
 	 	var HtmlBlock = "";
 		if(type == "3"){
-			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option value='='>等于</option> <option value='>'>大于</option><option value='<'>小于</option></select> <input id='conditionValue' name='conditionValue'/>";
+			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option value='=='>等于</option> <option value='>='>大于等于</option><option value='<='>小于等于</option></select> <input id='conditionValue' name='conditionValue'/>";
 			$("#additionSpan").html(HtmlBlock);
 		}else if(type == "1"){
-			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option value='='>等于</option> </select>";
+			HtmlBlock = " <select id='conditionSign' name='conditionSign'><option value='=='>等于</option> </select>";
 			HtmlBlock += " <select id='conditionValue' name='conditionValue'>";
 			
 			$.post("getCodeList", {fieldCode:code}, function(data){
@@ -124,9 +124,9 @@ function preview() {
 										</td>
 										<td class="rightTd">
 											<select id="percentageSign" name="percentageSign">
-												<option value=">">大于</option>
-												<option value="<">小于</option>
-												<option value="=">等于</option>
+												<option value=">=">大于等于</option>
+												<option value="<=">小于等于</option>
+												<option value="==">等于</option>
 											</select>
 											<input id="percentageValue" name="percentageValue"/>
 										</td>

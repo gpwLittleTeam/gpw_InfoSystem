@@ -1,18 +1,25 @@
 package gpw.action.jump;
 
-import gpw.algorithm.Committee;
+import gpw.algorithm.ForCommittee;
+import gpw.algorithm.ForRuleContent;
+import gpw.getInfo.GetJury;
+import gpw.getInfo.GetRuleManagement;
 import gpw.object.Expert;
 import gpw.object.Judge;
+import gpw.object.Jury;
 import gpw.object.Methods;
+import gpw.object.RuleManagement;
 import gpw.object.Titlegrade;
 import gpw.object.UserLogin;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.dom4j.rule.Rule;
 import org.omg.CosNaming.IstringHelper;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -20,18 +27,20 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class To_Pwcq_wyh extends ActionSupport{
 	private int[] years;
-	private Committee objCommittee = new Committee();
+	private ForCommittee objCommittee = new ForCommittee();
 	private Methods objMethods = new Methods();
 	private int listSize;  //展示列表的长度
+	private List<String> ruleCheckbox;  //用户使用的可选的规则
 	//firstPage
+	private List<RuleManagement> listRuleManagements;
 	private int viceNo;
 	private int committeeNo;
 	private String year;
+	//secPage
+	private List<Expert> listExpert;  //=candidateDirector
 	//thridPage
 	private List<Expert> candidateViceDirector;
 	private List<Expert> remainDirector;
-	//secPage
-	private List<Expert> listExpert;  //=candidateDirector
 	//fourthPage
 	private List<Expert> remainViceDirector;  //没有被选中的主任委员加副主任委员
 	private List<Expert> candidateCommittee;
@@ -42,12 +51,15 @@ public class To_Pwcq_wyh extends ActionSupport{
 	private int viceDirectorListSize;
 	private int committeeListSize;
 	private int directorListSize;
-	private int result; //抽取结果是否符合规则 ， 0为符合规则
+	private String result; //抽取结果是否符合规则 ， 0为符合规则
 	private String ratioOfSenior;  //正高级比例
 	private String ratioOfAge;  //45岁以下
 	private String rationOfOutsider; //非本单位的人的比例
+	private String feedback;
 	
 	public String firstPage() {
+		/*[旧]*/
+		/*
 		//清理Session
 		objMethods.clearSession();
 		//系统年份
@@ -60,11 +72,46 @@ public class To_Pwcq_wyh extends ActionSupport{
 			years[i] = formatDate - i;
 		}
 		return "firstPage";
+		*/
+		/*[旧] end*/
+		//清理Session
+		objMethods.clearSession();
+		/*系统年份*/
+		SimpleDateFormat format = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int formatDate = Integer.parseInt(format.format(date));
+		int length = 80;
+		years = new int[length];
+		for(int i=0;i<length;i++) {
+			years[i] = formatDate - i;
+		}
+		/*系统年份 end*/
+		/*规则*/
+		//取得当前用户所在的高评委的评审权限
+		String juryPower = new Jury().getJuryPowerByJuryNo(new Methods().getCurrentUser().getUser_jury()); 
+		System.out.println("juryPower:"  + juryPower);
+		GetRuleManagement objGetRuleManagement = new GetRuleManagement();
+		listRuleManagements = objGetRuleManagement.getEnabledRuleManagementByJuryPower(juryPower);
+		List<String> ruleContent = new ForRuleContent().getRuleContent(listRuleManagements);
+		for(int i=0;i<listRuleManagements.size();i++){
+			listRuleManagements.get(i).setRule_field(ruleContent.get(i));
+		}
+		/*规则 end*/
+		return "firstPage";
 	}
 
 	public String secPage() {
+		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的JuryNo
+		GetRuleManagement objGetRuleManagement = new GetRuleManagement();
+		GetJury objGetJury = new GetJury();
+		Jury objJury = objGetJury.getJuryByNo(juryNo); //获取该高评委
+		/*获取规则*/
+		List<RuleManagement> rules = objGetRuleManagement.getRuleManagementByRuleNo(ruleCheckbox);;  //选择的规则
+		rules.addAll(objGetRuleManagement.getForceRuleManagementByJuryPower(objJury.getJury_power()));//使用的规则 = 强制的规则 + 选择的规则
+		//System.out.println("rules.size()" + rules.size());
+		objMethods.setSession("rules", rules);//储存使用的规则至session
+		/*获取规则 end*/
 		directorListSize = 0;
-		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
 		listExpert = objCommittee.showDirectors(juryNo);  //所有参与抽取的Expert
 		listSize = listExpert.size();
 		//用于返回上级
@@ -97,14 +144,41 @@ public class To_Pwcq_wyh extends ActionSupport{
 		return "thridPage";
 	}
 	
+	
+	/**
+	 * [旧]委员抽取候选人结合了上一年的评委会的1/2
+	 * @return
+	 */
+	/* 旧版
 	public String fourthPage() {
 		int year = Integer.parseInt((String)objMethods.getSession("year"));
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
 		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
+		//
 		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector, year);
 		objMethods.setSession("candidateCommittee", candidateCommittee);
 		listSize = candidateCommittee.size();
 		//加载已抽的结果
+		listCommittee = (List<Expert>)objMethods.getSession("listCommittee");
+		if (listCommittee != null)
+			committeeListSize = listCommittee.size();
+		
+		return "fourthPage";
+	}
+	*/
+	
+	/**
+	 * [新]根据规则库的委员抽取
+	 * @return
+	 */
+	public String fourthPage() {
+		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
+		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
+		//
+		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector);
+		objMethods.setSession("candidateCommittee", candidateCommittee);
+		listSize = candidateCommittee.size();  //用于页面布局
+		//加载已抽的结果,页面来回跳转的时候用
 		listCommittee = (List<Expert>)objMethods.getSession("listCommittee");
 		if (listCommittee != null)
 			committeeListSize = listCommittee.size();
@@ -116,8 +190,16 @@ public class To_Pwcq_wyh extends ActionSupport{
 		listViceDirector = (List<Expert>)objMethods.getSession("listViceDirector");
 		listDirector = (List<Expert>)objMethods.getSession("listDirector");
 		listCommittee = (List<Expert>)objMethods.getSession("listCommittee");
-		result = (int)objMethods.getSession("result");
+		result = (String)objMethods.getSession("result");
 		System.out.println("result: " + result);
+		//抽取不满足规则的提示
+		if(result != "0") {
+			ForRuleContent objContent = new ForRuleContent();
+			GetRuleManagement objGetRuleManagement = new GetRuleManagement();
+			List<RuleManagement> listRuleManagements = new ArrayList<RuleManagement>();
+			listRuleManagements.add(objGetRuleManagement.getRuleManagementByRuleNo(result));
+			feedback = objContent.getRuleContent(listRuleManagements).get(0); 
+		}
 		//人数统计
 		directorListSize = listDirector.size();
 		viceDirectorListSize = listViceDirector.size();
@@ -266,7 +348,7 @@ public class To_Pwcq_wyh extends ActionSupport{
 		int year = Integer.parseInt((String)objMethods.getSession("year"));
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
 		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
-		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector, year);
+		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector);
 		listSize = candidateCommittee.size();
 		
 		//抽取结果
@@ -333,11 +415,11 @@ public class To_Pwcq_wyh extends ActionSupport{
 		this.committeeNo = committeeNo;
 	}
 
-	public Committee getObjCommittee() {
+	public ForCommittee getObjCommittee() {
 		return objCommittee;
 	}
 
-	public void setObjCommittee(Committee objCommittee) {
+	public void setObjCommittee(ForCommittee objCommittee) {
 		this.objCommittee = objCommittee;
 	}
 
@@ -485,12 +567,36 @@ public class To_Pwcq_wyh extends ActionSupport{
 		this.year = year;
 	}
 
-	public int getResult() {
+	public List<String> getRuleCheckbox() {
+		return ruleCheckbox;
+	}
+
+	public void setRuleCheckbox(List<String> ruleCheckbox) {
+		this.ruleCheckbox = ruleCheckbox;
+	}
+
+	public String getResult() {
 		return result;
 	}
 
-	public void setResult(int result) {
+	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+
+	public List<RuleManagement> getListRuleManagements() {
+		return listRuleManagements;
+	}
+
+	public void setListRuleManagements(List<RuleManagement> listRuleManagements) {
+		this.listRuleManagements = listRuleManagements;
 	}
 
 }

@@ -38,10 +38,10 @@ public class ForRuleContent {
 			
 			//处理 = > <
 			switch (tempRuleManagement.getRule_relation()) {
-			case "=" : ruleContent += "为"; break;
-			case ">" : ruleContent += "大于"; break;
-			case "<" : ruleContent += "小于"; break;
-			default: System.out.println("jump.To_ruleManagement.execute() switch{relation} wrong");break;
+			case "==" : ruleContent += "为"; break;
+			case ">=" : ruleContent += "大于等于"; break;
+			case "<=" : ruleContent += "小于等于"; break;
+			default: System.out.println("algorithm.ForRuleContent.getRuleContent() switch{relation} wrong");break;
 			}
 			
 			//判断是 类型1 还是类型3
@@ -56,11 +56,12 @@ public class ForRuleContent {
 			ruleContent += "的专家人数需";
 			
 			//处理占比percent
+			System.out.println("tempRuleManagement.getRule_percentRelation():" + tempRuleManagement.getRule_percentRelation());
 			switch (tempRuleManagement.getRule_percentRelation()) {
-			case "=" : ruleContent += "占"; break;
-			case ">" : ruleContent += "大于"; break;
-			case "<" : ruleContent += "小于"; break;
-			default: System.out.println("jump.To_ruleManagement.execute() switch{percentRelation} wrong");break;
+			case "==" : ruleContent += "占"; break;
+			case ">=" : ruleContent += "大于等于"; break;
+			case "<=" : ruleContent += "小于等于"; break;
+			default: System.out.println("algorithm.ForRuleContent.getRuleContent() switch{percentRelation} wrong");break;
 			}
 			ruleContent += "总抽取专家人数的";
 			ruleContent += tempRuleManagement.getRule_percent() + "%";
@@ -94,10 +95,10 @@ public class ForRuleContent {
 			
 			//处理 = > <
 			switch (tempRuleManagement.getRule_relation()) {
-			case "=" : ruleContent += "为"; break;
-			case ">" : ruleContent += "大于"; break;
-			case "<" : ruleContent += "小于"; break;
-			default: System.out.println("jump.To_ruleManagement.execute() switch{relation} wrong");break;
+			case "==" : ruleContent += "为"; break;
+			case ">=" : ruleContent += "大于"; break;
+			case "<=" : ruleContent += "小于"; break;
+			default: System.out.println("algorithm.ForRuleContent.getRuleContent(List<RuleManagement>) switch{relation} wrong");break;
 			}
 			
 			//判断是 类型1 还是类型3
@@ -113,10 +114,10 @@ public class ForRuleContent {
 			
 			//处理占比percent
 			switch (tempRuleManagement.getRule_percentRelation()) {
-			case "=" : ruleContent += "占"; break;
-			case ">" : ruleContent += "大于"; break;
-			case "<" : ruleContent += "小于"; break;
-			default: System.out.println("jump.To_ruleManagement.execute() switch{percentRelation} wrong");break;
+			case "==" : ruleContent += "占"; break;
+			case ">=" : ruleContent += "大于"; break;
+			case "<=" : ruleContent += "小于"; break;
+			default: System.out.println("algorithm.ForRuleContent.getRuleContent(List<RuleManagement>) switch{percentRelation} wrong");break;
 			}
 			ruleContent += "总抽取专家人数的";
 			ruleContent += tempRuleManagement.getRule_percent() + "%";

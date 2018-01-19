@@ -297,7 +297,7 @@
 		</action>
 		
 		<action name="to_pwcq_wyh" class="gpw.action.jump.To_Pwcq_wyh">
-			<result name="firstPage">/pwcq_wyh.jsp</result>
+			<result name="firstPage">/pwcq_wyh_new.jsp</result>
 			<result name="backFirst">/pwcq_wyh.jsp</result>
 			<result name="secPage">/pwcq_wyh_2.jsp</result>
 			<result name="backSec">/pwcq_wyh_2.jsp</result>
@@ -310,9 +310,9 @@
 			<result name="final">/pwcq_wyh_final.jsp</result>
 			<result name="final_print">/pwcq_wyh_final_print.jsp</result>
 		</action>
-		<action name="to_pwcq_wyh_new" class="gpw.action.jump.To_Pwcq_wyh_new">
+<!-- 	<action name="to_pwcq_wyh_new" class="gpw.action.jump.To_Pwcq_wyh_new">
 			<result name="firstPage">/pwcq_wyh_new.jsp</result>
-		</action>
+		</action> -->
 <!-- 		<action name="to_codePage_Group" class="gpw.action.jump.To_CodePage" method="toGroup">
 			<result>/codePageForGroup.jsp</result>
 		</action> -->

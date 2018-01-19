@@ -461,40 +461,51 @@ public class Expert {
 		Expert_Field35 = expert_Field35;
 	}
 	
+	
+	/**
+	 * 返回Expert对象某一个属性(fieldId)的值
+	 * @param fieldId e.g. "Expert_Field2"
+	 * @return e.g. 返回该对象的姓名
+	 */
 	public String getExpertInfoByFieldId (String fieldId){
-		LinkDB link =  new LinkDB();
-		Connection conn = link.getConn();
-		Statement stmt = null;
-		ResultSet rs = null;
-		String result = null;
-		String tempField = "Expert_Field"+fieldId;
-		String sqlValue = "select "+tempField+" from infolistview where Expert_Field1 ='" +this.Expert_Field1+ "'";
-		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlValue);
-			while (rs.next()) {
-				result = rs.getString(tempField);
-			}
-			return result;
-		} catch (Exception ex) {
-			System.out.println("get gpw default field wrong!");
-			//ex.printStackTrace();
-			return null;
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException ex) {
-				System.out.println("Close Error!!!!!!");//
-				//ex.printStackTrace();
-			}
+		switch (fieldId){
+		case "Expert_Field1" : return Expert_Field1;  
+		case "Expert_Field2" : return Expert_Field2;  
+		case "Expert_Field3" : return Expert_Field3;  
+		case "Expert_Field4" : return Expert_Field4;  
+		case "Expert_Field5" : return Expert_Field5;  
+		case "Expert_Field6" : return Expert_Field6;  
+		case "Expert_Field7" : return Expert_Field7;  
+		case "Expert_Field8" : return Expert_Field8;  
+		case "Expert_Field9" : return Expert_Field9;  
+		case "Expert_Field10" : return Expert_Field10;  
+		case "Expert_Field11" : return Expert_Field11;  
+		case "Expert_Field12" : return Expert_Field12;  
+		case "Expert_Field13" : return Expert_Field13;  
+		case "Expert_Field14" : return Expert_Field14;  
+		case "Expert_Field15" : return Expert_Field15;  
+		case "Expert_Field16" : return Expert_Field16;  
+		case "Expert_Field17" : return Expert_Field17;  
+		case "Expert_Field18" : return Expert_Field18;  
+		case "Expert_Field19" : return Expert_Field19;  
+		case "Expert_Field20" : return Expert_Field20;  
+		case "Expert_Field21" : return Expert_Field21;  
+		case "Expert_Field22" : return Expert_Field22;  
+		case "Expert_Field23" : return Expert_Field23;  
+		case "Expert_Field24" : return Expert_Field24;  
+		case "Expert_Field25" : return Expert_Field25;  
+		case "Expert_Field26" : return Expert_Field26;  
+		case "Expert_Field27" : return Expert_Field27;  
+		case "Expert_Field28" : return Expert_Field28;  
+		case "Expert_Field29" : return Expert_Field29;  
+		case "Expert_Field30" : return Expert_Field30;  
+		case "Expert_Field31" : return Expert_Field31;  
+		case "Expert_Field32" : return Expert_Field32;  
+		case "Expert_Field33" : return Expert_Field33;  
+		case "Expert_Field34" : return Expert_Field34;  
+		case "Expert_Field35" : return Expert_Field35;  
+		default :
+			System.out.println("Expert.getExpertInfoByFieldId(String)没有该属性 ->" + fieldId); return "";
 		}
 	}
 	

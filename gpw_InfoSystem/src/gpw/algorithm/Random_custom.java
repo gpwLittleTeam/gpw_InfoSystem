@@ -70,7 +70,7 @@ public class Random_custom
 	 * 返回一个随机数数组，无重复数，随机范围[start,end]
 	 * @param start 可随机到的最小值，闭区间
 	 * @param end 可随机到的最大值，闭区间
-	 * @param arraySize 数组的大小
+	 * @param number 抽取的个数
 	 * @return 随机数组
 	 */
 	public int[] randomsNoRepeat(int start,int end,int number) {

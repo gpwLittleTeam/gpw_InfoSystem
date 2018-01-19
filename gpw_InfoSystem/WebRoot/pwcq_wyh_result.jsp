@@ -121,23 +121,25 @@ a:active {
 <script type="text/javascript">
 $(function(){ 
 	var result = "<%=request.getAttribute("result")%>";
-	var feedback = "";
-	var errorColor = "#CC3333";  //抽取结果比例错误时提示色
-	var defaultColor = "#000000"; //规则要求的比例的提示色
-	if(result == "0") {
-	//do nothing
-	}else if(result == "2"){
-		feedback += "<div>当前正高级专家比例为<font style='color:" + errorColor + "'>" + "<%=request.getAttribute("ratioOfSenior")%>" +"%</font>低于</div>";
-		feedback += "<div>规则要求的正高级专家比例<font style='color:" + defaultColor + "'>25.00%</font>以上</div>";
-	} else if(result == "3"){
-		feedback += "<div>当前45周岁以下的专家的比例为<font style='color:" + errorColor + "'>" + "<%=request.getAttribute("ratioOfAge")%>" +"%</font>低于</div>";
-		feedback += "<div>规则要求的45周岁以下的专家比例<font style='color:" + defaultColor + "'>25.00%</font>以上</div>";
-	} else{
-		feedback = "抽取结果有未知错误";
-	}
+	var feedback = "<%=request.getAttribute("feedback")%>";
+	
+// 	var errorColor = "#CC3333";  //抽取结果比例错误时提示色
+// 	var defaultColor = "#000000"; //规则要求的比例的提示色
+// 	if(result == "0") {
+//	do nothing
+// 	}else if(result == "2"){
+// 		feedback += "<div>当前正高级专家比例为<font style='color:" + errorColor + "'>" + "<%=request.getAttribute("ratioOfSenior")%>" +"%</font>低于</div>";
+// 		feedback += "<div>规则要求的正高级专家比例<font style='color:" + defaultColor + "'>25.00%</font>以上</div>";
+// 	} else if(result == "3"){
+// 		feedback += "<div>当前45周岁以下的专家的比例为<font style='color:" + errorColor + "'>" + "<%=request.getAttribute("ratioOfAge")%>" +"%</font>低于</div>";
+// 		feedback += "<div>规则要求的45周岁以下的专家比例<font style='color:" + defaultColor + "'>25.00%</font>以上</div>";
+// 	} else{
+// 		feedback = "抽取结果有未知错误";
+// 	}
+	 
 //	alert(feedback);
 	if(result != "0") {
-		jQuery.alertWindow("无法抽取期望结果", feedback , "#A5DE37"); 
+		jQuery.alertWindow("抽取结果无法满足以下规则", feedback , "#A5DE37"); 
 	}
 });
 </script>

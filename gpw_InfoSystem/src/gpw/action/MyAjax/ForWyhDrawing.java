@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
-import gpw.algorithm.Committee;
+import gpw.algorithm.ForCommittee;
 import gpw.object.Expert;
 import gpw.object.Methods;
+import gpw.object.RuleManagement;
 import gpw.object.UserLogin;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 public class ForWyhDrawing extends ActionSupport{
-	private Committee objCommittee = new Committee();
+	private ForCommittee objCommittee = new ForCommittee();
 	private Methods objMethods = new Methods();
 	private UserLogin objUserLogin;
 	private String juryNo = objMethods.getCurrentUser().getUser_jury();
@@ -43,7 +44,7 @@ public class ForWyhDrawing extends ActionSupport{
 		System.out.println("committeeNo: "+committeeNo);
 		nextStep = false;
 		//判断拟任主任委员的人数是否小于1
-		Committee objCommittee = new Committee();
+		ForCommittee objCommittee = new ForCommittee();
 		List<Expert> expertsToExtract = objCommittee.showDirectors(juryNo); 
 		int maxViceDirectorNr = objCommittee.selectMaxViceDirectorNumber(juryNo); //可抽取的最大的副主任委员数
 		int maxCommiteeNr = objCommittee.selectMaxCommitteeNumber(juryNo, viceNo);
@@ -66,7 +67,6 @@ public class ForWyhDrawing extends ActionSupport{
 	}
 	
 	public String drawDirector(){
-		System.out.println("forwyh :" + juryNo);
 		listDirector = new ArrayList<Expert>();
 		remainDirector = objCommittee.extractDirector(juryNo, listDirector);
 	//	System.out.println("listdirector.size():"+listDirector.size());
@@ -87,7 +87,6 @@ public class ForWyhDrawing extends ActionSupport{
 		listViceDirector = new ArrayList<Expert>();//用于储存选中的副主任委员
 		remainDirector = (List<Expert>)objMethods.getSession("remainDirector");  //抽完主任委员之后剩余的副主任委员候选人
 		viceNo =(int)objMethods.getSession("viceNo");
-		System.out.println("remainDirector.size: "+remainDirector.size());
 		remainViceDirector = objCommittee.extractViceDirector(juryNo, remainDirector, listViceDirector, viceNo);  //抽完副主任委员后的人储存在remainViceDirectors
 		
 		objMethods.setSession("remainViceDirector", remainViceDirector);
@@ -102,7 +101,7 @@ public class ForWyhDrawing extends ActionSupport{
 	}
 
 	public String drawingCommittee() throws ParseException {
-		int result = 0;  //判断是否符合规则，0为符合规则
+		String result = "0";  //判断是否符合规则，0为符合规则
 		int loopCount = 0;  //循环次数判断
 		int maxCount = 100; //最大次数
 		listDirector = (List<Expert>)objMethods.getSession("listDirector");
@@ -111,30 +110,20 @@ public class ForWyhDrawing extends ActionSupport{
 		//System.out.println("drawingCommittee() . remainViceDirector.size() :"+remainViceDirector.size());
 		//循环maxCount次
 		do{
+			
 			listCommittee = new ArrayList<Expert>();
-			objCommittee.extractCommittee(juryNo, listCommittee, committeeNo);  //抽取委员
+			listCommittee = objCommittee.extractCommittee(juryNo, committeeNo);  //抽取委员
 			//把主任委员，副主任委员，委员合并到一个totalExpert中
 			ArrayList<Expert> totalExpert = new ArrayList<Expert>();
 			totalExpert.addAll(listDirector);
 			totalExpert.addAll(listViceDirector);
 			totalExpert.addAll(listCommittee);
 			//判断是否符合规则
-			result = objCommittee.check(totalExpert,juryNo);
-			switch(result) {
-			case 0: 
-				//System.out.println("符合规则"); 
-				break;
-			case 2: 
-				//System.out.println("不符合rule2  " + loopCount);
-				loopCount++;
-				break;
-			case 3: 
-				//System.out.println("不符合rule3  " + loopCount);
-				loopCount++;
-				break;
-			}
-		} while(result != 0 && loopCount < maxCount);
-		
+			result = objCommittee.check(totalExpert, (List<RuleManagement>)objMethods.getSession("rules"));
+			loopCount++;
+			System.out.println("MyAjax.ForWyhDrawing.drawingCommittee() result of check : " + result);
+			System.out.println("循环次数：" + loopCount);
+		} while(!result.equals("0") && loopCount < maxCount);
 		objMethods.setSession("result", result);
 		objMethods.setSession("listCommittee",listCommittee);
 		jsonArray = JSONArray.fromObject(listCommittee);
@@ -163,7 +152,7 @@ public class ForWyhDrawing extends ActionSupport{
 		}
 		
 		year = (String)objMethods.getSession("year");
-		Committee objCommittee = new Committee();
+		ForCommittee objCommittee = new ForCommittee();
 		objCommittee.insertResult(directorId, viceDirectorId, committeeId, year);
 		String error = objMethods.getError();
 		if(error != null) {
@@ -179,11 +168,11 @@ public class ForWyhDrawing extends ActionSupport{
 	}
 
 	
-	public Committee getObjCommittee() {
+	public ForCommittee getObjCommittee() {
 		return objCommittee;
 	}
 
-	public void setObjCommittee(Committee objCommittee) {
+	public void setObjCommittee(ForCommittee objCommittee) {
 		this.objCommittee = objCommittee;
 	}
 
