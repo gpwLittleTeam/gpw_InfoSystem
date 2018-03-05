@@ -149,7 +149,7 @@ public class To_Pwcq_wyh extends ActionSupport{
 	 * [旧]委员抽取候选人结合了上一年的评委会的1/2
 	 * @return
 	 */
-	/* 旧版
+	// 旧版
 	public String fourthPage() {
 		int year = Integer.parseInt((String)objMethods.getSession("year"));
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
@@ -165,12 +165,13 @@ public class To_Pwcq_wyh extends ActionSupport{
 		
 		return "fourthPage";
 	}
-	*/
+	
 	
 	/**
 	 * [新]根据规则库的委员抽取
 	 * @return
 	 */
+	/*
 	public String fourthPage() {
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
 		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
@@ -185,6 +186,7 @@ public class To_Pwcq_wyh extends ActionSupport{
 		
 		return "fourthPage";
 	}
+	*/
 	
 	public String resultPage(){
 		listViceDirector = (List<Expert>)objMethods.getSession("listViceDirector");
@@ -193,12 +195,19 @@ public class To_Pwcq_wyh extends ActionSupport{
 		result = (String)objMethods.getSession("result");
 		System.out.println("result: " + result);
 		//抽取不满足规则的提示
-		if(result != "0") {
-			ForRuleContent objContent = new ForRuleContent();
-			GetRuleManagement objGetRuleManagement = new GetRuleManagement();
-			List<RuleManagement> listRuleManagements = new ArrayList<RuleManagement>();
-			listRuleManagements.add(objGetRuleManagement.getRuleManagementByRuleNo(result));
-			feedback = objContent.getRuleContent(listRuleManagements).get(0); 
+		if(!result.equals("0")) {
+			//最原始的两条规则 rule2,rule3
+			if(result.equals("2")){
+				feedback = "具有正副高级合一及正高级评审权限的委员会，正高级专家占四分之一以上。 ";
+			} else if(result.equals("3")){
+				feedback = "具有正副高级合一及正高级评审权限的委员会，45周岁以下的专家占评委会的四分之一以上；而具有副高级评审权限的委员会，45岁以下的专家占评委会的三分之一以上。 ";
+			} else {	//由管理员定义的规则
+				ForRuleContent objContent = new ForRuleContent();
+				GetRuleManagement objGetRuleManagement = new GetRuleManagement();
+				List<RuleManagement> listRuleManagements = new ArrayList<RuleManagement>();
+				listRuleManagements.add(objGetRuleManagement.getRuleManagementByRuleNo(result));
+				feedback = objContent.getRuleContent(listRuleManagements).get(0);
+			}
 		}
 		//人数统计
 		directorListSize = listDirector.size();
@@ -343,7 +352,27 @@ public class To_Pwcq_wyh extends ActionSupport{
 		return "backThird";
 	}
 	
+	
+	//[旧]
 	public String backFourth() {
+		//候选委员
+		int year = Integer.parseInt((String)objMethods.getSession("year"));
+		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
+		remainViceDirector = (List<Expert>)objMethods.getSession("remainViceDirector");
+		candidateCommittee = objCommittee.showCommittee(juryNo, remainViceDirector,year);
+		listSize = candidateCommittee.size();
+		
+		//抽取结果
+		listCommittee = (List<Expert>)objMethods.getSession("listCommittee");
+		if (listCommittee != null){
+			committeeListSize = listCommittee.size();
+			System.out.println("committeeListSize" + committeeListSize);
+		}
+		return "backFourth";
+	}
+	
+	//[新]
+/*	public String backFourth() {
 		//候选委员
 		int year = Integer.parseInt((String)objMethods.getSession("year"));
 		String juryNo = objMethods.getCurrentUser().getUser_jury();  //当前用户的所属高评委的Jury
@@ -358,7 +387,7 @@ public class To_Pwcq_wyh extends ActionSupport{
 			System.out.println("committeeListSize" + committeeListSize);
 		}
 		return "backFourth";
-	}
+	}*/
 	
 	public String backResult() {
 		listViceDirector = (List<Expert>)objMethods.getSession("listViceDirector");

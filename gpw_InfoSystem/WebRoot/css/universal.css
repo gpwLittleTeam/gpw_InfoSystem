@@ -51,9 +51,14 @@ a:active {
 }
 
 .STYLE7 {
-	font-size: 12px
+	font-size: 12px;
 }
 
+.STYLE7_MARGIN {
+	font-size: 15px;
+	font-weight: bold;
+	margin: 10px 0px 0px 20px;
+}
 -->
 .list {
 	width: 98%;

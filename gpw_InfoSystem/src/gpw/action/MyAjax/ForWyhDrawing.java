@@ -110,9 +110,9 @@ public class ForWyhDrawing extends ActionSupport{
 		//System.out.println("drawingCommittee() . remainViceDirector.size() :"+remainViceDirector.size());
 		//循环maxCount次
 		do{
-			
 			listCommittee = new ArrayList<Expert>();
-			listCommittee = objCommittee.extractCommittee(juryNo, committeeNo);  //抽取委员
+			//listCommittee = objCommittee.extractCommittee(juryNo, committeeNo);  //抽取委员
+			objCommittee.extractCommittee(juryNo,listCommittee ,committeeNo);  //抽取委员
 			//把主任委员，副主任委员，委员合并到一个totalExpert中
 			ArrayList<Expert> totalExpert = new ArrayList<Expert>();
 			totalExpert.addAll(listDirector);
@@ -160,7 +160,6 @@ public class ForWyhDrawing extends ActionSupport{
 			case "NoExpertsToInsertResult": feedback = "保存失败！存在未抽取项"; break;
 			default : feedback = "保存失败！"; break;
 			}
-
 		} else {
 			feedback = "保存成功！";
 		}

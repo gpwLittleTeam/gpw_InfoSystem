@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/buttons.css">
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/json2.js"></script>
+<link rel="stylesheet" href="css/universal.css?a=1">
 <style type="text/css">
 <!--
 body {
@@ -138,17 +139,26 @@ a:active {
 									</tr>
 									<tr>
 										<td  bgcolor="#FFFFFF">
-											<div style="margin: 10px 0px 0px 20px; font-size: 13px; font-weight: bold;">
+											<div style="margin: 10px 0px 0px 20px; font-size: 14px; font-weight: bold;">
 												抽取规则：
+											</div>
+											<div class = "STYLE7_MARGIN">
+												<input type="checkbox"  checked="checked" disabled>具有正副高级合一及正高级评审权限的委员会，正高级专家占四分之一以上。
+											</div>
+											<div class = "STYLE7_MARGIN">
+												<input type="checkbox"  checked="checked" disabled>具有正副高级合一及正高级评审权限的委员会，45周岁以下的专家占评委会的四分之一以上；而具有副高级评审权限的委员会，45岁以下的专家占评委会的三分之一以上。
+											</div>
+											<div class = "STYLE7_MARGIN">
+												<input type="checkbox"  checked="checked" disabled>上一年执行评委随机保留二分之一，另二分之一随机抽取。
 											</div>
 											<s:iterator id="list" value="listRuleManagements">
 												<s:if test="%{#list.rule_force == '0'.toString()}">
-													<div class = "STYLE7" style="margin: 10px 0px 0px 20px">
+													<div class = "STYLE7_MARGIN">
 														<input type="checkbox" value="<s:property value='#list.rule_no'/>" name="ruleCheckbox" checked/><span><s:property value="#list.rule_field"/></span>
 													</div>
 												</s:if> 
 												<s:else>
-													<div class = "STYLE7" style="margin: 10px 0px 0px 20px">
+													<div class = "STYLE7_MARGIN" >
 														<input type="checkbox" value="<s:property value='#list.rule_no'/>" name="ruleCheckbox" checked disabled/><span><s:property value="#list.rule_field"/></span>
 													</div>
 												</s:else>

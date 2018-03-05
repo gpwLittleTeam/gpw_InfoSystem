@@ -225,6 +225,10 @@ public class GetRuleManagement {
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> sqlValue = new ArrayList<String>();
+		//方式ruleNo为空，即information manager一个规则都没有选
+		if(ruleNo == null){
+			ruleNo = new ArrayList<String>();
+		}
 		for(int i=0;i<ruleNo.size();i++){
 			sqlValue.add("select * from rule_management where rule_no = '" + ruleNo.get(i) + "'");
 			//System.out.println(sqlValue.get(i));
