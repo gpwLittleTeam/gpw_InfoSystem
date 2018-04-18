@@ -1,24 +1,28 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,gpw.object.*"
+	pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+/* List<Expert> expertList = (List<Expert>) request.getSession().getAttribute("expertList");   //列表里要显示的专家 */
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'statistic2.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<script type="text/javascript" src="js/echarts.js"></script>
-	<script type="text/javascript" src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>
-	<!--
+<head>
+<base href="<%=basePath%>">
+
+<title>统计1</title>
+
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+
+<script type="text/javascript" src="js/echarts.js"></script>
+<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 
@@ -30,120 +34,230 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript">
     	var myChart = echarts.init(document.getElementById("main"));
     	
-    	/* var dataTest = "${expertList}"; */
-    	/* console.log(dataTest); */
+    	var dataMaster = "${resultNumberOfMaster}";
+    	dataMaster = dataMaster.substring(1,23);
+    	dataMaster = dataMaster.split(",");
+	
+		var dataPhD = "${resultNumberOfPhD}";
+		dataPhD = dataPhD.substring(1,23);
+    	dataPhD = dataPhD.split(",");
+    	
+    	var dataSenior = "${resultNumberOfSenior}";
+    	dataSenior = dataSenior.substring(1,23);
+    	dataSenior = dataSenior.split(",");
+    	
+    	var dataDSenior = "${resultNumberOfDSenior}";
+    	dataDSenior = dataDSenior.substring(1,23);
+    	dataDSenior = dataDSenior.split(",");
+    	
+    	var dataDirector = "${resultNumberOfDirector}";
+    	dataDirector = dataDirector.substring(1,23);
+    	dataDirector = dataDirector.split(",");
+    	
+    	var dataDDirector = "${resultNumberOfDDirector}";
+    	dataDDirector = dataDDirector.substring(1,23);
+    	dataDDirector = dataDDirector.split(",");
 	
 		// 指定图表的配置项和数据
-		var hours = [ '25-30岁', '30-35岁', '35-40岁', '40-45岁', '45-50岁', 
-			'50-55岁', '55-60岁', '60岁以上'
-		];
-		var days = [ '助教', '讲师', '副教授', '教授'
-		];
-	
-		var data = [
-			[ 0, 0, 5 ],
-			[ 0, 1, 1 ],
-			[ 0, 2, 0 ],
-			[ 0, 3, 0 ],
-			[ 0, 4, 0 ],
-			[ 0, 5, 0 ],
-			[ 0, 6, 0 ],
-			[ 0, 7, 0 ],
-			[ 1, 0, 7 ],
-			[ 1, 1, 0 ],
-			[ 1, 2, 15 ],
-			[ 1, 3, 0 ],
-			[ 1, 4, 0 ],
-			[ 1, 5, 0 ],
-			[ 1, 6, 0 ],
-			[ 1, 7, 0 ],
-			[ 2, 0, 1 ],
-			[ 2, 1, 1 ],
-			[ 2, 2, 0 ],
-			[ 2, 3, 0 ],
-			[ 2, 4, 0 ],
-			[ 2, 5, 0 ],
-			[ 2, 6, 0 ],
-			[ 2, 7, 0 ],
-			[ 3, 0, 7 ],
-			[ 3, 1, 3 ],
-			[ 3, 2, 0 ],
-			[ 3, 3, 0 ],
-			[ 3, 4, 7 ],
-			[ 3, 5, 0 ],
-			[ 3, 6, 5 ],
-			[ 3, 7, 9 ],
-		];
-		option = {
+		var option = {
 			title : {
-				text : '任职资格与年龄和学历的关系图',
+				text : '根据专家任职时间的分析图',
 			},
-			tooltip : {},
-			visualMap : {
-				max : 20,
-				inRange : {
-					color : [ '#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026' ]
-				}
+			tooltip : {
+				trigger : 'axis'
 			},
-			xAxis3D : {
-				type : 'category',
-				data : hours
+			legend : {
+				data : [ '硕士人数', '博士人数', '正高级人数', '副高级人数', '曾属主任人数', '曾属副主任人数' ]
 			},
-			yAxis3D : {
-				type : 'category',
-				data : days
-			},
-			zAxis3D : {
-				type : 'value'
-			},
-			grid3D : {
-				boxWidth : 200,
-				boxDepth : 80,
-				light : {
-					main : {
-						intensity : 1.2
+			toolbox : {
+				show : true,
+				feature : {
+					magicType : {
+						show : true,
+						type : [ 'line', 'bar' ]
 					},
-					ambient : {
-						intensity : 0.3
+					restore : {
+						show : true
+					},
+					saveAsImage : {
+						show : true
 					}
 				}
 			},
-			series : [ {
-				type : 'bar3D',
-				data : data.map(function(item) {
-					return {
-						value : [ item[1], item[0], item[2] ]
-					}
-				}),
-				shading : 'color',
-	
-				label : {
-					show : false,
-					textStyle : {
-						fontSize : 16,
-						borderWidth : 1
+			calculable : true,
+			xAxis : [
+				{
+					type : 'category',
+					data : [ '1年', '2年', '3年', '4年', '5年', '5-10年', '10-15年', '15年以上' ]
+				}
+			],
+			yAxis : [
+				{
+					type : 'value'
+				}
+			],
+			series : [
+				{
+					name : '硕士人数',
+					type : 'bar',
+					data : dataMaster,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
 					}
 				},
-	
-				itemStyle : {
-					opacity : 0.4
-				},
-	
-				emphasis : {
-					label : {
-						textStyle : {
-							fontSize : 20,
-							color : '#900'
-						}
+				{
+					name : '博士人数',
+					type : 'bar',
+					data : dataPhD,
+					markPoint : {
+						/* data : [
+						    {name : '年最高', value : 8, xAxis: 7, yAxis: 8},
+						    {name : '年最低', value : 1, xAxis: 0, yAxis: 1}
+						] */
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
 					},
-					itemStyle : {
-						color : '#900'
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					},
+				},
+				{
+					name : '正高级人数',
+					type : 'bar',
+					data : dataSenior,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					}
+				},
+				{
+					name : '副高级人数',
+					type : 'bar',
+					data : dataDSenior,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					}
+				},
+				{
+					name : '曾属主任人数',
+					type : 'bar',
+					data : dataDirector,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					}
+				},
+				{
+					name : '曾属副主任人数',
+					type : 'bar',
+					data : dataDDirector,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
 					}
 				}
-			} ]
-		}
+			]
+		};
+	
+	
 		// 显示图表
 		myChart.setOption(option);
     </script>
 </body>
+
 </html>

@@ -343,6 +343,12 @@
 		<action name="to_statistic1" class="gpw.action.jump.To_Statistic_gpw">
 			<result>/statistic1.jsp</result>
 		</action>
+		<action name="to_statistic2" class="gpw.action.jump.To_Statistic2_gpw">
+			<result>/statistic2.jsp</result>
+		</action>
+		<action name="to_statistic3" class="gpw.action.jump.To_Statistic3_gpw">
+			<result>/statistic3.jsp</result>
+		</action>
 		
 	</package>
 	

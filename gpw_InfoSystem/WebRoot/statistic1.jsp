@@ -41,25 +41,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var dataPhD = "${resultNumberOfPhD}";
 		dataPhD = dataPhD.substring(1,23);
     	dataPhD = dataPhD.split(",");
+    	
+    	var dataSenior = "${resultNumberOfSenior}";
+    	dataSenior = dataSenior.substring(1,23);
+    	dataSenior = dataSenior.split(",");
+    	
+    	var dataDSenior = "${resultNumberOfDSenior}";
+    	dataDSenior = dataDSenior.substring(1,23);
+    	dataDSenior = dataDSenior.split(",");
+    	
+    	var dataDirector = "${resultNumberOfDirector}";
+    	dataDirector = dataDirector.substring(1,23);
+    	dataDirector = dataDirector.split(",");
+    	
+    	var dataDDirector = "${resultNumberOfDDirector}";
+    	dataDDirector = dataDDirector.substring(1,23);
+    	dataDDirector = dataDDirector.split(",");
 	
 		// 指定图表的配置项和数据
 		var option = {
 			title : {
-				text : '年龄与所获学位关系图',
+				text : '根据专家年龄的分析图',
 			},
 			tooltip : {
 				trigger : 'axis'
 			},
 			legend : {
-				data : [ '硕士人数', '博士人数' ]
+				data : [ '硕士人数', '博士人数', '正高级人数', '副高级人数', '曾属主任人数', '曾属副主任人数' ]
 			},
 			toolbox : {
 				show : true,
 				feature : {
-					dataView : {
-						show : true,
-						readOnly : false
-					},
 					magicType : {
 						show : true,
 						type : [ 'line', 'bar' ]
@@ -119,6 +131,106 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    {name : '年最高', value : 8, xAxis: 7, yAxis: 8},
 						    {name : '年最低', value : 1, xAxis: 0, yAxis: 1}
 						] */
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					},
+				},
+				{
+					name : '正高级人数',
+					type : 'bar',
+					data : dataSenior,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					}
+				},
+				{
+					name : '副高级人数',
+					type : 'bar',
+					data : dataDSenior,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					}
+				},
+				{
+					name : '曾属主任人数',
+					type : 'bar',
+					data : dataDirector,
+					markPoint : {
+						data : [
+							{
+								type : 'max',
+								name : '最大值'
+							},
+							{
+								type : 'min',
+								name : '最小值'
+							}
+						]
+					},
+					markLine : {
+						data : [
+							{
+								type : 'average',
+								name : '平均值'
+							}
+						]
+					}
+				},
+				{
+					name : '曾属副主任人数',
+					type : 'bar',
+					data : dataDDirector,
+					markPoint : {
 						data : [
 							{
 								type : 'max',

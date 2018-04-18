@@ -47,13 +47,13 @@ menu.push( {
 	url : 'to_pwcq_pyz.action',
 	level : 2
 });
-/*menu.push( {
+menu.push( {
 	id : 203,
 	parentId : 2,
 	name : '抽取委员会 New',
 	url : 'to_pwcq_wyh!firstPage.action',
 	level : 2
-});*/
+});
 
 menu.push( {
 	id : 3,
@@ -82,22 +82,22 @@ menu.push( {
 menu.push( {
 	id : 30201,
 	parentId: 302,
-	name : '统计1',
+	name : '年龄分析图',
 	url : 'to_statistic1.action',
 	level : 3,
 });
 menu.push( {
 	id : 30202,
 	parentId : 302,
-	name : '统计2',
-	url : './statistic2.jsp',
+	name : '任职时间分析图',
+	url : 'to_statistic2.action',
 	level : 3,
 });
 menu.push( {
 	id : 30203,
 	parentId : 302,
-	name : '统计3',
-	url : './statistic3.jsp',
+	name : '拟任职称分析图',
+	url : 'to_statistic3.action',
 	level : 3,
 });
 

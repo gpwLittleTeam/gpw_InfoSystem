@@ -18,7 +18,7 @@ import gpw.object.Expert;
 import gpw.object.Methods;
 import gpw.object.UserLogin;
 
-public class To_Statistic_gpw extends ActionSupport {
+public class To_Statistic3_gpw extends ActionSupport {
 	private List<Expert> expertList;
 	private String UserName;
 	private Methods objMethods;
@@ -52,9 +52,7 @@ public class To_Statistic_gpw extends ActionSupport {
 		for (int i=0; i<expertList.size(); i++) {
 			if (expertList.get(i).getExpert_Field7().equals("硕士")) {
 				tempNumberOfMaster.add(expertList.get(i));
-			} else if (expertList.get(i).getExpert_Field7().equals("博士") || 
-					expertList.get(i).getExpert_Field7().equals("副博士") || 
-					expertList.get(i).getExpert_Field7().equals("名誉博士")) {
+			} else if (expertList.get(i).getExpert_Field7().equals("博士")) {
 				tempNumberOfPhD.add(expertList.get(i));
 			}
 		}

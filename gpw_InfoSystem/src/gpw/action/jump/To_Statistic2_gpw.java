@@ -18,13 +18,13 @@ import gpw.object.Expert;
 import gpw.object.Methods;
 import gpw.object.UserLogin;
 
-public class To_Statistic_gpw extends ActionSupport {
+public class To_Statistic2_gpw extends ActionSupport {
 	private List<Expert> expertList;
 	private String UserName;
 	private Methods objMethods;
 	private UserLogin objUserLogin;
 
-	// 年龄分析图
+	// 任职时间分析图
 	private String resultNumberOfMaster;
 	private String resultNumberOfPhD;
 	private String resultNumberOfSenior;
@@ -43,7 +43,7 @@ public class To_Statistic_gpw extends ActionSupport {
 
 		Date d = new Date();	//当前日期
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date birthDay;			//专家出生日期
+		Date date;			//专家任职时间
 		
 		// 用于暂存硕士博士专家信息
 		List<Expert> tempNumberOfMaster = new ArrayList<Expert>();
@@ -63,46 +63,50 @@ public class To_Statistic_gpw extends ActionSupport {
 		int[] numberOfPhD = new int[8];
 		
 		for (Expert expert: tempNumberOfMaster) {
-			birthDay = sdf.parse(expert.getExpert_Field5());
-			int year = (int) ((d.getTime() / 86400000 - birthDay.getTime() / 86400000) / 365);
-			if (25<=year && year<30) {
-				numberOfMaster[0]++;
-			} else if (30<=year && year<35) {
-				numberOfMaster[1]++;
-			} else if (35<=year && year<40) {
-				numberOfMaster[2]++;
-			} else if (40<=year && year<45) {
-				numberOfMaster[3]++;
-			} else if (45<=year && year<50) {
-				numberOfMaster[4]++;
-			} else if (50<=year && year<55) {
-				numberOfMaster[5]++;
-			} else if (55<=year && year<60) {
-				numberOfMaster[6]++;
-			} else if (60<=year) {
-				numberOfMaster[7]++;
+			if(!expert.getExpert_Field20().equals("")) {
+				date = sdf.parse(expert.getExpert_Field20());
+				int year = (int) ((d.getTime() / 86400000 - date.getTime() / 86400000) / 365);
+				if (0<=year && year<1) {
+					numberOfMaster[0]++;
+				} else if (1<=year && year<2) {
+					numberOfMaster[1]++;
+				} else if (2<=year && year<3) {
+					numberOfMaster[2]++;
+				} else if (3<=year && year<4) {
+					numberOfMaster[3]++;
+				} else if (4<=year && year<5) {
+					numberOfMaster[4]++;
+				} else if (5<=year && year<10) {
+					numberOfMaster[5]++;
+				} else if (10<=year && year<15) {
+					numberOfMaster[6]++;
+				} else if (15<=year) {
+					numberOfMaster[7]++;
+				}
 			}
 		}
 		
 		for (Expert expert: tempNumberOfPhD) {
-			birthDay = sdf.parse(expert.getExpert_Field5());
-			int year = (int) ((d.getTime() / 86400000 - birthDay.getTime() / 86400000) / 365);
-			if (25<=year && year<30) {
-				numberOfPhD[0]++;
-			} else if (30<=year && year<35) {
-				numberOfPhD[1]++;
-			} else if (35<=year && year<40) {
-				numberOfPhD[2]++;
-			} else if (40<=year && year<45) {
-				numberOfPhD[3]++;
-			} else if (45<=year && year<50) {
-				numberOfPhD[4]++;
-			} else if (50<=year && year<55) {
-				numberOfPhD[5]++;
-			} else if (55<=year && year<60) {
-				numberOfPhD[6]++;
-			} else if (60<=year) {
-				numberOfPhD[7]++;
+			if(!expert.getExpert_Field20().equals("")) {
+				date = sdf.parse(expert.getExpert_Field20());
+				int year = (int) ((d.getTime() / 86400000 - date.getTime() / 86400000) / 365);
+				if (0<=year && year<1) {
+					numberOfPhD[0]++;
+				} else if (1<=year && year<2) {
+					numberOfPhD[1]++;
+				} else if (2<=year && year<3) {
+					numberOfPhD[2]++;
+				} else if (3<=year && year<4) {
+					numberOfPhD[3]++;
+				} else if (4<=year && year<5) {
+					numberOfPhD[4]++;
+				} else if (5<=year && year<10) {
+					numberOfPhD[5]++;
+				} else if (10<=year && year<15) {
+					numberOfPhD[6]++;
+				} else if (15<=year) {
+					numberOfPhD[7]++;
+				}
 			}
 		}
 		
@@ -122,46 +126,50 @@ public class To_Statistic_gpw extends ActionSupport {
 		int[] numberOfDSenior = new int[8];
 		
 		for (Expert expert: tempNumberOfSenior) {
-			birthDay = sdf.parse(expert.getExpert_Field5());
-			int year = (int) ((d.getTime() / 86400000 - birthDay.getTime() / 86400000) / 365);
-			if (25<=year && year<30) {
-				numberOfSenior[0]++;
-			} else if (30<=year && year<35) {
-				numberOfSenior[1]++;
-			} else if (35<=year && year<40) {
-				numberOfSenior[2]++;
-			} else if (40<=year && year<45) {
-				numberOfSenior[3]++;
-			} else if (45<=year && year<50) {
-				numberOfSenior[4]++;
-			} else if (50<=year && year<55) {
-				numberOfSenior[5]++;
-			} else if (55<=year && year<60) {
-				numberOfSenior[6]++;
-			} else if (60<=year) {
-				numberOfSenior[7]++;
+			if(!expert.getExpert_Field20().equals("")) {
+				date = sdf.parse(expert.getExpert_Field20());
+				int year = (int) ((d.getTime() / 86400000 - date.getTime() / 86400000) / 365);
+				if (0<=year && year<1) {
+					numberOfSenior[0]++;
+				} else if (1<=year && year<2) {
+					numberOfSenior[1]++;
+				} else if (2<=year && year<3) {
+					numberOfSenior[2]++;
+				} else if (3<=year && year<4) {
+					numberOfSenior[3]++;
+				} else if (4<=year && year<5) {
+					numberOfSenior[4]++;
+				} else if (5<=year && year<10) {
+					numberOfSenior[5]++;
+				} else if (10<=year && year<15) {
+					numberOfSenior[6]++;
+				} else if (15<=year) {
+					numberOfSenior[7]++;
+				}
 			}
 		}
 		
 		for (Expert expert: tempNumberOfDSenior) {
-			birthDay = sdf.parse(expert.getExpert_Field5());
-			int year = (int) ((d.getTime() / 86400000 - birthDay.getTime() / 86400000) / 365);
-			if (25<=year && year<30) {
-				numberOfDSenior[0]++;
-			} else if (30<=year && year<35) {
-				numberOfDSenior[1]++;
-			} else if (35<=year && year<40) {
-				numberOfDSenior[2]++;
-			} else if (40<=year && year<45) {
-				numberOfDSenior[3]++;
-			} else if (45<=year && year<50) {
-				numberOfDSenior[4]++;
-			} else if (50<=year && year<55) {
-				numberOfDSenior[5]++;
-			} else if (55<=year && year<60) {
-				numberOfDSenior[6]++;
-			} else if (60<=year) {
-				numberOfDSenior[7]++;
+			if(!expert.getExpert_Field20().equals("")) {
+				date = sdf.parse(expert.getExpert_Field20());
+				int year = (int) ((d.getTime() / 86400000 - date.getTime() / 86400000) / 365);
+				if (0<=year && year<1) {
+					numberOfDSenior[0]++;
+				} else if (1<=year && year<2) {
+					numberOfDSenior[1]++;
+				} else if (2<=year && year<3) {
+					numberOfDSenior[2]++;
+				} else if (3<=year && year<4) {
+					numberOfDSenior[3]++;
+				} else if (4<=year && year<5) {
+					numberOfDSenior[4]++;
+				} else if (5<=year && year<10) {
+					numberOfDSenior[5]++;
+				} else if (10<=year && year<15) {
+					numberOfDSenior[6]++;
+				} else if (15<=year) {
+					numberOfDSenior[7]++;
+				}
 			}
 		}
 
@@ -181,46 +189,50 @@ public class To_Statistic_gpw extends ActionSupport {
 		int[] numberOfDDirector = new int[8];
 		
 		for (Expert expert: tempNumberOfDirector) {
-			birthDay = sdf.parse(expert.getExpert_Field5());
-			int year = (int) ((d.getTime() / 86400000 - birthDay.getTime() / 86400000) / 365);
-			if (25<=year && year<30) {
-				numberOfDirector[0]++;
-			} else if (30<=year && year<35) {
-				numberOfDirector[1]++;
-			} else if (35<=year && year<40) {
-				numberOfDirector[2]++;
-			} else if (40<=year && year<45) {
-				numberOfDirector[3]++;
-			} else if (45<=year && year<50) {
-				numberOfDirector[4]++;
-			} else if (50<=year && year<55) {
-				numberOfDirector[5]++;
-			} else if (55<=year && year<60) {
-				numberOfDirector[6]++;
-			} else if (60<=year) {
-				numberOfDirector[7]++;
+			if(!expert.getExpert_Field20().equals("")) {
+				date = sdf.parse(expert.getExpert_Field20());
+				int year = (int) ((d.getTime() / 86400000 - date.getTime() / 86400000) / 365);
+				if (0<=year && year<1) {
+					numberOfDirector[0]++;
+				} else if (1<=year && year<2) {
+					numberOfDirector[1]++;
+				} else if (2<=year && year<3) {
+					numberOfDirector[2]++;
+				} else if (3<=year && year<4) {
+					numberOfDirector[3]++;
+				} else if (4<=year && year<5) {
+					numberOfDirector[4]++;
+				} else if (5<=year && year<10) {
+					numberOfDirector[5]++;
+				} else if (10<=year && year<15) {
+					numberOfDirector[6]++;
+				} else if (15<=year) {
+					numberOfDirector[7]++;
+				}
 			}
 		}
 		
 		for (Expert expert: tempNumberOfDDirector) {
-			birthDay = sdf.parse(expert.getExpert_Field5());
-			int year = (int) ((d.getTime() / 86400000 - birthDay.getTime() / 86400000) / 365);
-			if (25<=year && year<30) {
-				numberOfDDirector[0]++;
-			} else if (30<=year && year<35) {
-				numberOfDDirector[1]++;
-			} else if (35<=year && year<40) {
-				numberOfDDirector[2]++;
-			} else if (40<=year && year<45) {
-				numberOfDDirector[3]++;
-			} else if (45<=year && year<50) {
-				numberOfDDirector[4]++;
-			} else if (50<=year && year<55) {
-				numberOfDDirector[5]++;
-			} else if (55<=year && year<60) {
-				numberOfDDirector[6]++;
-			} else if (60<=year) {
-				numberOfDDirector[7]++;
+			if(!expert.getExpert_Field20().equals("")) {
+				date = sdf.parse(expert.getExpert_Field20());
+				int year = (int) ((d.getTime() / 86400000 - date.getTime() / 86400000) / 365);
+				if (0<=year && year<1) {
+					numberOfDDirector[0]++;
+				} else if (1<=year && year<2) {
+					numberOfDDirector[1]++;
+				} else if (2<=year && year<3) {
+					numberOfDDirector[2]++;
+				} else if (3<=year && year<4) {
+					numberOfDDirector[3]++;
+				} else if (4<=year && year<5) {
+					numberOfDDirector[4]++;
+				} else if (5<=year && year<10) {
+					numberOfDDirector[5]++;
+				} else if (10<=year && year<15) {
+					numberOfDDirector[6]++;
+				} else if (15<=year) {
+					numberOfDDirector[7]++;
+				}
 			}
 		}
 				
@@ -246,9 +258,9 @@ public class To_Statistic_gpw extends ActionSupport {
 //		System.out.println(d);
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //		String test = "1996-08-11";
-//		Date birthDay = sdf.parse(test);
-//		System.out.println(birthDay);
-//		System.out.println((d.getTime() / 86400000 - birthDay.getTime() / 86400000) / 365);
+//		Date date = sdf.parse(test);
+//		System.out.println(date);
+//		System.out.println((d.getTime() / 86400000 - date.getTime() / 86400000) / 365);
 //	}
 	
 	public List<Expert> getExpertList() {
