@@ -47,13 +47,13 @@ menu.push( {
 	url : 'to_pwcq_pyz.action',
 	level : 2
 });
-menu.push( {
+/*menu.push( {
 	id : 203,
 	parentId : 2,
 	name : '抽取委员会 New',
 	url : 'to_pwcq_wyh!firstPage.action',
 	level : 2
-});
+});*/
 
 menu.push( {
 	id : 3,
