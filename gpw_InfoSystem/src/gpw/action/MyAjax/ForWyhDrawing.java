@@ -161,7 +161,7 @@ public class ForWyhDrawing extends ActionSupport{
 			default : feedback = "保存失败！"; break;
 			}
 		} else {
-			feedback = "保存成功！";
+			feedback = "成功保存抽取结果至“任职管理”";
 		}
 		return SUCCESS;
 	}

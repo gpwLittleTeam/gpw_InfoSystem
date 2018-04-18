@@ -79,11 +79,8 @@ a:active {
 		$.post("addHistoryTitleForWYH.action", function(data) {
 			console.log(data.feedback); //
 			var feedback = data.feedback;
-			if(feedback == "保存成功！") {
-				//alert(feedback);
-				saveSuccess = 1;
-				$("#feedbackNav").html(feedback);
-			}
+			saveSuccess = 1;
+			$("#feedbackNav").html(feedback);
 		});
 	}
 	

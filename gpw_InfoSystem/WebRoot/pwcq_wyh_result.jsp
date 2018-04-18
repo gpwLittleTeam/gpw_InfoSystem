@@ -138,7 +138,7 @@ $(function(){
 // 	}
 	 
 //	alert(feedback);
-	if(result != "0") {
+	if(result != "null" && result != "0") {
 		jQuery.alertWindow("抽取结果无法满足以下规则", feedback , "#A5DE37"); 
 	}
 });
