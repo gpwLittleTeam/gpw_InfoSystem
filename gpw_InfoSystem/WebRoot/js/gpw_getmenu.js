@@ -55,55 +55,63 @@ menu.push( {
 	level : 2
 });*/
 
+//menu.push( {
+//	id : 3,
+//	parentId : 0,
+//	name : '查询统计',
+//	url : '',
+//	level : 1,
+//	css : 'nobg'
+//});
+
 menu.push( {
 	id : 3,
 	parentId : 0,
-	name : '查询统计',
-	url : '',
-	level : 1,
-	css : 'nobg '
-});
-
-menu.push( {
-	id : 301,
-	parentId : 3,
 	name : '信息查询',
 	url : 'to_cxtj_query.action',
-	level : 2
+	level : 1,
+	css : 'nobg'
 });
-
-menu.push( {
-	id : 302,
-	parentId : 3,
-	name : '信息统计',
-	url :'',
-	level : 2,
-});
-menu.push( {
-	id : 30201,
-	parentId: 302,
-	name : '年龄分析图',
-	url : 'to_statistic1.action',
-	level : 3,
-});
-menu.push( {
-	id : 30202,
-	parentId : 302,
-	name : '任职时间分析图',
-	url : 'to_statistic2.action',
-	level : 3,
-});
-menu.push( {
-	id : 30203,
-	parentId : 302,
-	name : '拟任职称分析图',
-	url : 'to_statistic3.action',
-	level : 3,
-});
-
 
 menu.push( {
 	id : 4,
+	parentId : 0,
+	name : '信息统计',
+	url :'',
+	level : 1,
+});
+menu.push( {
+	id : 401,
+	parentId: 4,
+	name : '年龄分析图',
+	url : 'to_statistic1.action',
+	level : 2,
+});
+menu.push( {
+	id : 402,
+	parentId : 4,
+	name : '任职时间分析图',
+	url : 'to_statistic2.action',
+	level : 2,
+});
+menu.push( {
+	id : 403,
+	parentId : 4,
+	name : '拟任职称分析图',
+	url : 'to_statistic3.action',
+	level : 2,
+});
+menu.push( {
+	id : 404,
+	parentId : 4,
+	name : '现有任职资格分析图',
+	url : 'to_statistic4.action',
+	level : 2,
+});
+
+
+menu.push( {
+	id : 5,
 	parentId : 0,
 	name : '专业组管理',
 	url : 'to_zyzgl.action',
@@ -115,7 +123,7 @@ menu.push( {
 
 
 menu.push( {
-	id : 5,
+	id : 6,
 	parentId : 0,
 	name : '任职管理',
 	url : 'to_rzgl.action',
@@ -125,7 +133,7 @@ menu.push( {
 });
 
 menu.push( {
-	id : 6,
+	id : 7,
 	parentId : 0,
 	name : '修改密码',
 	url : './xgmm.jsp',

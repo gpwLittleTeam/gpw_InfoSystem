@@ -35,27 +35,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	var myChart = echarts.init(document.getElementById("main"));
     	
     	var dataMaster = "${resultNumberOfMaster}";
-    	dataMaster = dataMaster.substring(1,23);
+    	dataMaster = dataMaster.substring(1, dataMaster.length - 1);
     	dataMaster = dataMaster.split(",");
 	
 		var dataPhD = "${resultNumberOfPhD}";
-		dataPhD = dataPhD.substring(1,23);
+		dataPhD = dataPhD.substring(1, dataPhD.length - 1);
     	dataPhD = dataPhD.split(",");
     	
     	var dataSenior = "${resultNumberOfSenior}";
-    	dataSenior = dataSenior.substring(1,23);
+    	dataSenior = dataSenior.substring(1, dataSenior.length - 1);
     	dataSenior = dataSenior.split(",");
     	
     	var dataDSenior = "${resultNumberOfDSenior}";
-    	dataDSenior = dataDSenior.substring(1,23);
+    	dataDSenior = dataDSenior.substring(1, dataDSenior.length - 1);
     	dataDSenior = dataDSenior.split(",");
     	
     	var dataDirector = "${resultNumberOfDirector}";
-    	dataDirector = dataDirector.substring(1,23);
+    	dataDirector = dataDirector.substring(1, dataDirector.length - 1);
     	dataDirector = dataDirector.split(",");
     	
     	var dataDDirector = "${resultNumberOfDDirector}";
-    	dataDDirector = dataDDirector.substring(1,23);
+    	dataDDirector = dataDDirector.substring(1, dataDDirector.length - 1);
     	dataDDirector = dataDDirector.split(",");
 	
 		// 指定图表的配置项和数据

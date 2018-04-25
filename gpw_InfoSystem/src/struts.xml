@@ -349,6 +349,9 @@
 		<action name="to_statistic3" class="gpw.action.jump.To_Statistic3_gpw">
 			<result>/statistic3.jsp</result>
 		</action>
+		<action name="to_statistic4" class="gpw.action.jump.To_Statistic4_gpw">
+			<result>/statistic4.jsp</result>
+		</action>
 		
 	</package>
 	

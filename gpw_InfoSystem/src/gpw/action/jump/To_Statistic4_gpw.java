@@ -18,20 +18,19 @@ import gpw.object.Expert;
 import gpw.object.Methods;
 import gpw.object.UserLogin;
 
-public class To_Statistic3_gpw extends ActionSupport {
+public class To_Statistic4_gpw extends ActionSupport {
 	private List<Expert> expertList;
 	private String UserName;
 	private Methods objMethods;
 	private UserLogin objUserLogin;
 
-	// 拟任职称分析图
+	// 现有任职资格分析图
 	private String resultNumberOfMaster;
 	private String resultNumberOfPhD;
 	private String resultNumberOfSenior;
 	private String resultNumberOfDSenior;
-	private String resultNumberOfProfessor;
-	private String resultNumberOfDProfessor;
-	
+	private String resultNumberOfDirector;
+	private String resultNumberOfDDirector;
 
 	@Override
 	public String execute() throws Exception {
@@ -40,7 +39,6 @@ public class To_Statistic3_gpw extends ActionSupport {
 		objUserLogin = (UserLogin)request.getSession().getAttribute("User"); 
 		objMethods = new Methods();
 		expertList = objMethods.initializeExpertListForGPWByJuryNo(objUserLogin.getUser_jury());
-
 		
 		// 用于暂存硕士博士专家信息
 		List<Expert> tempNumberOfMaster = new ArrayList<Expert>();
@@ -56,37 +54,35 @@ public class To_Statistic3_gpw extends ActionSupport {
 			}
 		}
 		
-		int[] numberOfMaster = new int[5];
-		int[] numberOfPhD = new int[5];
+		int[] numberOfMaster = new int[8];
+		int[] numberOfPhD = new int[8];
 		
 		for (Expert expert: tempNumberOfMaster) {
-			if(!expert.getExpert_Field32().equals("")) {
-				switch(expert.getExpert_Field32()) {
-				case "主任委员": numberOfMaster[0]++; break;
-				case "副主任委员": numberOfMaster[1]++; break;
-				case "委员": numberOfMaster[2]++; break;
-				}
-			}
-			if(!expert.getExpert_Field34().equals("")) {
-				switch(expert.getExpert_Field34()) {
-				case "组长": numberOfMaster[3]++; break;
-				case "组员": numberOfMaster[4]++; break;
+			if(!expert.getExpert_Field17().equals("")) {
+				switch(expert.getExpert_Field17()) {
+				case "高校教授": numberOfMaster[0]++; break;
+				case "高校助教": numberOfMaster[1]++; break;
+				case "高校计划副教授": numberOfMaster[2]++; break;
+				case "中专高级讲师": numberOfMaster[3]++; break;
+				case "技工学校教师": numberOfMaster[4]++; break;
+				case "技校高级讲师": numberOfMaster[5]++; break;
+				case "中学教师": numberOfMaster[6]++; break;
+				case "中学二级教师": numberOfMaster[7]++; break;
 				}
 			}
 		}
 		
 		for (Expert expert: tempNumberOfPhD) {
-			if(!expert.getExpert_Field32().equals("")) {
-				switch(expert.getExpert_Field32()) {
-				case "主任委员": numberOfPhD[0]++; break;
-				case "副主任委员": numberOfPhD[1]++; break;
-				case "委员": numberOfPhD[2]++; break;
-				}
-			}
-			if(!expert.getExpert_Field34().equals("")) {
-				switch(expert.getExpert_Field34()) {
-				case "组长": numberOfPhD[3]++; break;
-				case "组员": numberOfPhD[4]++; break;
+			if(!expert.getExpert_Field17().equals("")) {
+				switch(expert.getExpert_Field17()) {
+				case "高校教授": numberOfPhD[0]++; break;
+				case "高校助教": numberOfPhD[1]++; break;
+				case "高校计划副教授": numberOfPhD[2]++; break;
+				case "中专高级讲师": numberOfPhD[3]++; break;
+				case "技工学校教师": numberOfPhD[4]++; break;
+				case "技校高级讲师": numberOfPhD[5]++; break;
+				case "中学教师": numberOfPhD[6]++; break;
+				case "中学二级教师": numberOfPhD[7]++; break;
 				}
 			}
 		}
@@ -103,102 +99,98 @@ public class To_Statistic3_gpw extends ActionSupport {
 			}
 		}
 		
-		int[] numberOfSenior = new int[5];
-		int[] numberOfDSenior = new int[5];
+		int[] numberOfSenior = new int[8];
+		int[] numberOfDSenior = new int[8];
 		
 		for (Expert expert: tempNumberOfSenior) {
-			if(!expert.getExpert_Field32().equals("")) {
-				switch(expert.getExpert_Field32()) {
-				case "主任委员": numberOfSenior[0]++; break;
-				case "副主任委员": numberOfSenior[1]++; break;
-				case "委员": numberOfSenior[2]++; break;
-				}
-			}
-			if(!expert.getExpert_Field34().equals("")) {
-				switch(expert.getExpert_Field34()) {
-				case "组长": numberOfSenior[3]++; break;
-				case "组员": numberOfSenior[4]++; break;
+			if(!expert.getExpert_Field17().equals("")) {
+				switch(expert.getExpert_Field17()) {
+				case "高校教授": numberOfSenior[0]++; break;
+				case "高校助教": numberOfSenior[1]++; break;
+				case "高校计划副教授": numberOfSenior[2]++; break;
+				case "中专高级讲师": numberOfSenior[3]++; break;
+				case "技工学校教师": numberOfSenior[4]++; break;
+				case "技校高级讲师": numberOfSenior[5]++; break;
+				case "中学教师": numberOfSenior[6]++; break;
+				case "中学二级教师": numberOfSenior[7]++; break;
 				}
 			}
 		}
 		
 		for (Expert expert: tempNumberOfDSenior) {
-			if(!expert.getExpert_Field32().equals("")) {
-				switch(expert.getExpert_Field32()) {
-				case "主任委员": numberOfDSenior[0]++; break;
-				case "副主任委员": numberOfDSenior[1]++; break;
-				case "委员": numberOfDSenior[2]++; break;
-				}
-			}
-			if(!expert.getExpert_Field34().equals("")) {
-				switch(expert.getExpert_Field34()) {
-				case "组长": numberOfDSenior[3]++; break;
-				case "组员": numberOfDSenior[4]++; break;
+			if(!expert.getExpert_Field17().equals("")) {
+				switch(expert.getExpert_Field17()) {
+				case "高校教授": numberOfDSenior[0]++; break;
+				case "高校助教": numberOfDSenior[1]++; break;
+				case "高校计划副教授": numberOfDSenior[2]++; break;
+				case "中专高级讲师": numberOfDSenior[3]++; break;
+				case "技工学校教师": numberOfDSenior[4]++; break;
+				case "技校高级讲师": numberOfDSenior[5]++; break;
+				case "中学教师": numberOfDSenior[6]++; break;
+				case "中学二级教师": numberOfDSenior[7]++; break;
 				}
 			}
 		}
-		
-		// 用于暂存高校教授副教授等专家信息
-		List<Expert> tempNumberOfProfessor = new ArrayList<Expert>();
-		List<Expert> tempNumberOfDProfessor = new ArrayList<Expert>();
+
+		// 用于暂存曾属主任委员副主任委员专家信息
+		List<Expert> tempNumberOfDirector = new ArrayList<Expert>();
+		List<Expert> tempNumberOfDDirector = new ArrayList<Expert>();
 		
 		for (int i=0; i<expertList.size(); i++) {
-			if (expertList.get(i).getExpert_Field17().equals("高校教授")) {
-				tempNumberOfProfessor.add(expertList.get(i));
-			} else if (expertList.get(i).getExpert_Field17().equals("高校计划副教授")) {
-				tempNumberOfDProfessor.add(expertList.get(i));
+			if (expertList.get(i).getExpert_Field23().equals("主任委员")) {
+				tempNumberOfDirector.add(expertList.get(i));
+			} else if (expertList.get(i).getExpert_Field23().equals("副主任委员")) {
+				tempNumberOfDDirector.add(expertList.get(i));
 			}
 		}
 		
-		int[] numberOfProfessor = new int[5];
-		int[] numberOfDProfessor = new int[5];
+		int[] numberOfDirector = new int[8];
+		int[] numberOfDDirector = new int[8];
 		
-		for (Expert expert: tempNumberOfProfessor) {
-			if(!expert.getExpert_Field32().equals("")) {
-				switch(expert.getExpert_Field32()) {
-				case "主任委员": numberOfProfessor[0]++; break;
-				case "副主任委员": numberOfProfessor[1]++; break;
-				case "委员": numberOfProfessor[2]++; break;
-				}
-			}
-			if(!expert.getExpert_Field34().equals("")) {
-				switch(expert.getExpert_Field34()) {
-				case "组长": numberOfProfessor[3]++; break;
-				case "组员": numberOfProfessor[4]++; break;
-				}
-			}
-		}
-		
-		for (Expert expert: tempNumberOfDProfessor) {
-			if(!expert.getExpert_Field32().equals("")) {
-				switch(expert.getExpert_Field32()) {
-				case "主任委员": numberOfDProfessor[0]++; break;
-				case "副主任委员": numberOfDProfessor[1]++; break;
-				case "委员": numberOfDProfessor[2]++; break;
-				}
-			}
-			if(!expert.getExpert_Field34().equals("")) {
-				switch(expert.getExpert_Field34()) {
-				case "组长": numberOfDProfessor[3]++; break;
-				case "组员": numberOfDProfessor[4]++; break;
+		for (Expert expert: tempNumberOfDirector) {
+			if(!expert.getExpert_Field17().equals("")) {
+				switch(expert.getExpert_Field17()) {
+				case "高校教授": numberOfDirector[0]++; break;
+				case "高校助教": numberOfDirector[1]++; break;
+				case "高校计划副教授": numberOfDirector[2]++; break;
+				case "中专高级讲师": numberOfDirector[3]++; break;
+				case "技工学校教师": numberOfDirector[4]++; break;
+				case "技校高级讲师": numberOfDirector[5]++; break;
+				case "中学教师": numberOfDirector[6]++; break;
+				case "中学二级教师": numberOfDirector[7]++; break;
 				}
 			}
 		}
 		
+		for (Expert expert: tempNumberOfDDirector) {
+			if(!expert.getExpert_Field17().equals("")) {
+				switch(expert.getExpert_Field17()) {
+				case "高校教授": numberOfDDirector[0]++; break;
+				case "高校助教": numberOfDDirector[1]++; break;
+				case "高校计划副教授": numberOfDDirector[2]++; break;
+				case "中专高级讲师": numberOfDDirector[3]++; break;
+				case "技工学校教师": numberOfDDirector[4]++; break;
+				case "技校高级讲师": numberOfDDirector[5]++; break;
+				case "中学教师": numberOfDDirector[6]++; break;
+				case "中学二级教师": numberOfDDirector[7]++; break;
+				}
+			}
+		}
+				
 //		System.out.println(Arrays.toString(numberOfMaster));
 //		System.out.println(Arrays.toString(numberOfPhD));
 		resultNumberOfMaster = Arrays.toString(numberOfMaster);
 		resultNumberOfPhD = Arrays.toString(numberOfPhD);
 		resultNumberOfSenior = Arrays.toString(numberOfSenior);
 		resultNumberOfDSenior = Arrays.toString(numberOfDSenior);
-		resultNumberOfProfessor = Arrays.toString(numberOfProfessor);
-		resultNumberOfDProfessor = Arrays.toString(numberOfDProfessor);
+		resultNumberOfDirector = Arrays.toString(numberOfDirector);
+		resultNumberOfDDirector = Arrays.toString(numberOfDDirector);
 		request.getSession().setAttribute("resultNumberOfMaster", resultNumberOfMaster);
 		request.getSession().setAttribute("resultNumberOfPhD", resultNumberOfPhD);
 		request.getSession().setAttribute("resultNumberOfSenior", resultNumberOfSenior);
 		request.getSession().setAttribute("resultNumberOfDSenior", resultNumberOfDSenior);
-		request.getSession().setAttribute("resultNumberOfDirector", resultNumberOfProfessor);
-		request.getSession().setAttribute("resultNumberOfDDirector", resultNumberOfDProfessor);
+		request.getSession().setAttribute("resultNumberOfDirector", resultNumberOfDirector);
+		request.getSession().setAttribute("resultNumberOfDDirector", resultNumberOfDDirector);
 		return SUCCESS;
 	}
 
@@ -276,19 +268,19 @@ public class To_Statistic3_gpw extends ActionSupport {
 		this.resultNumberOfDSenior = resultNumberOfDSenior;
 	}
 
-	public String getResultNumberOfProfessor() {
-		return resultNumberOfProfessor;
+	public String getResultNumberOfDirector() {
+		return resultNumberOfDirector;
 	}
 
-	public void setResultNumberOfProfessor(String resultNumberOfProfessor) {
-		this.resultNumberOfProfessor = resultNumberOfProfessor;
+	public void setResultNumberOfDirector(String resultNumberOfDirector) {
+		this.resultNumberOfDirector = resultNumberOfDirector;
 	}
 
-	public String getResultNumberOfDProfessor() {
-		return resultNumberOfDProfessor;
+	public String getResultNumberOfDDirector() {
+		return resultNumberOfDDirector;
 	}
 
-	public void setResultNumberOfDProfessor(String resultNumberOfDProfessor) {
-		this.resultNumberOfDProfessor = resultNumberOfDProfessor;
+	public void setResultNumberOfDDirector(String resultNumberOfDDirector) {
+		this.resultNumberOfDDirector = resultNumberOfDDirector;
 	}
 }

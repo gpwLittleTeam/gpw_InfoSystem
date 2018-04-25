@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">
 
-<title>统计2</title>
+<title>统计1</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -88,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			xAxis : [
 				{
 					type : 'category',
-					data : [ '1年', '2年', '3年', '4年', '5年', '5-10年', '10-15年', '15年以上' ]
+					data : [ '高校教授', '高校助教', '高校计划副教授', '中专高级讲师', '技工学校教师', '技校高级讲师', '中学教师', '中学二级教师' ]
 				}
 			],
 			yAxis : [
