@@ -352,6 +352,18 @@
 		<action name="to_statistic4" class="gpw.action.jump.To_Statistic4_gpw">
 			<result>/statistic4.jsp</result>
 		</action>
+		<action name="to_statistic1_gly" class="gpw.action.jump.To_Statistic_gly">
+			<result>/statistic1.jsp</result>
+		</action>
+		<action name="to_statistic2_gly" class="gpw.action.jump.To_Statistic2_gly">
+			<result>/statistic2.jsp</result>
+		</action>
+		<action name="to_statistic3_gly" class="gpw.action.jump.To_Statistic3_gly">
+			<result>/statistic3.jsp</result>
+		</action>
+		<action name="to_statistic4_gly" class="gpw.action.jump.To_Statistic4_gly">
+			<result>/statistic4.jsp</result>
+		</action>
 		
 	</package>
 	

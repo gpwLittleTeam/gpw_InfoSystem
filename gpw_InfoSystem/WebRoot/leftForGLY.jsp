@@ -4,10 +4,10 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title></title>
-		<script>
+		<!-- <script>
 		parent.document.all.I2.height = screen.height;
         parent.document.all.rightFrame.height = screen.height - 300;
-  		</script>
+  		</script> -->
 		<style type="text/css">
 <!--
 body {

@@ -29,27 +29,46 @@ menu.push( {
 menu.push( {
 	id : 3,
 	parentId : 0,
-	name : '查询统计',
-	url : '',
-	level : 1,
-	css : 'nobg '
-});
-
-menu.push( {
-	id : 301,
-	parentId : 3,
 	name : '信息查询',
 	url : 'to_cxtj_query.action',
-	level : 2
+	level : 1,
+	css : 'nobg'
 });
 
 menu.push( {
-	id : 302,
-	parentId : 3,
+	id : 4,
+	parentId : 0,
 	name : '信息统计',
-	url :'to_statistic1.action',
+	url :'',
+	level : 1,
+});
+menu.push( {
+	id : 401,
+	parentId: 4,
+	name : '年龄分析图',
+	url : 'to_statistic1_gly.action',
 	level : 2,
-	css : 'nobg '
+});
+menu.push( {
+	id : 402,
+	parentId : 4,
+	name : '任职时间分析图',
+	url : 'to_statistic2_gly.action',
+	level : 2,
+});
+menu.push( {
+	id : 403,
+	parentId : 4,
+	name : '拟任职称分析图',
+	url : 'to_statistic3_gly.action',
+	level : 2,
+});
+menu.push( {
+	id : 404,
+	parentId : 4,
+	name : '现有任职资格分析图',
+	url : 'to_statistic4_gly.action',
+	level : 2,
 });
 
 
