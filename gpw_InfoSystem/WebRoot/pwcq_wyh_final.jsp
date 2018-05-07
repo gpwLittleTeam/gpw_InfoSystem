@@ -25,12 +25,6 @@ body {
 	font-size: 12px
 }
 
-.STYLE4 {
-	font-size: 12px;
-	color: #1F4A65;
-	font-weight: bold;
-}
-
 a:link {
 	font-size: 12px;
 	color: #06482a;

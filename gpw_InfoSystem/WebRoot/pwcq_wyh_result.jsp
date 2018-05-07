@@ -141,11 +141,29 @@ $(function(){
 	if(result != "null" && result != "0") {
 		jQuery.alertWindow("抽取结果无法满足以下规则", feedback , "#A5DE37"); 
 	}
+	
 });
+var saveSuccess = 0;
+	
+function saveResult() {
+	$.post("addHistoryTitleForWYH.action", function(data) {
+		console.log(data.feedback); //
+		var feedback = data.feedback;
+		saveSuccess = 1;
+		$("#feedbackNav").html(feedback);
+	});
+}
+
+function checkLeave() {
+	alert("1");
+	if(saveSuccess != 1){
+		event.returnValue="您还未保存抽取结果";
+	}
+};
 </script>
 </head>
 
-<body>
+<body onbeforeunload="checkLeave()">
 	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 		<tr>
 			<th height="30">
@@ -168,6 +186,7 @@ $(function(){
 					<tr>
 						<th width="9" background="images/tab_12.gif">&nbsp;</th>
 						<td style="background-color:#f3ffe3;" align="center">
+							<nav id="feedbackNav" class="feedbackNav"><s:property value="feedback"/></nav>
 							<table class="normalDisplayTable" style="margin:10px 0px;">
 								<tr align="center" class="STYLE7">
 									<td rowspan="${directorListSize+1 }" width=20% >		<center>
@@ -250,7 +269,7 @@ $(function(){
 									<td colspan="2">${ratioOfSenior }%</td>
 
 								</tr>
-								<tr>
+								<%-- <tr>
 									<td colspan="5">
 										<div id="pieChart1">
 											<svg id="pieChartSVG">
@@ -275,13 +294,13 @@ $(function(){
 											</svg>
 										</div>
 									</td>
-								</tr>
+								</tr> --%>
 								<tr >
 
 									<td colspan="3" class="STYLE7">45岁以下(含)专家占</td>
 									<td colspan="2">${ratioOfAge }%</td>
 								</tr>
-								<tr>
+								<%-- <tr>
 									<td colspan="5">
 										<div id="pieChart2">
 											<svg id="pieChartSVG">
@@ -306,7 +325,7 @@ $(function(){
 											</svg>
 										</div>
 									</td>
-								</tr>
+								</tr> --%>
 								<tr >
 
 									<td colspan="3" class="STYLE7">外单位专家占</td>
@@ -320,9 +339,18 @@ $(function(){
 												style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
 												class="button button-action button-rounded" onclick="location.href='to_pwcq_wyh!backFourth.action'">上一步</button>
 											<button type="button"
+												style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
+												class="button button-action button-rounded" onclick="saveResult()">保存</button>
+											<button type="button"
+												style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="lastmove"
+												class="button button-action button-rounded" onclick="window.open('to_pwcq_wyh!finalPagePrint.action')">打印</button>
+											<button type="button"
+												style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="finish"
+												class="button button-action button-rounded" onclick="location.href='./index.jsp'">关闭</button>
+											<!-- <button type="button"
 												style="font-size:8px; padding: 0 22px;line-height: 20px; height: 20px;" name="finish"
 												class="button button-action button-rounded"
-												onclick="location.href='to_pwcq_wyh!finalPage.action'">下一步</button>
+												onclick="location.href='to_pwcq_wyh!finalPage.action'">下一步</button> -->
 										</div>
 									</th>
 								</tr>
@@ -359,7 +387,7 @@ $(function(){
 		</tr>
 	</table>
 	<%-- <script src="https://d3js.org/d3.v3.min.js"></script> --%>
-	<script src="js/d3.v3.min.js"></script>
+	<%-- <script src="js/d3.v3.min.js"></script>
 	<script>
 	;( function() {
 	  var data = {
@@ -565,6 +593,6 @@ $(function(){
 	  ಠ_ಠ();
 	  
 	})();
-	</script>
+	</script> --%>
 </body>
 </html>

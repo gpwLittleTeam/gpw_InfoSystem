@@ -154,7 +154,7 @@ a:active {
 											<s:iterator id="list" value="listRuleManagements">
 												<s:if test="%{#list.rule_force == '0'.toString()}">
 													<div class = "STYLE7_MARGIN">
-														<input type="checkbox" value="<s:property value='#list.rule_no'/>" name="ruleCheckbox" checked/><span><s:property value="#list.rule_field"/></span>
+														<input type="checkbox" value="<s:property value='#list.rule_no'/>" name="ruleCheckbox"/><span><s:property value="#list.rule_field"/></span>
 													</div>
 												</s:if> 
 												<s:else>

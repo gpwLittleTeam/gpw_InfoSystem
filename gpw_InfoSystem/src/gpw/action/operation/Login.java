@@ -65,7 +65,7 @@ public class Login extends ActionSupport {
 				message = "连接服务器失败";
 				return ERROR;
 			}
-			message = "用户名或密码错误，请重新输入";
+			message = "用户名或密码错误";
 			return ERROR;
 		}
 	}
