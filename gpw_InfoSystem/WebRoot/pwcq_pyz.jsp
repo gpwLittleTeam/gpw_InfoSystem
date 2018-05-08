@@ -460,8 +460,6 @@ body {
 									<div width="98%">
 										<input type="button" value="保存"
 											class="button button-action button-rounded customBtnStyleSingle" onclick="saveResult()"/>
-										<input type="button" value="打印"
-												class="button button-action button-rounded customBtnStyleSingle" onclick="window.open('to_pwcq_wyh!finalPagePrint.action')"/>
 									</div>
 								</fieldset>
 								

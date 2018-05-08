@@ -48,10 +48,6 @@ public class To_Pwcq_pyz extends ActionSupport{
 		return super.execute();
 	}
 
-	public String printResult() {
-		
-		return SUCCESS;
-	}
 	public Methods getObjMethods() {
 		return objMethods;
 	}

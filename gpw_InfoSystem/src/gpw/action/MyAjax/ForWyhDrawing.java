@@ -103,7 +103,7 @@ public class ForWyhDrawing extends ActionSupport{
 	public String drawingCommittee() throws ParseException {
 		String result = "0";  //判断是否符合规则，0为符合规则
 		int loopCount = 0;  //循环次数判断
-		int maxCount = 100; //抽取的最大次数
+		int maxCount = 100; //最大次数
 		listDirector = (List<Expert>)objMethods.getSession("listDirector");
 		listViceDirector = (List<Expert>)objMethods.getSession("listViceDirector");
 		committeeNo = (int)objMethods.getSession("committeeNo");
