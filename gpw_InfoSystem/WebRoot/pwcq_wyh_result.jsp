@@ -139,7 +139,7 @@ $(function(){
 	 
 //	alert(feedback);
 	if(result != "null" && result != "0") {
-		jQuery.alertWindow("抽取结果无法满足以下规则", feedback , "#A5DE37"); 
+		jQuery.alertWindow("在随机抽取100次后抽取结果依旧无法满足以下规则", feedback , "#A5DE37"); 
 	}
 	
 });

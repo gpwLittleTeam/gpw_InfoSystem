@@ -253,6 +253,9 @@
 		<action name="to_pwcq_pyz" class="gpw.action.jump.To_Pwcq_pyz">
 			<result>/pwcq_pyz.jsp</result>
 		</action>
+		<action name="to_pwcq_pyz_print" class="gpw.action.jump.To_Pwcq_pyz" method="printResult">
+			<result>/pwcq_pyz_print.jsp</result>
+		</action>
 		<action name="to_rzgl" class="gpw.action.jump.To_Rzgl">
 			<result>/rzgl.jsp</result>
 		</action>
