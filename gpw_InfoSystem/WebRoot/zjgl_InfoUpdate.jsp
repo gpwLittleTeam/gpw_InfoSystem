@@ -485,10 +485,10 @@ a:active {
 																			}
 																		%>
 																</table>
-																<div style="margin-top:20px;margin-right:10px;" align="right">
+																<div style="margin-top:20px;margin-right:10px;" align="center">
 																		<input type="submit"
-																				style="font-size:15px; padding: 0 30px;  line-height: 27px; height: 27px;"
-																				value="确定" class="button button-action button-rounded" onclick="check_submit()" />
+																				style="font-size:15px; padding: 0 30px;  line-height: 27px; height: 27px; position: center"
+																				value="保存" class="button button-action button-rounded" onclick="check_submit()" />
 																</div>
 														</form>
 												</td>

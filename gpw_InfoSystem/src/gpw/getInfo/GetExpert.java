@@ -1811,6 +1811,7 @@ public class GetExpert {
 			sqlValue += chField.get(i) + "='" + value.get(i) + "' and ";
 		}
 		sqlValue = sqlValue.substring(0, sqlValue.length() - 5);
+		sqlValue = sqlValue.replace("2=", "2 like ");
 		System.out.println(sqlValue);
 		try {
 			stmt = conn.createStatement();

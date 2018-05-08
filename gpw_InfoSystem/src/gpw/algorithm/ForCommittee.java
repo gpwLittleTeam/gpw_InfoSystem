@@ -1413,7 +1413,7 @@ public class ForCommittee {
 		LinkDB link =  new LinkDB();
 		Connection conn = link.getConn();
 		Statement stmt = null;
-		String sqlValue = "delete from history_title where expert_serveyear='" + serveyear + "'";
+		String sqlValue = "delete from history_title where expert_serveyear='" + serveyear + "' and expert_post in ('委员','主任委员','副主任委员')";
 //		sqlValue = sqlValue.substring(0, sqlValue.length()-3);
 //		System.out.println(sqlValue);
 		try {

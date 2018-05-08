@@ -428,10 +428,9 @@ for(var i=0;i<cs.length;i++){
 									</tr>
  -->
 								</table>
-							</form> <!-- 分页  -->
-							<div class=pageDiv>
-								<tr><td align="center" colspan=2><%=bar %></td></tr>
-							</div>
+							</form> 
+							<!-- 分页  -->
+							<span class=pageDiv style="text-align:center; display:block;" colspan=2><%=bar %></span>
 						</td>
 						<td width="9" background="images/tab_16.gif">&nbsp;</td>
 					</tr>
