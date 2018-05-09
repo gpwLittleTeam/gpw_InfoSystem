@@ -160,7 +160,6 @@ body {
 		var exist;
 		var cease;
 		$.post("clearSession.action", {}, function() {
-			alert(1);
 		});
 		for(var i=0;i<AGroupNo.length;i++) {
 			var nrOfChoosen = $("#noChoosenOf"+AGroupNo[i]).val();

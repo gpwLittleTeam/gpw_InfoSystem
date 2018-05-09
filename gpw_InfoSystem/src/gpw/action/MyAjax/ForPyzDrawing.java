@@ -28,12 +28,14 @@ public class ForPyzDrawing extends ActionSupport {
 	// drawGroupmember
 	private int numberChoosen;
 	private List<Expert> leaderExpert;
-	private List<Expert> memberExpert;
+	private List<Expert> memberExpert; //临时储存
 	private String leaderResult;
 	private String memberResult;
 	//print
 	private List<List<Expert>> groupMembersList; //以组为单位存放组员
 	private List<Expert> groupLeaderList;
+	private List<Expert> totalMemberExpert;//不分组存放组员
+	private List<Expert> totalLeaderExpert;
 
 	public String showGroupMember() throws Exception {
 		membersOfGroup = objReviewGroup.showExpertsOfChoosenGroup(groupNo);
@@ -53,12 +55,12 @@ public class ForPyzDrawing extends ActionSupport {
 		// System.out.println("groupNo : " + groupNo);
 		// System.out.println("numberChoosen : " + numberChoosen);
 		List<Expert> oneGroup = new ArrayList<Expert>();
+		totalLeaderExpert = new ArrayList<Expert>();
+		totalMemberExpert = new ArrayList<Expert>();
 		leaderExpert = new ArrayList<Expert>();
 		memberExpert = new ArrayList<Expert>();
 		objReviewGroup.randomFunction(groupNo, numberChoosen, leaderExpert, memberExpert);
 		theErrors = new Methods().getError();
-//		System.out.println("errors: " + theErrors);
-		
 		if (theErrors != null) {
 			System.out.println("theErrors != null");
 		} else{
@@ -80,12 +82,15 @@ public class ForPyzDrawing extends ActionSupport {
 			objMethods.setSession("groupLeaderList", groupLeaderList);
 			objMethods.setSession("groupMembersList", groupMembersList);
 			//System.out.println("ForPYZDrawMemeber ->leaderExpert: " + leaderExpert.get(0).getExpert_Field1());
-			/*if((List<Expert>)objMethods.getSession("leaderExpert") != null)
-				leaderExpert.addAll((List<Expert>)objMethods.getSession("leaderExpert"));
-			if((List<Expert>)objMethods.getSession("memberExpert") != null)
-				memberExpert.addAll((List<Expert>)objMethods.getSession("memberExpert"));
-			objMethods.setSession("leaderExpert", leaderExpert);
-			objMethods.setSession("memberExpert", memberExpert);*/
+			if((List<Expert>)objMethods.getSession("totalLeaderExpert") != null)
+				totalLeaderExpert.addAll((List<Expert>)objMethods.getSession("totalLeaderExpert"));
+			if((List<Expert>)objMethods.getSession("totalMemberExpert") != null)
+				totalMemberExpert.addAll((List<Expert>)objMethods.getSession("totalMemberExpert"));
+			
+			totalLeaderExpert.addAll(leaderExpert);
+			totalMemberExpert.addAll(memberExpert);
+			objMethods.setSession("totalLeaderExpert", totalLeaderExpert);
+			objMethods.setSession("totalMemberExpert", totalMemberExpert);
 			
 /*			//储存多次抽取的结果
 			List<Expert> resultOfLeaderExpert = (List<Expert>)objMethods.getSession("resultOfLeaderExpert");
@@ -110,8 +115,8 @@ public class ForPyzDrawing extends ActionSupport {
 
 	public String addHistoryTitleForPYZ(){
 		Methods objMethods = new Methods();
-		List<Expert> leaderExpert = (List<Expert>) objMethods.getSession("leaderExpert");
-		List<Expert> memberExpert = (List<Expert>) objMethods.getSession("memberExpert");
+		List<Expert> leaderExpert = (List<Expert>) objMethods.getSession("totalLeaderExpert");
+		List<Expert> memberExpert = (List<Expert>) objMethods.getSession("totalMemberExpert");
 
 		//当前年份
 		SimpleDateFormat format = new SimpleDateFormat("yyyy");
@@ -266,6 +271,22 @@ public class ForPyzDrawing extends ActionSupport {
 
 	public void setGroupLeaderList(List<Expert> groupLeaderList) {
 		this.groupLeaderList = groupLeaderList;
+	}
+
+	public List<Expert> getTotalMemberExpert() {
+		return totalMemberExpert;
+	}
+
+	public void setTotalMemberExpert(List<Expert> totalMemberExpert) {
+		this.totalMemberExpert = totalMemberExpert;
+	}
+
+	public List<Expert> getTotalLeaderExpert() {
+		return totalLeaderExpert;
+	}
+
+	public void setTotalLeaderExpert(List<Expert> totalLeaderExpert) {
+		this.totalLeaderExpert = totalLeaderExpert;
 	}
 
 }

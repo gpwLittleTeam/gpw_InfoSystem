@@ -399,6 +399,9 @@
 		</action>
 		<!-- 抽取评议组 -->
 		<action name="clearSession" class="gpw.action.MyAjax.ForPyzDrawing" method="clearSession">
+			 <result name="success" type="json">
+                <param name="root"></param>
+            </result>
 		</action>
 		<action name="drawingMemeberOfGroup" class="gpw.action.MyAjax.ForPyzDrawing" method="drawGroupMemeber">
 			<result type="json">
