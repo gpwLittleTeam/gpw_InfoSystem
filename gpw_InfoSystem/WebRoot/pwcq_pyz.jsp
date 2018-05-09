@@ -159,6 +159,9 @@ body {
 		});
 		var exist;
 		var cease;
+		$.post("clearSession.action", {}, function() {
+			alert(1);
+		});
 		for(var i=0;i<AGroupNo.length;i++) {
 			var nrOfChoosen = $("#noChoosenOf"+AGroupNo[i]).val();
 			//exist = true;
@@ -177,9 +180,11 @@ body {
 				//cease = true;
 				continue;
 			}
-	
+			//清理session
+			
+			
 			if($("tr[name='resultGroup"+AGroupNo[i]+"']").length==0){
-				drawMember(AGroupNo[i],AGroupName[i]);  //前面都会问题的话，才会走到这一步
+				drawMember(AGroupNo[i],AGroupName[i]);  //前面都没问题的话，才会走到这一步
 			} else {
 				redrawMember(AGroupNo[i],AGroupName[i]);
 			}
@@ -225,7 +230,10 @@ body {
 					//console.log(leaderResult); //
 					//console.log(memberResult); //
 					$.each(leaderResult,function(i,leaderResult){
-						htmlBlock += "<tr class='list name' name=" + "resultGroup" + groupNo + ">" + "<td rowSpan=" + resultNumber + ">"+ groupName +"</td>";
+						htmlBlock += "<tr class='list name' name=" + "resultGroup" + groupNo + ">" + "<td rowSpan=" + resultNumber + ">"+ groupName 
+							+ "<input type='hidden' name='resultNumber' value='"+ resultNumber+"'/>"
+							+ "<input type='hidden' name='groupName' value='"+ groupName +"'" 
+							+ "</td>";
 						htmlBlock += "<td>" + leaderResult.expert_Field1 + "</td>"
 						htmlBlock += "<td><a target='_blank' href='to_infoBrowsing.action?expert_no="+ leaderResult.expert_Field1 +"'>" + leaderResult.expert_Field2 + "</a></td>";
 						htmlBlock += "<td>"
@@ -305,7 +313,10 @@ body {
 					//console.log(memberResult); //
 					$.each(leaderResult,function(i,leaderResult){
 						//alert("307");
-						htmlBlock += "<tr class='list name' name=" + "resultGroup" + groupNo + ">" + "<td rowSpan=" + resultNumber + ">"+ groupName +"</td>";
+						htmlBlock += "<tr class='list name' name=" + "resultGroup" + groupNo + ">" + "<td rowSpan=" + resultNumber + ">"+ groupName 
+							+ "<input type='hidden' name='resultNumber' value='"+ resultNumber+"'/>"
+							+ "<input type='hidden' name='groupName' value='"+ groupName +"'" 
+							+ "</td>";
 						htmlBlock += "<td>" + leaderResult.expert_Field1 + "</td>"
 						htmlBlock += "<td><a target='_blank' href='to_infoBrowsing.action?expert_no="+ leaderResult.expert_Field1 +"'>" + leaderResult.expert_Field2 + "</a></td>";
 						htmlBlock += "<td>"
@@ -435,7 +446,7 @@ body {
 								</div>
 								<!-- <form name="infoList" id="infoList" action="addHistoryTitle!addHistoryTitleForPYZ.action" method="post" target="_self"
 								style="margin:10px 0;width:98%"> -->
-								<form name="infoList" id="infoList" action="" method="post" style="margin:10px 0;width:98%">
+								<form name="infoList" id="infoList" action="to_pwcq_pyz_print.action" method="post" style="margin:10px 0;width:98%" target="_blank">
 								<fieldset style="width:98%;border:#c0de98 dashed 1px;">
 									<legend align="left" style="font-size:14px; color:#1F4A65;font-weight:bold;">抽取结果</legend>
 									<table id="drawResult" width="100%" border="0" align="center" cellpadding="0" cellspacing="1"
@@ -460,8 +471,8 @@ body {
 									<div width="98%">
 										<input type="button" value="保存"
 											class="button button-action button-rounded customBtnStyleSingle" onclick="saveResult()"/>
-										<input type="button" value="打印"
-												class="button button-action button-rounded customBtnStyleSingle" onclick="window.open('to_pwcq_wyh!finalPagePrint.action')"/>
+										<input type="submit" value="打印"
+												class="button button-action button-rounded customBtnStyleSingle"/>
 									</div>
 								</fieldset>
 								

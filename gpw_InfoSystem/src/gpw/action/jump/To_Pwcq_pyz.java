@@ -20,10 +20,16 @@ public class To_Pwcq_pyz extends ActionSupport{
 	private ReviewGroup objReviewGroup;
 	private UserLogin objUserLogin;
 	private List<Expert>[] arrayofExpertList; //
-	private List<Expert> leadExpert;
-	private List<Expert> memberExpert;
 	private List<Integer> noOfGroupMembers;
 	private List<Expert> membersOfGroup;
+	
+	//print
+	private List<List<Expert>> groupMembersList;
+	private List<Expert> groupLeaderList;
+	private List<Expert> leaderExpert;
+	private List<Expert> memberExpert;
+	private String[] resultNumber;
+	private String[] groupName;
 
 	@Override
 	public String execute() throws Exception {
@@ -49,6 +55,13 @@ public class To_Pwcq_pyz extends ActionSupport{
 	}
 
 	public String printResult() {
+		Methods objMethods = new Methods();
+		if(objMethods.getSession("groupMembersList") != null){
+			groupMembersList = (List<List<Expert>>)objMethods.getSession("groupMembersList");
+			groupLeaderList = (List<Expert>)objMethods.getSession("groupLeaderList");
+			System.out.println("groupName: " + groupName.length);
+			System.out.println("resultNumber: " + resultNumber.length);
+		}
 		
 		return SUCCESS;
 	}
@@ -100,22 +113,6 @@ public class To_Pwcq_pyz extends ActionSupport{
 		this.arrayofExpertList = arrayofExpertList;
 	}
 
-	public List<Expert> getLeadExpert() {
-		return leadExpert;
-	}
-
-	public void setLeadExpert(List<Expert> leadExpert) {
-		this.leadExpert = leadExpert;
-	}
-
-	public List<Expert> getMemberExpert() {
-		return memberExpert;
-	}
-
-	public void setMemberExpert(List<Expert> memberExpert) {
-		this.memberExpert = memberExpert;
-	}
-
 	public List<Integer> getNoOfGroupMembers() {
 		return noOfGroupMembers;
 	}
@@ -130,6 +127,54 @@ public class To_Pwcq_pyz extends ActionSupport{
 
 	public void setMembersOfGroup(List<Expert> membersOfGroup) {
 		this.membersOfGroup = membersOfGroup;
+	}
+
+	public List<Expert> getLeaderExpert() {
+		return leaderExpert;
+	}
+
+	public void setLeaderExpert(List<Expert> leaderExpert) {
+		this.leaderExpert = leaderExpert;
+	}
+
+	public List<Expert> getMemberExpert() {
+		return memberExpert;
+	}
+
+	public void setMemberExpert(List<Expert> memberExpert) {
+		this.memberExpert = memberExpert;
+	}
+
+	public String[] getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String[] groupName) {
+		this.groupName = groupName;
+	}
+
+	public String[] getResultNumber() {
+		return resultNumber;
+	}
+
+	public void setResultNumber(String[] resultNumber) {
+		this.resultNumber = resultNumber;
+	}
+
+	public List<List<Expert>> getGroupMembersList() {
+		return groupMembersList;
+	}
+
+	public void setGroupMembersList(List<List<Expert>> groupMembersList) {
+		this.groupMembersList = groupMembersList;
+	}
+
+	public List<Expert> getGroupLeaderList() {
+		return groupLeaderList;
+	}
+
+	public void setGroupLeaderList(List<Expert> groupLeaderList) {
+		this.groupLeaderList = groupLeaderList;
 	}
 
 }
