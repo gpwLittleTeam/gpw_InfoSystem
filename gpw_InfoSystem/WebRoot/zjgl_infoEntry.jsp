@@ -154,6 +154,7 @@ a:active {
 }
 </style>
 
+<script src="laydate/laydate.js"></script>
 <script>
 	/* 	var checkArray = new Array(35); //当checkArray[i] !=0，不能提交数据
 	 function check(docName, num) {
@@ -329,7 +330,7 @@ a:active {
 																				<td class=input-td>
 																						<input id="expert.Expert_Field5" name="expert.Expert_Field5"
 																								class="input-text  idNumber" style="width:<%=width[4]%>px" value=""
-																								type="<%=type[4]%>" ${aTablestrus[4].field_null }>
+																								onClick="laydate()" ${aTablestrus[4].field_null }>
 																						<span id="field4_span" class="hint"></span>
 																				</td>
 																		</tr>
