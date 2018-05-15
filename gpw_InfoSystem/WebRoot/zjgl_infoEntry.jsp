@@ -10,6 +10,7 @@
 	String[] width = new String[size];
 	String[] remariksName = new String[size];
 	String[] fieldName = new String[size];  //显示给用户的中文字段
+	String[] fieldNull = new String[size];
 	List<String>[] arrayOfNameList = (List<String>[]) request.getSession().getAttribute("arrayOfNameList");   //select 选项的中文字段
 	List<String>[] arrayOfCodeList = (List<String>[]) request.getSession().getAttribute("arrayOfCodeList");   //select 选项的英文字段
 //
@@ -18,6 +19,7 @@
 		width[i] = aTablestrus[i].getField_width();
 		remariksName[i] = aTablestrus[i].getField_remark();
 		fieldName[i] = aTablestrus[i].getField_chname();
+		fieldNull[i] = aTablestrus[i].getField_null();
 	}
 	/* System.out.println(aTablestrus[0].getField_id()); */
 %>
@@ -154,7 +156,6 @@ a:active {
 }
 </style>
 
-<script src="laydate/laydate.js"></script>
 <script>
 	/* 	var checkArray = new Array(35); //当checkArray[i] !=0，不能提交数据
 	 function check(docName, num) {
@@ -328,9 +329,7 @@ a:active {
 																						<span class="STYLE7">${aTablestrus[4].field_chname }</span>
 																				</td>
 																				<td class=input-td>
-																						<input id="expert.Expert_Field5" name="expert.Expert_Field5"
-																								class="input-text  idNumber" style="width:<%=width[4]%>px" value=""
-																								onClick="laydate()" ${aTablestrus[4].field_null }>
+																						<input type="text" id="datejs" class="demo-input" placeholder="请选择日期" ${aTablestrus[4].field_null } }>
 																						<span id="field4_span" class="hint"></span>
 																				</td>
 																		</tr>
@@ -390,7 +389,7 @@ a:active {
 																				</td>
 																				<td class="input-td">
 																						<select id=<%=inputName%> name=<%=inputName%> style="width:<%=width[i]%>px"
-																								type=<%=type[i]%> class="input-text " ${aTablestrus[i].field_null }>
+																								type=<%=type[i]%> class="input-text " <%=fieldNull[i]%> }>
 																								<option value="-1">-</option>
 																								<%
 																									for (int j = 0; j < arrayOfNameList[i].size(); j++) {
@@ -401,6 +400,19 @@ a:active {
 																								%>
 																								<span id=<%=spanName%> class="hint"></span>
 																						</select>
+																				</td>
+																				<td class="thirdTd"><%=remariksName[i]%></td>
+																		</tr>
+																		<%
+																			} else if (type[i].equals("date")) {
+																		%>
+																		<tr>
+																				<td class="firTd">
+																						<span class="STYLE7"><%=fieldName[i]%></span>
+																				</td>
+																				<td class=input-td>
+																						<input type="text" id="datejs" class="demo-input" placeholder="请选择日期" <%=fieldNull[i]%> }>
+																						<span id=<%=spanName%> class="hint"></span>
 																				</td>
 																				<td class="thirdTd"><%=remariksName[i]%></td>
 																		</tr>
@@ -733,5 +745,14 @@ a:active {
 						</td>
 				</tr>
 		</table>
+<script src="laydate/laydate.js"></script>
+<script>
+	lay('#version').html('-v'+ laydate.v);
+	
+	//执行一个laydate实例
+	laydate.render({
+	  elem: '#datejs' //指定元素
+	});
+</script>
 </body>
 </html>
