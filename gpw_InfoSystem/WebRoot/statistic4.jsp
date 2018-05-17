@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		// 指定图表的配置项和数据
 		var option = {
 			title : {
-				text : '根据专家任职时间的分析图',
+				text : '根据专家现有任职资格的分析图',
 			},
 			tooltip : {
 				trigger : 'axis'
