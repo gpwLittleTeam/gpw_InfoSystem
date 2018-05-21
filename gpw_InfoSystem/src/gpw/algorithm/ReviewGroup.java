@@ -201,9 +201,7 @@ public class ReviewGroup {
 					tempMember.add(tempExperts.get(k));
 				}
 			}
-			//System.out.println(tempExperts.size());
-//			System.out.println(tempLeader.size());
-//			System.out.println(tempMember.size());
+
 			if(tempLeader.size() == 0){
 				HttpServletRequest request = (HttpServletRequest)
 						ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
@@ -218,7 +216,6 @@ public class ReviewGroup {
 			} else {
 				//抽取组长模块
 				randomLeader = ra.nextInt(tempLeader.size()); //按照已有的个数随机生成一个组长
-				//System.out.println(s);
 				leader.add(tempLeader.get(randomLeader));//将该专家从tempLeader加入leaderOfGroup中
 				tempLeader.remove(randomLeader);
 				for(int h=0; h<tempLeader.size(); h++){	//把未选中组长的专家放到tempMember中
@@ -226,12 +223,6 @@ public class ReviewGroup {
 					tempLeader.remove(h);
 				}
 			}
-//			System.out.println("抽完组长后的membersize："+tempMember.size());
-//			for(int i=0;i<tempMember.size();i++){
-//				System.out.print(tempMember.get(i).getExpert_Field1()+" ");
-//			}
-//			System.out.println();
-			
 			//抽取组员模块
 			for(int j=0; j<numberChoosen-1; j++){ //按照选择的人数遍历，每次随机抽取一个组员从tempMember中放入memberOfGroup
 				randomMember = ra.nextInt(tempMember.size());

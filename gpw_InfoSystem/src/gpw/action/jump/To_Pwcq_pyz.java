@@ -42,7 +42,6 @@ public class To_Pwcq_pyz extends ActionSupport{
 		for(int i=0;i<listGroup.size();i++) {
 			membersOfGroup = objReviewGroup.showExpertsOfChoosenGroup(listGroup.get(i).getGroup_no());
 			noOfGroupMembers.add(membersOfGroup.size());
-			System.out.println("noOfGroupMembers : " + noOfGroupMembers.get(i));
 		}
 		
 		return super.execute();
