@@ -397,7 +397,7 @@ body {
 					<tr>
 						<td width="9" background="images/tab_12.gif">&nbsp;</td>
 						<td bgcolor="#f3ffe3" align="center">
-							<table id="drawResult" width="100%" border="0" align="center" cellpadding="0" cellspacing="1"
+							<table id="drawResult" width=99%" border="0" align="center" cellpadding="0" cellspacing="1"
 									bgcolor="#c0de98" style="margin:10px 0">
 									<tr>
 										<th width="15%" height="18" background="images/tab_14.gif" class="STYLE1">专业组名称</th>
@@ -412,10 +412,36 @@ body {
 										<th background="images/tab_14.gif" class="STYLE1">拟任专业组职务</th>
 										<th background="images/tab_14.gif" class="STYLE1">抽取结果</th>
 									</tr>
-									<!-- <tr class="list name">
-										
-									</tr> -->
-								</table>
+									<s:iterator id="group" value="groupMembersList" status="index">
+										<!-- 显示组长 -->
+										<tr class="list name">
+											<td rowSpan=<s:property value="%{resultNumber[#index.index]}"/>>
+												<s:property value="%{groupName[#index.index]}"/>
+											</td>
+											<td><s:property value="%{groupLeaderList[#index.index].Expert_Field1}"/></td>
+											<td><s:property value="%{groupLeaderList[#index.index].Expert_Field2}"/></td>
+											<td><s:property value="%{groupLeaderList[#index.index].Expert_Field3}"/></td>
+											<td><s:property value="%{groupLeaderList[#index.index].Expert_Field7}"/></td>
+											<td><s:property value="%{groupLeaderList[#index.index].Expert_Field12}"/></td>
+											<td><s:property value="%{groupLeaderList[#index.index].Expert_Field18}"/></td>
+											<td><s:property value="%{groupLeaderList[#index.index].Expert_Field34}"/></td>
+											<td>组长</td>
+										</tr>
+										<!-- 显示组员 -->
+									<s:iterator id="expert" value="#group">
+										<tr class="list name">
+											<td><s:property value="#expert.Expert_Field1"/></td>
+											<td><s:property value="#expert.Expert_Field2"/></td>
+											<td><s:property value="#expert.Expert_Field3"/></td>
+											<td><s:property value="#expert.Expert_Field7"/></td>
+											<td><s:property value="#expert.Expert_Field12"/></td>
+											<td><s:property value="#expert.Expert_Field18"/></td>
+											<td><s:property value="#expert.Expert_Field34"/></td>
+											<td>组员</td>
+										</tr>
+									</s:iterator>
+								</s:iterator>
+							</table>
 						</td>
 						<td width="9" background="images/tab_16.gif">&nbsp;</td>
 					</tr>

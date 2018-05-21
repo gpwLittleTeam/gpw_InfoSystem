@@ -67,8 +67,25 @@ public class To_Zjgl_infoEntry extends ActionSupport {
 		arrayOfCodeList = new List[size];
 		objMethods = new Methods();
 		objMethods.setOpinionsOfSelect(arrayOfNameList, arrayOfCodeList,objUserLogin.getUser_jury());
+		
+		//处理专业内容
+		List<String> arrayOfCodeSpeciality = arrayOfCodeList[9];
+		List<String> arrayOfNameSpeciality = arrayOfNameList[9];
+		
+		String majorsZNodes = new String();
+		
+		for (int i=0; i<arrayOfCodeSpeciality.size(); i++) {
+			String tempPID = this.executeParentID(arrayOfCodeSpeciality.get(i));
+			majorsZNodes += "{id:" + arrayOfCodeSpeciality.get(i) + ", pId:" + tempPID 
+					+ ", name:\"" + arrayOfNameSpeciality.get(i) 
+					+ "\"},";
+		}
+		majorsZNodes = "[" + majorsZNodes + "]";
+		System.out.println(majorsZNodes);
+		
 		request.getSession().setAttribute("arrayOfCodeList", arrayOfCodeList);
-		request.getSession().setAttribute("arrayOfNameList", arrayOfNameList);	
+		request.getSession().setAttribute("arrayOfNameList", arrayOfNameList);
+		request.getSession().setAttribute("majorsZNodes", majorsZNodes);
 		
 		//gpw用户 所属高评委字段写死
 		objJury = new Jury();
@@ -82,6 +99,12 @@ public class To_Zjgl_infoEntry extends ActionSupport {
 		return SUCCESS;
 	}
 
+	private String executeParentID(String id) {
+		String parentId = new String();
+		parentId = id.substring(0, 2) + "0000";
+		return parentId;
+	}
+	
 	public GetTableStru getObjGetTableStru() {
 		return objGetTableStru;
 	}

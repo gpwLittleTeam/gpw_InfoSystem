@@ -121,7 +121,7 @@ a:active {
 <script type="text/javascript">
 $(function(){ 
 	var result = "<%=request.getAttribute("result")%>";
-	var feedback = "<%=request.getAttribute("feedback")%>";
+	var feedbackForFailure = "<%=request.getAttribute("feedbackForFailure")%>";
 	
 // 	var errorColor = "#CC3333";  //抽取结果比例错误时提示色
 // 	var defaultColor = "#000000"; //规则要求的比例的提示色
@@ -139,7 +139,7 @@ $(function(){
 	 
 //	alert(feedback);
 	if(result != "null" && result != "0") {
-		jQuery.alertWindow("在随机抽取100次后抽取结果依旧无法满足以下规则", feedback , "#A5DE37"); 
+		jQuery.alertWindow("在随机抽取100次后抽取结果依旧无法满足以下规则", feedbackForFailure , "#A5DE37"); 
 	}
 	
 });

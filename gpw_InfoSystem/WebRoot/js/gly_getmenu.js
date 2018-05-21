@@ -73,7 +73,7 @@ menu.push( {
 
 
 menu.push( {
-	id : 4,
+	id : 5,
 	parentId : 0,
 	name : '高评委管理',
 	url : 'to_gpwgl',
@@ -85,7 +85,7 @@ menu.push( {
 
 
 menu.push( {
-	id : 5,
+	id : 6,
 	parentId : 0,
 	name : '代码管理',
 	url : '',
@@ -94,28 +94,28 @@ menu.push( {
 	css : 'nobg'
 });
 menu.push( {
-	id : 501,
+	id : 601,
 	parentId : 5,
 	name : '高评委职务代码表',
 	url : 'to_codePage.action?table=Counciltitle',
 	level : 2
 });
 menu.push( {
-	id :502,
+	id :602,
 	parentId : 5,
 	name : '学位代码表',
 	url : 'to_codePage.action?table=Degree',
 	level : 2
 });
 menu.push( {
-	id : 503,
+	id : 603,
 	parentId : 5,
 	name : '学历代码表',
 	url : 'to_codePage.action?table=Education',
 	level : 2
 });
 menu.push( {
-	id : 504,
+	id : 604,
 	parentId : 5,
 	name : '聘任情况代码表',
 	url : 'to_codePage.action?table=engage',
@@ -129,42 +129,42 @@ menu.push( {
 	level : 2
 });*/
 menu.push( {
-	id : 506,
+	id : 606,
 	parentId : 5,
 	name : '专业组职务代码表',
 	url : 'to_codePage.action?table=grouptitle',
 	level : 2
 });
 menu.push( {
-	id : 507,
+	id : 607,
 	parentId : 5,
 	name : '系列代码表',
 	url : 'to_codePage.action?table=series',
 	level : 2
 });
 menu.push( {
-	id : 508,
+	id : 608,
 	parentId : 5,
 	name : '性别代码表',
 	url : 'to_codePage.action?table=sex',
 	level : 2
 });
 menu.push( {
-	id : 509,
+	id : 609,
 	parentId : 5,
 	name : '专业代码表',
 	url : 'to_codePage.action?table=special',
 	level : 2
 });
 menu.push( {
-	id : 510,
+	id : 610,
 	parentId : 5,
 	name : '任职资格代码表',
 	url : 'to_codePage.action?table=title',
 	level : 2
 });
 menu.push( {
-	id : 511,
+	id : 611,
 	parentId : 5,
 	name : '资格级别代码表',
 	url : 'to_codePage.action?table=titlegrade',
@@ -172,7 +172,7 @@ menu.push( {
 });
 
 menu.push( {
-	id : 6,
+	id : 7,
 	parentId : 0,
 	name : '高评委用户管理',
 	url : 'to_userManagement.action',
@@ -180,7 +180,7 @@ menu.push( {
 });
 
 menu.push( {
-	id : 7,
+	id : 8,
 	parentId : 0,
 	name : '抽取规则管理',
 	url : 'to_ruleManagement.action',
@@ -188,7 +188,7 @@ menu.push( {
 });
 
 menu.push( {
-	id : 7,
+	id : 9,
 	parentId : 0,
 	name : '修改密码',
 	url : './xgmm.jsp',

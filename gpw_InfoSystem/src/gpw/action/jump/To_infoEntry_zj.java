@@ -51,8 +51,7 @@ public class To_infoEntry_zj extends ActionSupport {
 	private String message;
 
 	public String loadFields() throws Exception {
-		HttpServletRequest request = (HttpServletRequest) ActionContext
-				.getContext().get(StrutsStatics.HTTP_REQUEST);
+		HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
 		Methods objMethods = new Methods();
 		// objUserLogin = (UserLogin)request.getSession().getAttribute("User");
 		// System.err.println("session User:"+objUserLogin);
@@ -61,32 +60,30 @@ public class To_infoEntry_zj extends ActionSupport {
 		// 验证姓名号码验证码
 		objGetJuryIdcode = new GetJuryIdcode();
 		// get(0) 验证码;get(1) 失效时间
-		codeInfo = objGetJuryIdcode.getCodeInfoByNamePhone(expertName,
-				expertPhone);
+		codeInfo = objGetJuryIdcode.getCodeInfoByNamePhone(expertName, expertPhone);
 		// 日期处理
 		Date now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		if (!codeInfo.isEmpty()) {
-			//true=有效,false=已失效
+			// true=有效,false=已失效
 			boolean isValid = (sdf.parse(codeInfo.get(1)).getTime() - now.getTime()) > 0;
 			// 如果验证码正确，验证码未超时且从未提交过
 			if (codeInfo.get(0).equals(expertIdcode)) {
-				if(isValid) {
+				if (isValid) {
 					boolean unSubmit = !codeInfo.get(2).equals("已录入");
-					if(unSubmit) {
+					if (unSubmit) {
 						// 得到对应的juryNo
-						juryNo = objGetJuryIdcode.getJuryNo(expertIdcode, expertName,
-								expertPhone);
+						juryNo = objGetJuryIdcode.getJuryNo(expertIdcode, expertName, expertPhone);
 
 						// TableStru对象数组
 						objGetTableStru = new GetTableStru();
-						aTablestrus = (Tablestru[]) objGetTableStru.getAllTableStrus().toArray(
-										new Tablestru[objGetTableStru
-												.getAllTableStrus().size()]);
+						aTablestrus = (Tablestru[]) objGetTableStru.getAllTableStrus()
+								.toArray(new Tablestru[objGetTableStru.getAllTableStrus().size()]);
 						// 对象的备注属性——null问题
 						for (int i = 0; i < aTablestrus.length; i++) {
-							// System.out.println("aTablestrus[i].getField_remark()  i="+i+" -> "+aTablestrus[i].getField_remark());
+							// System.out.println("aTablestrus[i].getField_remark()
+							// i="+i+" -> "+aTablestrus[i].getField_remark());
 							if (aTablestrus[i].getField_remark() == null) {
 								aTablestrus[i].setField_remark(" ");
 							}
@@ -97,12 +94,26 @@ public class To_infoEntry_zj extends ActionSupport {
 						// 设置select中英字段
 						arrayOfNameList = new List[size];
 						arrayOfCodeList = new List[size];
-						objMethods.setOpinionsOfSelect(arrayOfNameList,
-								arrayOfCodeList, juryNo);
-						request.getSession().setAttribute("arrayOfCodeList",
-								arrayOfCodeList);
-						request.getSession().setAttribute("arrayOfNameList",
-								arrayOfNameList);
+						objMethods.setOpinionsOfSelect(arrayOfNameList, arrayOfCodeList, juryNo);
+						
+						//处理专业内容
+						List<String> arrayOfCodeSpeciality = arrayOfCodeList[9];
+						List<String> arrayOfNameSpeciality = arrayOfNameList[9];
+						
+						String majorsZNodes = new String();
+						
+						for (int i=0; i<arrayOfCodeSpeciality.size(); i++) {
+							String tempPID = this.executeParentID(arrayOfCodeSpeciality.get(i));
+							majorsZNodes += "{id:" + arrayOfCodeSpeciality.get(i) + ", pId:" + tempPID 
+									+ ", name:\"" + arrayOfNameSpeciality.get(i) 
+									+ "\"},";
+						}
+						majorsZNodes = "[" + majorsZNodes + "]";
+						System.out.println(majorsZNodes);
+						
+						request.getSession().setAttribute("arrayOfCodeList", arrayOfCodeList);
+						request.getSession().setAttribute("arrayOfNameList", arrayOfNameList);
+						request.getSession().setAttribute("majorsZNodes", majorsZNodes);
 
 						// gpw用户 所属高评委字段写死
 						objJury = new Jury();
@@ -112,11 +123,11 @@ public class To_infoEntry_zj extends ActionSupport {
 						// 自动生成编码
 						objGenerateNo = new GenerateNo();
 						ExpertNo = objGenerateNo.generateExpertNo(juryNo);
-						//System.out.println(ExpertNo);
+						// System.out.println(ExpertNo);
 						objMethods.setSession("expertName_enter", expertName);
 						objMethods.setSession("expertPhone_enter", expertPhone);
 						return SUCCESS;
-					} else{
+					} else {
 						message = "该专家的信息已经录入";
 						return ERROR;
 					}
@@ -135,11 +146,17 @@ public class To_infoEntry_zj extends ActionSupport {
 				return ERROR;
 			} else {
 				message = "专家姓名或手机号码输入错误";
-				return ERROR;	
+				return ERROR;
 			}
 		}
 	}
 
+	private String executeParentID(String id) {
+		String parentId = new String();
+		parentId = id.substring(0, 2) + "0000";
+		return parentId;
+	}
+	
 	public String getExpertNo() {
 		return ExpertNo;
 	}

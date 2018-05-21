@@ -56,6 +56,7 @@ public class To_Pwcq_wyh extends ActionSupport{
 	private String ratioOfAge;  //45岁以下
 	private String rationOfOutsider; //非本单位的人的比例
 	private String feedback;
+	private String feedbackForFailure;//抽取失败的提示
 	
 	public String firstPage() {
 		/*[旧]*/
@@ -198,15 +199,15 @@ public class To_Pwcq_wyh extends ActionSupport{
 		if(!result.equals("0")) {
 			//最原始的两条规则 rule2,rule3
 			if(result.equals("2")){
-				feedback = "具有正副高级合一及正高级评审权限的委员会，正高级专家占四分之一以上。 ";
+				feedbackForFailure = "具有正副高级合一及正高级评审权限的委员会，正高级专家占四分之一以上。 ";
 			} else if(result.equals("3")){
-				feedback = "具有正副高级合一及正高级评审权限的委员会，45周岁以下的专家占评委会的四分之一以上；而具有副高级评审权限的委员会，45岁以下的专家占评委会的三分之一以上。 ";
+				feedbackForFailure = "具有正副高级合一及正高级评审权限的委员会，45周岁以下的专家占评委会的四分之一以上；而具有副高级评审权限的委员会，45岁以下的专家占评委会的三分之一以上。 ";
 			} else {	//由管理员定义的规则
 				ForRuleContent objContent = new ForRuleContent();
 				GetRuleManagement objGetRuleManagement = new GetRuleManagement();
 				List<RuleManagement> listRuleManagements = new ArrayList<RuleManagement>();
 				listRuleManagements.add(objGetRuleManagement.getRuleManagementByRuleNo(result));
-				feedback = objContent.getRuleContent(listRuleManagements).get(0);
+				feedbackForFailure = objContent.getRuleContent(listRuleManagements).get(0);
 			}
 		}
 		//人数统计
@@ -626,6 +627,14 @@ public class To_Pwcq_wyh extends ActionSupport{
 
 	public void setListRuleManagements(List<RuleManagement> listRuleManagements) {
 		this.listRuleManagements = listRuleManagements;
+	}
+
+	public String getFeedbackForFailure() {
+		return feedbackForFailure;
+	}
+
+	public void setFeedbackForFailure(String feedbackForFailure) {
+		this.feedbackForFailure = feedbackForFailure;
 	}
 
 }
