@@ -90,7 +90,7 @@ a:active {
 			chkValue += ",";
 		});
 		/* var jsonChkValue = JSON.stringify(chkValue); */
-		alert(chkValue);
+		//alert(chkValue);
 		/* alert(jsonChkValue); */
 		$.post("testSend.action",{jsonChkValue : chkValue},function(data){
 			alert("发送成功");
