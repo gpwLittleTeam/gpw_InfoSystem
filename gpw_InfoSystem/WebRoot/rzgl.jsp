@@ -211,17 +211,21 @@ for(var i=0;i<cs.length;i++){
 																						<input type="checkbox" name="chooseAll" value="0"
 																								onclick="CheckSelect()" />
 																				</th>
-																				<th width="13%" height="18" background="images/tab_14.gif" class="STYLE1">专家编号</th>
-																				<th width="11%" height="24" background="images/tab_14.gif" class="STYLE1">专家姓名</th>
+																				<th width="4%" height="18" background="images/tab_14.gif" class="STYLE1">序号</th>
+																				<th width="12%" height="18" background="images/tab_14.gif" class="STYLE1">专家编号</th>
+																				<th width="10%" height="24" background="images/tab_14.gif" class="STYLE1">专家姓名</th>
 																				<th width="20%" height="18" background="images/tab_14.gif" class="STYLE1">所属高评委</th>
 																				<th width="15%" height="18" background="images/tab_14.gif" class="STYLE1">所属专业组</th>
-																				<th width="15%" height="18" background="images/tab_14.gif" class="STYLE1">所任职务</th>
-																				<th width="11%" height="18" background="images/tab_14.gif" class="STYLE1">任职年度</th>
+																				<th width="14%" height="18" background="images/tab_14.gif" class="STYLE1">所任职务</th>
+																				<th width="10%" height="18" background="images/tab_14.gif" class="STYLE1">任职年度</th>
 																		</tr>
-																		<s:iterator id="obj" value="listHistorytitle">
+																		<s:iterator id="obj" value="listHistorytitle" status="index">
 																				<tr class="list">
 																						<td>
 																								<input type="checkbox" name="nrOfCheckbox" value='<s:property value='#obj.expert_no'/>&<s:property value='#obj.expert_serveyear'/>' />
+																						</td>
+																						<td>
+																								<s:property value='#index.index+1' />
 																						</td>
 																						<td>
 																								<s:property value='#obj.expert_no' />

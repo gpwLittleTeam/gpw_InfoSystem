@@ -130,14 +130,11 @@ public class GenerateNo {
 		ResultSet rs = null;
 		String tempResult = null;
 		String sqlValue = "select max(rule_no) as temp from rule_management";
-//		System.out.println(sqlValue);
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
 			rs.next();
 			if(rs.getString("temp")!=null){		
-				//System.out.println("有数据");
-				//System.out.println(Integer.parseInt(rs.getString("temp"))+1);
 				tempResult = (Integer.parseInt(rs.getString("temp"))+1)+"";		//
 				//System.out.println(tempResult);
 				char[] ary1 = tempResult.toCharArray();			//创建两个char来完成左边自动补上数字
@@ -145,10 +142,8 @@ public class GenerateNo {
 				System.arraycopy(ary1, 0, ary2, ary2.length-ary1.length, ary1.length);
 				tempResult = new String(ary2);
 				ruleNo += tempResult; 
-				//System.out.println(result);
 			}
 			else{		//表中对应的该评委组暂时还没有专家，所以不能搜索其中编号最大的人，应重新新建一个
-				//System.out.println("没有数据");			
 				ruleNo += "0001";
 			}
 			return ruleNo;

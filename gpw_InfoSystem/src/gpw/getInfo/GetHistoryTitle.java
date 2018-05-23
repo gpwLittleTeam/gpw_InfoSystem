@@ -400,7 +400,7 @@ public class GetHistoryTitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from historytitleview where expert_no='"+expertNo+"'";
+		String sqlValue = "select * from historytitleview where expert_no='"+expertNo+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -446,7 +446,7 @@ public class GetHistoryTitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from historytitleview where expert_name='"+expertName+"'";
+		String sqlValue = "select * from historytitleview where expert_name='"+expertName+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -585,7 +585,7 @@ public class GetHistoryTitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from historytitleview where expert_group='"+expertGroup+"'";
+		String sqlValue = "select * from historytitleview where expert_group='"+expertGroup+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -632,7 +632,7 @@ public class GetHistoryTitle {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String sqlValue = "select * from historytitleview where expert_group='"+expertGroup+"'"
-				+ " and expert_jury='"+juryNo+"'";
+				+ " and expert_jury='"+juryNo+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -678,7 +678,7 @@ public class GetHistoryTitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from historytitleview where expert_post='"+expertPost+"'";
+		String sqlValue = "select * from historytitleview where expert_post='"+expertPost+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -725,7 +725,7 @@ public class GetHistoryTitle {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String sqlValue = "select * from historytitleview where expert_post='"+expertPost+"'"
-				+ " and expert_jury='"+juryNo+"'";
+				+ " and expert_jury='"+juryNo+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -771,7 +771,7 @@ public class GetHistoryTitle {
 		Connection conn = link.getConn();
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sqlValue = "select * from historytitleview where expert_serveyear='"+expertServeyear+"'";
+		String sqlValue = "select * from historytitleview where expert_serveyear='"+expertServeyear+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
@@ -818,7 +818,7 @@ public class GetHistoryTitle {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String sqlValue = "select * from historytitleview where expert_serveyear='"+expertServeyear+"'"
-				+ " and expert_jury='"+juryNo+"'";
+				+ " and expert_jury='"+juryNo+"'order by expert_serveyear desc,expert_post asc";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlValue);
