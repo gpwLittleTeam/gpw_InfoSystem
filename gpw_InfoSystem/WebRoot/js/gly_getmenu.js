@@ -75,18 +75,6 @@ menu.push( {
 menu.push( {
 	id : 5,
 	parentId : 0,
-	name : '高评委管理',
-	url : 'to_gpwgl',
-	target : 'rightframe',
-	level : 1,
-	css : 'nobg'
-});
-
-
-
-menu.push( {
-	id : 6,
-	parentId : 0,
 	name : '代码管理',
 	url : '',
 	target : 'rightframe',
@@ -94,28 +82,28 @@ menu.push( {
 	css : 'nobg'
 });
 menu.push( {
-	id : 601,
+	id : 501,
 	parentId : 5,
 	name : '高评委职务代码表',
 	url : 'to_codePage.action?table=Counciltitle',
 	level : 2
 });
 menu.push( {
-	id :602,
+	id :502,
 	parentId : 5,
 	name : '学位代码表',
 	url : 'to_codePage.action?table=Degree',
 	level : 2
 });
 menu.push( {
-	id : 603,
+	id : 503,
 	parentId : 5,
 	name : '学历代码表',
 	url : 'to_codePage.action?table=Education',
 	level : 2
 });
 menu.push( {
-	id : 604,
+	id : 504,
 	parentId : 5,
 	name : '聘任情况代码表',
 	url : 'to_codePage.action?table=engage',
@@ -129,46 +117,57 @@ menu.push( {
 	level : 2
 });*/
 menu.push( {
-	id : 606,
+	id : 506,
 	parentId : 5,
 	name : '专业组职务代码表',
 	url : 'to_codePage.action?table=grouptitle',
 	level : 2
 });
 menu.push( {
-	id : 607,
+	id : 507,
 	parentId : 5,
 	name : '系列代码表',
 	url : 'to_codePage.action?table=series',
 	level : 2
 });
 menu.push( {
-	id : 608,
+	id : 508,
 	parentId : 5,
 	name : '性别代码表',
 	url : 'to_codePage.action?table=sex',
 	level : 2
 });
 menu.push( {
-	id : 609,
+	id : 509,
 	parentId : 5,
 	name : '专业代码表',
 	url : 'to_codePage.action?table=special',
 	level : 2
 });
 menu.push( {
-	id : 610,
+	id : 510,
 	parentId : 5,
 	name : '任职资格代码表',
 	url : 'to_codePage.action?table=title',
 	level : 2
 });
 menu.push( {
-	id : 611,
+	id : 511,
 	parentId : 5,
 	name : '资格级别代码表',
 	url : 'to_codePage.action?table=titlegrade',
 	level : 2
+});
+
+
+menu.push( {
+	id : 6,
+	parentId : 0,
+	name : '高评委管理',
+	url : 'to_gpwgl',
+	target : 'rightframe',
+	level : 1,
+	css : 'nobg'
 });
 
 menu.push( {
