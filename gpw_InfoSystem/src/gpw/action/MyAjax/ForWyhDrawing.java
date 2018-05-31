@@ -109,7 +109,7 @@ public class ForWyhDrawing extends ActionSupport{
 		committeeNo = (int)objMethods.getSession("committeeNo");
 		//System.out.println("drawingCommittee() . remainViceDirector.size() :"+remainViceDirector.size());
 		//循环maxCount次
-		do{
+/*		do{
 			listCommittee = new ArrayList<Expert>();
 			//listCommittee = objCommittee.extractCommittee(juryNo, committeeNo);  //抽取委员
 			objCommittee.extractCommittee(juryNo,listCommittee ,committeeNo);  //抽取委员
@@ -124,6 +124,14 @@ public class ForWyhDrawing extends ActionSupport{
 			System.out.println("MyAjax.ForWyhDrawing.drawingCommittee() result of check : " + result);
 			System.out.println("循环次数：" + loopCount);
 		} while(!result.equals("0") && loopCount < maxCount);
+		
+		//若全随机无法抽取到满足规则的专家集合，则使用半随机
+		if(!result.equals("0")){
+			
+		}*/
+		listCommittee = new ArrayList<Expert>();
+		objCommittee.extractCommitteeSemirandom(juryNo, listCommittee, committeeNo);
+		
 		objMethods.setSession("result", result);
 		objMethods.setSession("listCommittee",listCommittee);
 		jsonArray = JSONArray.fromObject(listCommittee);

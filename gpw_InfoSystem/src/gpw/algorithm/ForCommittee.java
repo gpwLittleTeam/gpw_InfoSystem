@@ -396,7 +396,7 @@ public class ForCommittee {
 	 */
 	private Boolean checkRule2(List<Expert> listToCheck, String juryNo){
 		String jury_power = new Jury().getJuryPowerByJuryNo(juryNo);
-		if(!jury_power.equals("2")){//说明是正高级或者正副合一
+		if(!jury_power.equals("3")){//说明是正高级或者正副合一
 			int numberOfZG = 0; // 正高级计数
 			for(int i=0; i<listToCheck.size(); i++){
 				if(listToCheck.get(i).getExpert_Field18().equals("正高级")){
@@ -601,9 +601,7 @@ public class ForCommittee {
 		}
 	}
 	
-	
 	/*****抽取规则结束*******/
-	
 	
 	//查询最大副主任委员的个数
 	public int selectMaxViceDirectorNumber(String juryNo){
@@ -710,6 +708,8 @@ public class ForCommittee {
 			}
 			return result;
 		}
+	
+	
 	//两个最大数的使用看这里
 /*	public static void main(String args[]){
 		Committee test = new Committee();
@@ -1135,7 +1135,7 @@ public class ForCommittee {
 			List<Expert> selected = new ArrayList<Expert>();
 			selected.addAll((List<Expert>)objMethods.getSession("listDirector"));
 			selected.addAll((List<Expert>)objMethods.getSession("listViceDirector"));  //在主任委员和副主任委员中已经被选出来的;
-			List<Expert> remainderOfLastYearExperts = lastYearCommittees(thisYear, juryNo);
+			List<Expert> remainderOfLastYearExperts = lastYearCommittees(thisYear, juryNo);  //去年被抽中的专家-今年已被选为主任委员和副主任委员的专家
 			int lastYearCommitteesSize = remainderOfLastYearExperts.size();
 			objMethods.setSession("lastYearCommitteesSize", lastYearCommitteesSize);
 			for(int i=0;i<remainderOfLastYearExperts.size();i++){  
@@ -1274,10 +1274,10 @@ public class ForCommittee {
 	 * 2. 剩下的名额从所有委员候选人中抽（不要重复）
 	 */
 	/**
-	 * [旧]抽取委员，从session中得到委员候选人，先从去年的专家里抽，至满足去年人数的二分之一 （如果是奇数，则不足1/2）//因为是抽取的最后一步，所以没有必要有返回值
+	 * [完全随机]抽取委员，从session中得到委员候选人，先从去年的专家里抽，至满足去年人数的二分之一 （如果是奇数，则不足1/2）//因为是抽取的最后一步，所以没有必要有返回值
 	 * @param juryNo
 	 * @param committee 返回抽取出来的committee
-	 * @param number
+	 * @param number  抽取委员的人数
 	 */
 	public void extractCommittee(String juryNo, List<Expert> committee, int number){
 		Methods objMethods = new Methods();
@@ -1322,6 +1322,299 @@ public class ForCommittee {
 			System.out.println("Committee.java-extractCommittee(List<Expert>,Lit<Expert>,int):Boolean wrong!");
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * [半随机]抽取委员算法，抽取顺序：去年一半->正高级1/4->年龄->自定义
+	 * @param juryNo
+	 * @param committee  最后抽取结束返回的委员列表
+	 * @param number  抽取委员人数
+	 * @return 0=成功抽取，否则返回不满足的规则的编号
+	 * @throws ParseException 
+	 */
+	public String extractCommitteeSemirandom(String juryNo, List<Expert> committee, int number) throws ParseException{
+		String result = "0"; //抽取结果能否满足抽取
+		Methods objMethods = new Methods();
+		List<Expert> expertsToExtract = (List<Expert>)objMethods.getSession("candidateCommittee");//来自gpw.action.jump.To_Pwcq_wyh.fourthPage() //包含去年的专家
+		List<Expert> remainderOfLastYearExperts = (List<Expert>)objMethods.getSession("remainderOfLastYearExperts");
+		int selectedCount = (int)objMethods.getSession("selectedCount");//已抽取的主任委员和副主任委员中有几个是去年的专家
+		int lastYearCommitteesSize = (int)objMethods.getSession("lastYearCommitteesSize");
+		int NoToExtractFromLastYear = ((lastYearCommitteesSize+1)/2 - selectedCount); //还要从去年的委员中抽多少人
+		if(NoToExtractFromLastYear > number) {  //考虑到如果去年抽的人很多，今年的抽的人不到去年的一半，则全部都是去年的人
+			NoToExtractFromLastYear = number;
+		}
+		
+		if(expertsToExtract.size() >= number){
+			Random_custom obj = new Random_custom();
+			// 先从去年的专家里抽，至满足去年人数的二分之一
+			int[] committeesNoFromLastYear = obj.randomsNoRepeat(0, remainderOfLastYearExperts.size()-1, NoToExtractFromLastYear);
+			
+			for(int i=0;i<NoToExtractFromLastYear;i++){
+				committee.add(remainderOfLastYearExperts.get(committeesNoFromLastYear[i]));
+				for(int j=0;j<expertsToExtract.size();j++) {//防止重复，从等一下要抽取的候选人中删除
+					if(committee.get(i).getExpert_Field1().equals(expertsToExtract.get(j).getExpert_Field1())){
+						expertsToExtract.remove(j);
+						break;
+					}
+				}
+			}
+			number = number - NoToExtractFromLastYear; //抽完去年的人之后，从全部的人里面还要抽几个人
+			/* number 还能抽多少人
+			 * expertsToExtract  还能被抽的人
+			 * committee  已被抽中的人
+			 */
+			int viceNo = (int)objMethods.getSession("viceNo");
+			int committeeNo = (int)objMethods.getSession("committeeNo");
+			int totalNo = viceNo + committeeNo + 1; //总共抽取的人数
+			List<Expert> listDirector = (List<Expert>)objMethods.getSession("listDirector");
+			List<Expert> listViceDirector = (List<Expert>)objMethods.getSession("listViceDirector");
+			ArrayList<Expert> ExpertsSelected = new ArrayList<Expert>();
+			ExpertsSelected.addAll(listDirector);
+			ExpertsSelected.addAll(listViceDirector);
+			ExpertsSelected.addAll(committee);
+			Jury objJury = new Jury();
+			int numberToExtractForThisRule; //保存具体一条规则所需抽的人数
+			//抽取正高级专家1/4以上
+			//45周岁以下的专家占评委会的四分之一以上
+			String JuryPower = objJury.getJuryPowerByJuryNo(juryNo);  //得到评审权限
+			if(!JuryPower.equals("3")){ //如果不是副高
+				 //抽取正高级专家1/4以上
+				numberToExtractForThisRule = countExpertToBeExtractedForThisRule1(ExpertsSelected, totalNo, "Expert_Field18", "正高级", 0.25, ">=");
+				if(numberToExtractForThisRule>0){
+					committee.addAll(extractExpertWithCondition1(expertsToExtract, numberToExtractForThisRule, "Expert_Field18", "正高级"));
+					number -= numberToExtractForThisRule;
+				}
+				//45周岁以下的专家占评委会的四分之一以上 
+				numberToExtractForThisRule = countExpertToBeExtractedForThisRule3(ExpertsSelected, totalNo, "Expert_Field5", "<=", 45, 0.25, ">=");
+				if(numberToExtractForThisRule>0){
+					committee.addAll(extractExpertWithCondition3(expertsToExtract, numberToExtractForThisRule, "Expert_Field5", "<=", 45));
+					number -= numberToExtractForThisRule;
+				}
+			} else {  //如果是副高
+				numberToExtractForThisRule = countExpertToBeExtractedForThisRule3(ExpertsSelected, totalNo, "Expert_Field5", "<=", 45, 0.333, ">=");
+				if(numberToExtractForThisRule>0){
+					committee.addAll(extractExpertWithCondition3(expertsToExtract, numberToExtractForThisRule, "Expert_Field5", "<=", 45));
+					number -= numberToExtractForThisRule;
+				}
+			}
+			
+			
+			//剩余人数随机抽取
+			//int NumberToExtractForThisRule = number - committee.size();
+			if(number > 0) {
+				Random_custom rcObj = new Random_custom();
+				int[] randomNo = rcObj.randomsNoRepeat(0, expertsToExtract.size()-1, number);
+				for(int i=0;i<randomNo.length;i++){
+					committee.add(expertsToExtract.get(randomNo[i]));
+				}
+				result = "0";
+			}
+		}
+		else{
+			System.out.println("抽取数量大于被抽取的人数");
+			HttpServletRequest request = (HttpServletRequest)
+					ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+			request.setAttribute("Error", "NoExpertsToExtractCommittee");
+			result = "NoExpertsToExtractCommittee";
+		}
+		return result;
+	}
+	
+	private int countExpertToBeExtractedForThisRule3 (List<Expert> expertsSelected, int totalExpertNo, String rule_field, String rule_relation, int rule_value, double percent, String percentRelation) throws ParseException{
+		int NumberToExtract;
+		if(percentRelation.equals(">=")){
+			NumberToExtract = (int)(totalExpertNo * percent + 0.99); //有余数就进位
+		} else if(percentRelation.equals("<=")){
+			NumberToExtract = (int)(totalExpertNo * percent - 0.01);
+		} else if(percentRelation.equals("==")){
+			if((int)(totalExpertNo * percent) == (totalExpertNo * percent)){ 
+				//能整除
+				NumberToExtract = (int)(totalExpertNo * percent);
+			} else{
+				//不能整除
+				return -999; //表示无法抽取，不能抽取半个人
+			}
+		} else {
+			return -999; //percentRelation 错误
+		}
+		
+		int sizeMeetRule = 0;  //之前已抽中的专家中同时符合这个规则的专家人数
+		int size_expertsSelected = expertsSelected.size();
+		
+		//时间计算
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		long nowTime = now.getTime();
+		long rule_value_ms = (1000L*60*60*24*365) * rule_value; //把规则中的年份化成毫秒
+		
+		switch (rule_relation) {
+		case ">=":
+			for(int i=0;i<size_expertsSelected;i++){
+				long timeOfExpert = sdf.parse(expertsSelected.get(i).getExpertInfoByFieldId(rule_field)).getTime(); //专家实际的时间
+				if((nowTime - timeOfExpert) >= rule_value_ms){
+					sizeMeetRule++;
+				}
+			}
+			break;
+		case "<=":
+			for(int i=0;i<size_expertsSelected;i++){
+				long timeOfExpert = sdf.parse(expertsSelected.get(i).getExpertInfoByFieldId(rule_field)).getTime(); //专家实际的时间
+				if((nowTime - timeOfExpert) <= rule_value_ms){
+					sizeMeetRule++;
+				}
+			}
+			break;
+		case "==":
+			for(int i=0;i<size_expertsSelected;i++){
+				long timeOfExpert = sdf.parse(expertsSelected.get(i).getExpertInfoByFieldId(rule_field)).getTime(); //专家实际的时间
+				if((nowTime - timeOfExpert) == rule_value_ms){
+					sizeMeetRule++;
+				}
+			}
+			break;
+		default:
+			System.out.println("algorithm.ForCommittee.countExpertToBeExtractedForThisRule3 -> rule_relation 字段错误 ");
+			break;
+		}
+
+		NumberToExtract -= sizeMeetRule;
+		if(NumberToExtract > 0)
+			return NumberToExtract;
+		else 
+			return 0;
+	}
+	
+	/**
+	 * 类型1，计算 还需抽取多少位符合该规则的专家， 
+	 * @param expertsSelected  已经被抽取的专家
+	 * @param totalExpertNo  总共抽取的人数
+	 * @param rule_field   规则约束的字段
+	 * @param rule_value   约束字段的值
+	 * @param percent  所占百分比
+	 * @param percentRelation  与percent的大小关系
+	 * @return  还需抽取的人数
+	 */
+	private int countExpertToBeExtractedForThisRule1(List<Expert> expertsSelected, int totalExpertNo, String rule_field, String rule_value, double percent, String percentRelation){
+		int NumberToExtract;
+		if(percentRelation.equals(">=")){
+			NumberToExtract = (int)(totalExpertNo * percent + 0.99); //有余数就进位
+		} else if(percentRelation.equals("<=")){
+			NumberToExtract = (int)(totalExpertNo * percent - 0.01);
+		} else if(percentRelation.equals("==")){
+			if((int)(totalExpertNo * percent) == (totalExpertNo * percent)){ 
+				//能整除
+				NumberToExtract = (int)(totalExpertNo * percent);
+			} else{
+				//不能整除
+				return -999; //表示无法抽取，不能抽取半个人
+			}
+		} else {
+			return -999; //percentRelation 错误
+		}
+		int sizeMeetRule = 0;  //之前已抽中的专家中同时符合这个规则的专家人数
+		int size_expertsSelected = expertsSelected.size();
+		for(int i=0;i<size_expertsSelected;i++){
+			if(expertsSelected.get(i).getExpertInfoByFieldId(rule_field).equals(rule_value)){
+				sizeMeetRule++;
+			}
+		}
+		NumberToExtract -= sizeMeetRule;
+		if(NumberToExtract > 0)
+			return NumberToExtract;
+		else 
+			return 0;
+	}
+	
+	/**
+	 * 类型3的规则抽取,已抽取出的人会从候选集中删除
+	 * @param expertsToExtract  候选集
+	 * @param numberToExtract  抽取人数
+	 * @param rule_field  规则要求的字段
+	 * @param rule_value  规则要求的字段的值
+	 * @return
+	 * @throws ParseException 
+	 */
+	private List<Expert> extractExpertWithCondition3(List<Expert> expertsToExtract, int numberToExtract, String rule_field, String rule_relation, int rule_value) throws ParseException{
+		List<Integer> expertPositionsMeetRule = new ArrayList<Integer>(); //符合规则的所有的专家在候选集中的位置
+		List<Expert> expertsSelected = new ArrayList<Expert>(); //选中的专家集
+		int size_expertsToExtract = expertsToExtract.size();
+		//得到符合规则的所有的专家在候选集中的位置
+		for(int i=0;i<size_expertsToExtract;i++){
+			if(expertsToExtract.get(i).getExpertInfoByFieldId(rule_field).equals(rule_value)){
+				expertPositionsMeetRule.add(i);
+			}
+		}
+		
+		//时间计算
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		long nowTime = now.getTime();
+		long rule_value_ms = (1000L*60*60*24*365) * rule_value; //把规则中的年份化成毫秒
+		
+		switch (rule_relation) {
+		case ">=":
+			for(int i=0;i<size_expertsToExtract;i++){
+				long timeOfExpert = sdf.parse(expertsSelected.get(i).getExpertInfoByFieldId(rule_field)).getTime(); //专家实际的时间
+				if((nowTime - timeOfExpert) >= rule_value_ms){
+					expertPositionsMeetRule.add(i);
+				}
+			}
+			break;
+		case "<=":
+			for(int i=0;i<size_expertsToExtract;i++){
+				long timeOfExpert = sdf.parse(expertsSelected.get(i).getExpertInfoByFieldId(rule_field)).getTime(); //专家实际的时间
+				if((nowTime - timeOfExpert) <= rule_value_ms){
+					expertPositionsMeetRule.add(i);
+				}
+			}
+			break;
+		case "==":
+			for(int i=0;i<size_expertsToExtract;i++){
+				long timeOfExpert = sdf.parse(expertsSelected.get(i).getExpertInfoByFieldId(rule_field)).getTime(); //专家实际的时间
+				if((nowTime - timeOfExpert) == rule_value_ms){
+					expertPositionsMeetRule.add(i);
+				}
+			}
+			break;
+		default:
+			System.out.println("algorithm.ForCommittee.extractExpertWithCondition3 -> rule_relation 字段错误 ");
+			break;
+		}
+		
+		Random_custom rcObj = new Random_custom();
+		int[] randomNo = rcObj.randomsNoRepeat(0, expertPositionsMeetRule.size()-1, numberToExtract);
+		for(int i=0;i<numberToExtract;i++){
+			expertsSelected.add(expertsToExtract.get(expertPositionsMeetRule.get(randomNo[i])));
+			expertsToExtract.remove(expertPositionsMeetRule.get(randomNo[i])-i);
+		}
+		return expertsSelected;
+	}
+	
+	/**
+	 * 类型1的规则抽取,已抽取出的人会从候选集中删除
+	 * @param expertsToExtract  候选集
+	 * @param numberToExtract  抽取人数
+	 * @param rule_field  规则要求的字段
+	 * @param rule_value  规则要求的字段的值
+	 * @return
+	 */
+	private List<Expert> extractExpertWithCondition1(List<Expert> expertsToExtract, int numberToExtract, String rule_field, String rule_value){
+		List<Integer> expertPositionsMeetRule = new ArrayList<Integer>(); //符合规则的所有的专家在候选集中的位置
+		List<Expert> expertsSelected = new ArrayList<Expert>(); //选中的专家集
+		int size_expertsToExtract = expertsToExtract.size();
+		//得到符合规则的所有的专家在候选集中的位置
+		for(int i=0;i<size_expertsToExtract;i++){
+			if(expertsToExtract.get(i).getExpertInfoByFieldId(rule_field).equals(rule_value)){
+				expertPositionsMeetRule.add(i);
+			}
+		}
+		
+		Random_custom rcObj = new Random_custom();
+		int[] randomNo = rcObj.randomsNoRepeat(0, expertPositionsMeetRule.size()-1, numberToExtract);
+		for(int i=0;i<numberToExtract;i++){
+			expertsSelected.add(expertsToExtract.get(expertPositionsMeetRule.get(randomNo[i])));
+			expertsToExtract.remove(expertPositionsMeetRule.get(randomNo[i])-i);
+		}
+		return expertsSelected;
 	}
 	
 	//根据id录入historytitle
