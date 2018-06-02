@@ -356,7 +356,7 @@ a:active {
 																						<select id="expert.Expert_Field3" name="expert.Expert_Field3"
 																								style="width:<%=width[2]%>px" class="input-text" ${aTablestrus[2].field_null }>
 																								<!-- onBlur="check('expert.Expert_Field3','2')" -->
-																								<option value="-1">-</option>
+																								<option></option>
 																								<%
 																									for (int i = 0; i < arrayOfCodeList[2].size(); i++) {
 																								%>
@@ -393,7 +393,7 @@ a:active {
 																						<span class="STYLE7">${aTablestrus[4].field_chname }</span>
 																				</td>
 																				<td class=input-td>
-																						<input type="text" id="datejs" class="demo-input" placeholder="请选择日期" ${aTablestrus[4].field_null } }>
+																						<input type="text" id="datejs" name="expert.Expert_Field5" class="demo-input" placeholder="请选择日期" ${aTablestrus[4].field_null }>
 																						<span id="field4_span" class="hint"></span>
 																				</td>
 																		</tr>
@@ -454,8 +454,8 @@ a:active {
 																				</td>
 																				<td class="input-td">
 																						<select id=<%=inputName%> name=<%=inputName%> style="width:<%=width[i]%>px"
-																								type=<%=type[i]%> class="input-text " <%=fieldNull[i]%> >
-																								<option value="-1">-</option>
+																								type=<%=type[i]%> class="input-text" <%=fieldNull[i]%> >
+																								<option></option>
 																								<%
 																									for (int j = 0; j < arrayOfNameList[i].size(); j++) {
 																								%>
@@ -495,7 +495,7 @@ a:active {
 																						<span class="STYLE7"><%=fieldName[i]%></span>
 																				</td>
 																				<td class=input-td>
-																						<input type="text" id="datejs" class="demo-input" placeholder="请选择日期" <%=fieldNull[i]%> >
+																						<input type="text" id="datejs" name=<%=inputName%> class="demo-input" placeholder="请选择日期" <%=fieldNull[i]%> >
 																						<span id=<%=spanName%> class="hint"></span>
 																				</td>
 																				<td class="thirdTd"><%=remariksName[i]%></td>
@@ -831,11 +831,12 @@ a:active {
 		</table>
 <script src="laydate/laydate.js"></script>
 <script>
-	lay('#version').html('-v'+ laydate.v);
-	
-	//执行一个laydate实例
-	laydate.render({
-	  elem: '#datejs' //指定元素
+	/* lay('#version').html('-v'+ laydate.v); */
+	lay('#datejs').each(function(){
+		laydate.render({
+			elem: this,
+			trigger: 'click'
+		});
 	});
 </script>
 </body>
