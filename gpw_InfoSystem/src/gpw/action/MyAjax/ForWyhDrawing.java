@@ -109,7 +109,7 @@ public class ForWyhDrawing extends ActionSupport{
 		committeeNo = (int)objMethods.getSession("committeeNo");
 		//System.out.println("drawingCommittee() . remainViceDirector.size() :"+remainViceDirector.size());
 		//循环maxCount次
-/*		do{
+		do{
 			listCommittee = new ArrayList<Expert>();
 			//listCommittee = objCommittee.extractCommittee(juryNo, committeeNo);  //抽取委员
 			objCommittee.extractCommittee(juryNo,listCommittee ,committeeNo);  //抽取委员
@@ -127,11 +127,25 @@ public class ForWyhDrawing extends ActionSupport{
 		
 		//若全随机无法抽取到满足规则的专家集合，则使用半随机
 		if(!result.equals("0")){
-			
-		}*/
-		listCommittee = new ArrayList<Expert>();
-		objCommittee.extractCommitteeSemirandom(juryNo, listCommittee, committeeNo);
-		
+			System.out.println("完全随机失败，开始半随机抽取");
+			int loopCountForSemi = 0;
+			int maxCountForSemi = 15;
+			String resultOfSemirandom = "";
+			do{
+				List<Expert> listCommitteeBySemirandom = new ArrayList<Expert>();
+				resultOfSemirandom = objCommittee.extractCommitteeSemirandom(juryNo, listCommitteeBySemirandom, committeeNo);
+				
+				if(!resultOfSemirandom.equals("0")){
+					System.out.println("半随机抽取失败  第 " +loopCountForSemi+ " 次");
+					System.out.println(resultOfSemirandom);
+				} else {
+					System.err.println("抽取成功");
+					listCommittee = listCommitteeBySemirandom;
+				}
+				loopCountForSemi++;
+			}while(!resultOfSemirandom.equals("0") && loopCountForSemi < maxCountForSemi);
+		}
+
 		objMethods.setSession("result", result);
 		objMethods.setSession("listCommittee",listCommittee);
 		jsonArray = JSONArray.fromObject(listCommittee);

@@ -90,7 +90,7 @@ public class To_Pwcq_wyh extends ActionSupport{
 		/*规则*/
 		//取得当前用户所在的高评委的评审权限
 		String juryPower = new Jury().getJuryPowerByJuryNo(new Methods().getCurrentUser().getUser_jury()); 
-		System.out.println("juryPower:"  + juryPower);
+		//System.out.println("juryPower:"  + juryPower);
 		GetRuleManagement objGetRuleManagement = new GetRuleManagement();
 		listRuleManagements = objGetRuleManagement.getEnabledRuleManagementByJuryPower(juryPower);
 		List<String> ruleContent = new ForRuleContent().getRuleContent(listRuleManagements);

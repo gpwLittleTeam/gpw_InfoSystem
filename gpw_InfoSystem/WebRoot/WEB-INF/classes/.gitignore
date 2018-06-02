@@ -1,4 +1,7 @@
-/gpw
-/message
-/temp
-/views
+/.DS_Store
+/META-INF/
+/gpw/
+/message/
+/struts.xml
+/temp/
+/views/

@@ -59,11 +59,16 @@ public class Random_custom
 	private void randomsNoRepeat(int start, int end, int arraySize, HashSet set){
 		int size = set.size(); //当前set的个数
 		Integer inte;
-		while(set.size() < (arraySize+size))
-		{
-			inte = new Integer(random(start, end));
-			set.add(inte);
-		} 
+		int range = end - start + 1;
+		if(range >= arraySize){
+			while(set.size() < (arraySize+size))
+			{
+				inte = new Integer(random(start, end));
+				set.add(inte);
+			} 
+		} else {
+			System.out.println("抽取范围：" + start + "至" + end + " , " + "欲抽取个数：" + arraySize);
+		}
 	}
 	
 	/**
@@ -75,17 +80,23 @@ public class Random_custom
 	 */
 	public int[] randomsNoRepeat(int start,int end,int number) {
 		int[] result = new int[number];
-		HashSet set = new HashSet();
-		randomsNoRepeat(start, end, number, set);
-		Iterator iter = set.iterator();
-		int count = 0;
-		while(iter.hasNext()){
-			//System.out.println(iter.next());
-			result[count] = ((Integer)iter.next()).intValue();
-			count++;
+		int range = end - start + 1;
+		if(range >= number){
+			HashSet set = new HashSet();
+			randomsNoRepeat(start, end, number, set);
+			Iterator iter = set.iterator();
+			int count = 0;
+			while(iter.hasNext()){
+				//System.out.println(iter.next());
+				result[count] = ((Integer)iter.next()).intValue();
+				count++;
+			}
+			insertSort(result);
+			return result;
+		} else {
+			System.out.println("抽取范围：" + start + "至" + end + " , " + "欲抽取个数：" + number);
+			return new int[0];
 		}
-		insertSort(result);
-		return result;
 	}
 	
 	//插入排序
