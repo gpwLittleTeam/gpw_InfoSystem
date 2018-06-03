@@ -1808,10 +1808,11 @@ public class GetExpert {
 
 		String sqlValue = "select * from infolistview where ";
 		for (int i = 0; i < chField.size(); i++) {
-			sqlValue += chField.get(i) + "='" + value.get(i) + "' and ";
+			sqlValue += chField.get(i) + " like'%" + value.get(i) + "%' and ";
 		}
 		sqlValue = sqlValue.substring(0, sqlValue.length() - 5);
-		sqlValue = sqlValue.replace("2=", "2 like ");
+//		sqlValue = sqlValue.replace("2='", "2 like '%");
+		
 		System.out.println(sqlValue);
 		try {
 			stmt = conn.createStatement();
