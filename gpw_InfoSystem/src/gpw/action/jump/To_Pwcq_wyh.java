@@ -206,8 +206,13 @@ public class To_Pwcq_wyh extends ActionSupport{
 				ForRuleContent objContent = new ForRuleContent();
 				GetRuleManagement objGetRuleManagement = new GetRuleManagement();
 				List<RuleManagement> listRuleManagements = new ArrayList<RuleManagement>();
-				listRuleManagements.add(objGetRuleManagement.getRuleManagementByRuleNo(result));
-				feedbackForFailure = objContent.getRuleContent(listRuleManagements).get(0);
+				RuleManagement temp = objGetRuleManagement.getRuleManagementByRuleNo(result);
+				if(temp!=null){
+					listRuleManagements.add(temp);
+					feedbackForFailure = objContent.getRuleContent(listRuleManagements).get(0);
+				} else {
+					feedbackForFailure = "抽取过程中出现未知问题，请重新抽取";
+				}
 			}
 		}
 		//人数统计

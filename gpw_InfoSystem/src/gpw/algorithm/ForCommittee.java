@@ -1384,7 +1384,19 @@ public class ForCommittee {
 				ExpertsSelected.addAll(committee);
 				Jury objJury = new Jury();
 				//读取自定义规则
-				List<RuleManagement> listRuleManagements = (List<RuleManagement>)objMethods.getSession("rules");
+				List<RuleManagement> listRuleManagements = new ArrayList<RuleManagement>();
+				listRuleManagements.addAll((List<RuleManagement>)objMethods.getSession("rules"));
+				//添加Rule2, Rule3  
+				String JuryPower = objJury.getJuryPowerByJuryNo(juryNo);  //得到评审权限
+				if(!JuryPower.equals("3")){ //如果不是副高
+					RuleManagement rule = new RuleManagement("2", "Expert_Field18", "equal", "1", "25", ">=", "10", "1", "1");
+					RuleManagement rule1 = new RuleManagement("3", "Expert_Field5", "<=", "45", "25", ">=", "10", "1", "1");
+					listRuleManagements.add(rule);
+					listRuleManagements.add(rule1);
+				} else {
+					RuleManagement rule2 = new RuleManagement("3", "Expert_Field5", "<=", "45", "33.3", ">=", "3", "1", "1");
+					listRuleManagements.add(rule2);
+				}
 				//对规则分类
 				List<RuleManagement> ruleOfequal = new ArrayList<RuleManagement>();
 				List<RuleManagement> ruleOfgte = new ArrayList<RuleManagement>(); //大于等于
@@ -1453,7 +1465,7 @@ public class ForCommittee {
 					if(currentRule.getRule_relation().equals("equal")){
 						numberExpertToBeExtracted = countExpertToBeExtractedForThisRule1(ExpertsSelected, totalNo, currentRule.getRule_field(), value[forIndex[i]], (Double.parseDouble(currentRule.getRule_percent())/100), currentRule.getRule_percentRelation());
 						if(numberExpertToBeExtracted > number){
-							return "无法满足"+currentRule.getRule_no();
+							return currentRule.getRule_no();
 						}
 						int numberToDelete = forSort[i] - numberExpertToBeExtracted;
 						deleteExpertWithCondition1(expertsToExtract, numberToDelete, currentRule.getRule_field(), value[forIndex[i]]);
@@ -1464,7 +1476,7 @@ public class ForCommittee {
 					} else {
 						numberExpertToBeExtracted = countExpertToBeExtractedForThisRule3(ExpertsSelected, totalNo, currentRule.getRule_field(), currentRule.getRule_relation(), Integer.parseInt(currentRule.getRule_value()), (Double.parseDouble(currentRule.getRule_percent())/100), currentRule.getRule_percentRelation());
 						if(numberExpertToBeExtracted > number){
-							return "无法满足"+currentRule.getRule_no();
+							return currentRule.getRule_no();
 						}
 						int numberToDelete = forSort[i] - numberExpertToBeExtracted;
 						deleteExpertWithCondition3(expertsToExtract, numberToDelete, currentRule.getRule_field(), currentRule.getRule_relation(), Integer.parseInt(currentRule.getRule_value()));
@@ -1475,55 +1487,40 @@ public class ForCommittee {
 					} 
 				}
 				//处理rule_percentRelation为》=的规则
-				//抽取正高级专家1/4以上
-				//45周岁以下的专家占评委会的四分之一以上
+
 				int numberToExtractForThisRule; //保存具体一条规则所需抽的人数
-				String JuryPower = objJury.getJuryPowerByJuryNo(juryNo);  //得到评审权限
-				if(!JuryPower.equals("3")){ //如果不是副高
-					 //抽取正高级专家1/4以上
-					numberToExtractForThisRule = countExpertToBeExtractedForThisRule1(ExpertsSelected, totalNo, "Expert_Field18", "正高级", 0.25, ">=");
-					if(numberToExtractForThisRule>0){
-						List<Expert> selected = extractExpertWithCondition1(expertsToExtract, numberToExtractForThisRule, "Expert_Field18", "正高级");
-						committee.addAll(selected);
-						ExpertsSelected.addAll(selected);
-						number -= numberToExtractForThisRule;
-					}
-					//45周岁以下的专家占评委会的四分之一以上 
-					numberToExtractForThisRule = countExpertToBeExtractedForThisRule3(ExpertsSelected, totalNo, "Expert_Field5", "<=", 45, 0.25, ">=");
-					if(numberToExtractForThisRule>0){
-						List<Expert> selected = extractExpertWithCondition3(expertsToExtract, numberToExtractForThisRule, "Expert_Field5", "<=", 45);
-						committee.addAll(selected);
-						ExpertsSelected.addAll(selected);
-						number -= numberToExtractForThisRule;
-					}
-				} else {  //如果是副高
-					numberToExtractForThisRule = countExpertToBeExtractedForThisRule3(ExpertsSelected, totalNo, "Expert_Field5", "<=", 45, 0.333, ">=");
-					if(numberToExtractForThisRule>0){
-						List<Expert> selected = extractExpertWithCondition3(expertsToExtract, numberToExtractForThisRule, "Expert_Field5", "<=", 45);
-						committee.addAll(selected);
-						ExpertsSelected.addAll(selected);
-						number -= numberToExtractForThisRule;
-					}
-				}
-				
+				forSort = new int[ruleOfgte.size()];  //要抽取的人
+				forIndex = new int[ruleOfgte.size()];
+				value = new String[ruleOfgte.size()];
 				for(int i=0;i<ruleOfgte.size();i++){
-					RuleManagement currentRule = ruleOfgte.get(i); 
+					RuleManagement tempRule = ruleOfgte.get(i);
+					if(tempRule.getRule_relation().equals("equal")){
+						value[i] = transformCodevaluetoZHvalue(tempRule.getRule_field(), tempRule.getRule_value());
+						numberToExtractForThisRule = countExpertToBeExtractedForThisRule1(ExpertsSelected, totalNo, tempRule.getRule_field(), value[i], (Double.parseDouble(tempRule.getRule_percent())/100), tempRule.getRule_percentRelation());
+						forSort[i] = numberToExtractForThisRule;
+					} else {
+						numberToExtractForThisRule = countExpertToBeExtractedForThisRule3(ExpertsSelected, totalNo, tempRule.getRule_field(), tempRule.getRule_relation(), Integer.parseInt(tempRule.getRule_value()), (Double.parseDouble(tempRule.getRule_percent())/100), tempRule.getRule_percentRelation());
+						forSort[i] = numberToExtractForThisRule;
+					}
+					forIndex[i] = i;
+				}
+				sortArrayWithIndex(forSort, forIndex);
+				for(int i=0;i<ruleOfgte.size();i++){
+					RuleManagement currentRule = ruleOfgte.get(forIndex[i]); 
+					numberToExtractForThisRule = forSort[i];
 					if(currentRule.getRule_relation().equals("equal")){
-						String rule_value = transformCodevaluetoZHvalue(currentRule.getRule_field(), currentRule.getRule_value());
-						numberToExtractForThisRule = countExpertToBeExtractedForThisRule1(ExpertsSelected, totalNo, currentRule.getRule_field(), rule_value, (Double.parseDouble(currentRule.getRule_percent())/100), currentRule.getRule_percentRelation());
 						if(numberToExtractForThisRule > number) {
-							return "无法满足"+currentRule.getRule_no();
+							return currentRule.getRule_no();
 						}
 						if(numberToExtractForThisRule>0){
-							List<Expert> selected = extractExpertWithCondition1(expertsToExtract, numberToExtractForThisRule, currentRule.getRule_field(), rule_value);
+							List<Expert> selected = extractExpertWithCondition1(expertsToExtract, numberToExtractForThisRule, currentRule.getRule_field(), value[forIndex[i]]);
 							committee.addAll(selected);
 							ExpertsSelected.addAll(selected);
 							number -= numberToExtractForThisRule;
 						}
 					} else {
-						numberToExtractForThisRule = countExpertToBeExtractedForThisRule3(ExpertsSelected, totalNo, "Expert_Field5", "<=", 45, 0.333, ">=");
 						if(numberToExtractForThisRule > number) {
-							return "无法满足"+currentRule.getRule_no();
+							return currentRule.getRule_no();
 						}
 						if(numberToExtractForThisRule>0){
 							List<Expert> selected = extractExpertWithCondition3(expertsToExtract, numberToExtractForThisRule, currentRule.getRule_field(), currentRule.getRule_relation(), Integer.parseInt(currentRule.getRule_value()));
@@ -1565,6 +1562,7 @@ public class ForCommittee {
 			return "Unknown Error in extractCommitteeSemirandom()";
 		}
 	}
+	
 	
 	private int countExpertToBeExtracted(String percentRelation, int totalExpertNo,double percent){
 		int NumberToExtract;

@@ -134,7 +134,7 @@ public class ForWyhDrawing extends ActionSupport{
 			do{
 				List<Expert> listCommitteeBySemirandom = new ArrayList<Expert>();
 				resultOfSemirandom = objCommittee.extractCommitteeSemirandom(juryNo, listCommitteeBySemirandom, committeeNo);
-				
+				result = resultOfSemirandom;
 				if(!resultOfSemirandom.equals("0")){
 					System.out.println("半随机抽取失败  第 " +loopCountForSemi+ " 次");
 					System.out.println(resultOfSemirandom);
