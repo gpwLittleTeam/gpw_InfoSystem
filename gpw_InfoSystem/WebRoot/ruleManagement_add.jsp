@@ -48,24 +48,49 @@ $(function(){
 	});
 	$("#conditionSelect,#additionSpan,#percentageSign,#percentageValue,#range").on("change",function(){
 		//暂时先注释，以后有时间再改一下
-		//preview();
+		preview();
 	});
 });
 function preview() {
 	isNull = false;
+	var HtmlBlock = "";
+	var type = $("#conditionSelect").children('option:selected').attr('fieldType');
 	//alert(isNull);
 	$("#conditionSelect,#conditionSign,#conditionValue,#percentageSign,#percentageValue,#range").each(function(){
 		if($(this).val() == ""){
 			isNull = true;
+			return;
 		}
 	});
-	var HtmlBlock = "";
+	
 	if(isNull == false){
-		$("#conditionSelect").children('option:selected').attr('fieldType');
-		HtmlBlock += $("#range").find("option:selected").text() + "的高评委,";
+		if(type==1) {
+			$.post("getPreview", {ruleField:$("#conditionSelect").find("option:selected").val(),
+				  ruleRelation:$("#conditionSign").find("option:selected").val(),
+				  ruleValue:$("#conditionValue").find("option:selected").val(),
+				  rulePrecent:$("#percentageValue").val(),
+				  rulePrecentRelation:$("#percentageSign").find("option:selected").val()
+				  }, function(data){
+				  		HtmlBlock += data.ruleContent;
+				  		$("#previewDiv").text(HtmlBlock);
+					}
+			);
+		} else {
+			$.post("getPreview", {ruleField:$("#conditionSelect").find("option:selected").val(),
+				  ruleRelation:$("#conditionSign").find("option:selected").val(),
+				  ruleValue:$("#conditionValue").val(),
+				  rulePrecent:$("#percentageValue").val(),
+				  rulePrecentRelation:$("#percentageSign").find("option:selected").val()
+				  }, function(data){
+				  		HtmlBlock += data.ruleContent;
+				  		$("#previewDiv").text(HtmlBlock);
+					}
+			);
+		}
+/* 		HtmlBlock += $("#range").find("option:selected").text() + "的高评委,";
 		HtmlBlock += "抽取结果中" + $("#conditionSelect").find("option:selected").text() + $("#conditionSign").find("option:selected").text() + $("#conditionValue").find("option:selected").text() + "的专家的人数";
 		HtmlBlock += "需" + $("#percentageSign").find("option:selected").text() + "总抽取人数的" + $("#percentageValue").val() + "%";
-		$("#previewDiv").text(HtmlBlock);
+		$("#previewDiv").text(HtmlBlock); */
 	}
 }
 </script>

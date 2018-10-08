@@ -457,5 +457,10 @@
 				<param name="includeProperties">jsonListCodeModel</param>
 			</result>
 		</action>
+		<action name="getPreview" class="gpw.action.MyAjax.ForRuleManagement" method="getPreView">
+			<result type="json">
+				<param name="includeProperties">ruleContent</param>
+			</result>
+		</action>
 	</package>
 </struts>
